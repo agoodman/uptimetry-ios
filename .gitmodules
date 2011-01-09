@@ -1,0 +1,9 @@
+[submodule "asi-http-request"]
+	path = asi-http-request
+	url = git@github.com:pokeb/asi-http-request.git
+[submodule "MBProgressHUD"]
+	path = MBProgressHUD
+	url = http://github.com/jdg/MBProgressHUD.git
+[submodule "CocoaLumberjack"]
+	path = CocoaLumberjack
+	url = git://github.com/robbiehanson/CocoaLumberjack.git

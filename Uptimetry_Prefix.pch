@@ -1,0 +1,13 @@
+//
+// Prefix header for all source files of the 'Uptimetry' target in the 'Uptimetry' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+    #import <UIKit/UIKit.h>
+#endif
+
+#import "DDLog.h"
+
+#define Alert(aTitle,aMessage) [[[[UIAlertView alloc] initWithTitle:aTitle message:aMessage delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK",nil] autorelease] show]
+#define NetworkAlert Alert(@"Network error",@"Please check your network connection.")
