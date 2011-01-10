@@ -7,15 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SiteRequest.h"
+#import "MBProgressHUD.h"
 
 
-@interface SiteListViewController : UITableViewController {
+@interface SiteListViewController : UITableViewController <SiteRequestDelegate> {
 
 	NSArray* sites;
+	UISegmentedControl* control;
+	MBProgressHUD* hud;
 	
 }
 
 @property (retain) NSArray* sites;
+@property (retain) MBProgressHUD* hud;
+@property (retain) UISegmentedControl* control;
 
 
 @end

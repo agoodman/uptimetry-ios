@@ -89,6 +89,11 @@
 		7E8BA80912DA7A1F008BA955 /* SignUpViewController_Shared.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E8BA80412DA7A1F008BA955 /* SignUpViewController_Shared.m */; };
 		7E8BA80A12DA7A1F008BA955 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E8BA80612DA7A1F008BA955 /* User.m */; };
 		7E8BA80B12DA7A1F008BA955 /* UserRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E8BA80812DA7A1F008BA955 /* UserRequest.m */; };
+		7E8BA81412DA7B7F008BA955 /* Site.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E8BA81312DA7B7F008BA955 /* Site.m */; };
+		7E8BA81912DA7BFF008BA955 /* SiteRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E8BA81812DA7BFF008BA955 /* SiteRequest.m */; };
+		7E8BA8C512DA84C5008BA955 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7E8BA8C412DA84C5008BA955 /* Settings.bundle */; };
+		7E8BAA0612DA91D8008BA955 /* Add.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E8BAA0412DA91D8008BA955 /* Add.png */; };
+		7E8BAA0712DA91D8008BA955 /* Refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E8BAA0512DA91D8008BA955 /* Refresh.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -311,6 +316,13 @@
 		7E8BA80612DA7A1F008BA955 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = Shared/User.m; sourceTree = "<group>"; };
 		7E8BA80712DA7A1F008BA955 /* UserRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserRequest.h; path = Shared/UserRequest.h; sourceTree = "<group>"; };
 		7E8BA80812DA7A1F008BA955 /* UserRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserRequest.m; path = Shared/UserRequest.m; sourceTree = "<group>"; };
+		7E8BA81212DA7B7F008BA955 /* Site.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Site.h; path = Shared/Site.h; sourceTree = "<group>"; };
+		7E8BA81312DA7B7F008BA955 /* Site.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Site.m; path = Shared/Site.m; sourceTree = "<group>"; };
+		7E8BA81712DA7BFF008BA955 /* SiteRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SiteRequest.h; path = Shared/SiteRequest.h; sourceTree = "<group>"; };
+		7E8BA81812DA7BFF008BA955 /* SiteRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SiteRequest.m; path = Shared/SiteRequest.m; sourceTree = "<group>"; };
+		7E8BA8C412DA84C5008BA955 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		7E8BAA0412DA91D8008BA955 /* Add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Add.png; sourceTree = "<group>"; };
+		7E8BAA0512DA91D8008BA955 /* Refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Refresh.png; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Uptimetry-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Uptimetry-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -345,6 +357,8 @@
 		2860E324111B887F00E27156 /* iPhone */ = {
 			isa = PBXGroup;
 			children = (
+				7E8BAA0412DA91D8008BA955 /* Add.png */,
+				7E8BAA0512DA91D8008BA955 /* Refresh.png */,
 				7E8BA7CE12DA503E008BA955 /* SignUpViewController_Phone.h */,
 				7E8BA7CF12DA503E008BA955 /* SignUpViewController_Phone.m */,
 				7E8BA75D12DA4AA1008BA955 /* SignInViewController_Phone.h */,
@@ -418,6 +432,7 @@
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				7E8BA8C412DA84C5008BA955 /* Settings.bundle */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -453,6 +468,8 @@
 				7E8BA80612DA7A1F008BA955 /* User.m */,
 				7E1EF15312DA3102007A3DDB /* Session.h */,
 				7E1EF15412DA3102007A3DDB /* Session.m */,
+				7E8BA81212DA7B7F008BA955 /* Site.h */,
+				7E8BA81312DA7B7F008BA955 /* Site.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -464,6 +481,8 @@
 				7E8BA80812DA7A1F008BA955 /* UserRequest.m */,
 				7E1EF15712DA311D007A3DDB /* SessionRequest.h */,
 				7E1EF15812DA311D007A3DDB /* SessionRequest.m */,
+				7E8BA81712DA7BFF008BA955 /* SiteRequest.h */,
+				7E8BA81812DA7BFF008BA955 /* SiteRequest.m */,
 			);
 			name = RESTClient;
 			sourceTree = "<group>";
@@ -847,6 +866,9 @@
 				7E8BA7B712DA4E26008BA955 /* SignInView_Pad.xib in Resources */,
 				7E8BA7B812DA4E26008BA955 /* PublicView_Pad.xib in Resources */,
 				7E8BA7B912DA4E26008BA955 /* SignUpView_Pad.xib in Resources */,
+				7E8BA8C512DA84C5008BA955 /* Settings.bundle in Resources */,
+				7E8BAA0612DA91D8008BA955 /* Add.png in Resources */,
+				7E8BAA0712DA91D8008BA955 /* Refresh.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -920,6 +942,8 @@
 				7E8BA80912DA7A1F008BA955 /* SignUpViewController_Shared.m in Sources */,
 				7E8BA80A12DA7A1F008BA955 /* User.m in Sources */,
 				7E8BA80B12DA7A1F008BA955 /* UserRequest.m in Sources */,
+				7E8BA81412DA7B7F008BA955 /* Site.m in Sources */,
+				7E8BA81912DA7BFF008BA955 /* SiteRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

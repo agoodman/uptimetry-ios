@@ -26,7 +26,7 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
-	self.navigationBar.tintColor = [UIColor colorWithRed:58.0/256.0 green:143.0/256.0 blue:24.0/256.0 alpha:1.0];
+	self.navigationBar.tintColor = [UIColor colorWithRed:58.0/256.0 green:4.0/256.0 blue:112.0/256.0 alpha:1.0];
 	self.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
 	// 3.1 compatibility check
 	NSString* tCurrentVersion = [[UIDevice currentDevice] systemVersion];

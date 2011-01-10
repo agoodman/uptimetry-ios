@@ -10,9 +10,11 @@
 #import "AppDelegate_Shared.h"
 
 
+static int ddLogLevel = LOG_LEVEL_VERBOSE;
+
 @implementation SiteListViewController
 
-@synthesize sites;
+@synthesize sites, hud, control;
 
 #pragma mark -
 #pragma mark Initialization
@@ -35,15 +37,27 @@
 - (void)viewDidLoad 
 {
     [super viewDidLoad];
-	self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Sign Out" style:UIBarButtonItemStylePlain target:self action:@selector(signOutButton)] autorelease];
-	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStylePlain target:self action:@selector(settingsButton)] autorelease];
+	self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStylePlain target:self action:@selector(showSettings)] autorelease];
+	
+	
+	NSArray* tButtons = [NSArray arrayWithObjects:
+						 [UIImage imageNamed:@"Refresh.png"],
+						 [UIImage imageNamed:@"Add.png"],
+						 nil];
+	self.control = [[[UISegmentedControl alloc] initWithItems:tButtons] autorelease];
+	control.segmentedControlStyle = UISegmentedControlStyleBar;
+	control.momentary = YES;
+	[control addTarget:self action:@selector(controlSelected:) forControlEvents:UIControlEventAllEvents];
+	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:control] autorelease];
 }
 
-/*
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated 
+{
     [super viewWillAppear:animated];
+
+	[self refreshSites];
 }
-*/
+
 /*
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -67,17 +81,89 @@
 }
 
 #pragma mark -
-#pragma mark IBActions
 
-- (IBAction)signOutButton
+- (void)controlSelected:(UISegmentedControl*)aControl
 {
-	AppDelegate_Shared* tAppDelegate = (AppDelegate_Shared*)[[UIApplication sharedApplication] delegate];
-	[tAppDelegate didSignOut];
+	if( aControl.selectedSegmentIndex==0 ) {
+		// refresh
+		[self refreshSites];
+	}else{
+		// add
+		[self addSite];
+	}
 }
 
-- (IBAction)settingsButton
+- (void)refreshSites
+{
+	self.hud = [[[MBProgressHUD alloc] initWithView:self.view] autorelease];
+	hud.labelText = @"Loading";
+	[self.view addSubview:hud];
+	[hud show:YES];
+	
+	[SiteRequest requestSites:self];
+}
+
+- (void)addSite
+{
+	Alert(@"TODO", @"show new site view");
+//	SingleLabelTextFieldViewController* tNewSite = [[[SingleLabelTextFieldViewController alloc] initWithTitle:@"New Site" label:@"Title" caption:@"" text:@""] autorelease];
+//	tNewSite.delegate = self;
+//	
+//	MobileNavigationController* tWrapper = [[[MobileNavigationController alloc] initWithRootViewController:tNewSite] autorelease];
+//	[self.navigationController presentModalViewController:tWrapper animated:YES];
+}
+
+- (IBAction)showSettings
 {
 	Alert(@"TODO", @"show settings view");
+}
+
+- (void)hideHud
+{
+	[hud hide:YES];
+	[hud removeFromSuperview];
+	self.hud = nil;
+}
+
+#pragma mark -
+#pragma mark SiteRequestDelegate
+
+- (void)siteRequestFailed
+{
+	[self hideHud];
+	NetworkAlert;
+}
+
+- (void)sitesReceived:(NSArray *)aSites
+{
+	[self hideHud];
+	self.sites = aSites;
+	
+	[self.tableView reloadData];
+}
+
+- (void)siteReceived:(Site*)site
+{
+	[self hideHud];
+	[self.navigationController dismissModalViewControllerAnimated:YES];
+	
+	NSMutableArray* tSites = [[[NSMutableArray alloc] initWithArray:self.sites] autorelease];
+	[tSites addObject:site];
+	self.sites = tSites;
+	[self.tableView reloadData];
+	
+//	SiteEditViewController* tEdit = [[[SiteEditViewController alloc] initWithSite:site shared:NO] autorelease];
+//	[self.navigationController pushViewController:tEdit animated:YES];
+}	
+
+- (void)siteFieldsInvalid:(NSArray *)errors
+{
+	[self hideHud];
+	NSMutableString* tErrors = [[[NSMutableString alloc] init] autorelease];
+	for (NSString* err in errors) {
+		[tErrors appendFormat:@"%@\n",err];
+	}
+	Alert(@"Unable to Save", tErrors);
 }
 
 #pragma mark -
@@ -102,10 +188,12 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
     }
     
-    // Configure the cell...
+	Site* tSite = [sites objectAtIndex:indexPath.row];
+	cell.textLabel.text = tSite.url;
+	cell.detailTextLabel.text = tSite.email;
     
     return cell;
 }
