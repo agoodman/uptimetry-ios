@@ -1,9 +1,9 @@
 //
 //  MobileNavigationController.m
-//  VerifIP Mobile
+//  Migrant Studios Mobile
 //
 //  Created by Aubrey Goodman on 1/28/10.
-//  Copyright 2010 VerifIP LLC. All rights reserved.
+//  Copyright 2010 Migrant Studios LLC. All rights reserved.
 //
 
 #import "MobileNavigationController.h"

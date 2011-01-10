@@ -3,7 +3,7 @@
 //  verifip
 //
 //  Created by Aubrey Goodman on 6/1/10.
-//  Copyright 2010 VerifIP. All rights reserved.
+//  Copyright 2010 Migrant Studios. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

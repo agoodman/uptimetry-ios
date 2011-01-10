@@ -3,7 +3,7 @@
 //  verifip
 //
 //  Created by Aubrey Goodman on 6/2/10.
-//  Copyright 2010 VerifIP. All rights reserved.
+//  Copyright 2010 Migrant Studios. All rights reserved.
 //
 
 #import "PublicViewController_Pad.h"
