@@ -12,6 +12,8 @@
 
 @interface PublicViewController : UIViewController <SignInDelegate> {
 
+	IBOutlet UIImageView* background;
+	
 }
 
 -(IBAction)signIn;

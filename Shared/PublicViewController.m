@@ -63,12 +63,17 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 }
 */
 
-/*
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad {
+- (void)viewDidLoad 
+{
     [super viewDidLoad];
+	
+	[UIView beginAnimations:@"SubtleBgMotion" context:nil];
+	[UIView setAnimationDuration:30];
+	[UIView setAnimationRepeatCount:999];
+	[UIView setAnimationCurve:UIViewAnimationCurveLinear];
+	background.transform = CGAffineTransformMakeRotation(60*M_PI/180.0);
+	[UIView commitAnimations];
 }
-*/
 
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation 
