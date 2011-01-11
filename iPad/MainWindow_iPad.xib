@@ -87,7 +87,7 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<object class="IBUIViewController" id="355632843">
 						<object class="IBUINavigationItem" key="IBUINavigationItem" id="701050471">
-							<string key="IBUITitle">up•tīm•e•try</string>
+							<string key="IBUITitle">Sites</string>
 							<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 						</object>
 						<reference key="IBUIParentViewController" ref="1045599906"/>

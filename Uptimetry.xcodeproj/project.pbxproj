@@ -24,6 +24,7 @@
 		7E15E86712DC027B0047C328 /* SingleLabelTextFieldView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7E15E86612DC027B0047C328 /* SingleLabelTextFieldView.xib */; };
 		7E15E8A912DC091B0047C328 /* SiteListViewController_Pad.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E15E8A812DC091B0047C328 /* SiteListViewController_Pad.m */; };
 		7E15E91A12DC12A20047C328 /* DoubleLabelTextFieldView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7E15E91912DC12A20047C328 /* DoubleLabelTextFieldView.xib */; };
+		7E15EA2712DC36CC0047C328 /* AccountView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7E15EA2612DC36CC0047C328 /* AccountView.xib */; };
 		7E1EF12612DA282B007A3DDB /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E1EF12412DA282B007A3DDB /* icon.png */; };
 		7E1EF12712DA282B007A3DDB /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E1EF12512DA282B007A3DDB /* icon@2x.png */; };
 		7E1EF13512DA290E007A3DDB /* SiteListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E1EF13412DA290E007A3DDB /* SiteListViewController.m */; };
@@ -135,6 +136,7 @@
 		7E15E8A712DC091B0047C328 /* SiteListViewController_Pad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SiteListViewController_Pad.h; sourceTree = "<group>"; };
 		7E15E8A812DC091B0047C328 /* SiteListViewController_Pad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SiteListViewController_Pad.m; sourceTree = "<group>"; };
 		7E15E91912DC12A20047C328 /* DoubleLabelTextFieldView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = DoubleLabelTextFieldView.xib; path = Shared/DoubleLabelTextFieldView.xib; sourceTree = "<group>"; };
+		7E15EA2612DC36CC0047C328 /* AccountView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AccountView.xib; path = Shared/AccountView.xib; sourceTree = "<group>"; };
 		7E1EF12412DA282B007A3DDB /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		7E1EF12512DA282B007A3DDB /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
 		7E1EF13312DA290E007A3DDB /* SiteListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SiteListViewController.h; path = Shared/SiteListViewController.h; sourceTree = "<group>"; };
@@ -460,6 +462,7 @@
 				7E8BA67E12DA39DA008BA955 /* AppDelegate_Shared.m */,
 				7E8BA6C012DA40B0008BA955 /* PublicViewController.h */,
 				7E8BA6C112DA40B0008BA955 /* PublicViewController.m */,
+				7E15EA2612DC36CC0047C328 /* AccountView.xib */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -922,6 +925,7 @@
 				7E15E83D12DC00070047C328 /* CaptionLabelCell.xib in Resources */,
 				7E15E86712DC027B0047C328 /* SingleLabelTextFieldView.xib in Resources */,
 				7E15E91A12DC12A20047C328 /* DoubleLabelTextFieldView.xib in Resources */,
+				7E15EA2712DC36CC0047C328 /* AccountView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

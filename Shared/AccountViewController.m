@@ -20,9 +20,9 @@
 
 @synthesize user;
 
-- (id)initWithStyle:(UITableViewStyle)style {
-    // Override initWithStyle: if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
-    if (self = [super initWithStyle:style]) {
+- (id)init 
+{
+    if (self = [super initWithNibName:@"AccountView" bundle:[NSBundle mainBundle]]) {
     }
     return self;
 }
@@ -31,7 +31,8 @@
     [super viewDidLoad];
 
 	self.navigationItem.title = @"Account";
-	self.view.backgroundColor = [UIColor colorWithRed:237.0/256.0 green:230.0/256.0 blue:241.0/256.0 alpha:1.0];
+	self.tableView.backgroundView = nil;
+	self.tableView.backgroundColor = [UIColor colorWithRed:237.0/256.0 green:230.0/256.0 blue:241.0/256.0 alpha:1.0];
 	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Sign Out" style:UIBarButtonItemStylePlain target:self action:@selector(signOut)] autorelease];
 	
 	[self refreshUser];

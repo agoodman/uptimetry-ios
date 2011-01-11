@@ -11,6 +11,13 @@
 #import "DDTTYLogger.h"
 
 
+static int ddLogLevel = LOG_LEVEL_VERBOSE;
+
+@interface AppDelegate_Shared (private)
+-(void)wakeUp;
+@end
+
+
 @implementation AppDelegate_Shared
 
 @synthesize window;
@@ -25,25 +32,10 @@
 
 	// setup logging
 	[DDLog addLogger:[DDTTYLogger sharedInstance]];
-
-	NSString* tHost = [[NSUserDefaults standardUserDefaults] stringForKey:@"ServerUrl"];
-	if( tHost==nil ) {
-		tHost = @"http://uptimetry.com/api/";
-		[[NSUserDefaults standardUserDefaults] setValue:tHost forKey:@"ServerUrl"];
-		[[NSUserDefaults standardUserDefaults] synchronize];
-	}
 	
 	// configure ObjectiveResource
-	[ObjectiveResourceConfig setSite:tHost];
 	[ObjectiveResourceConfig setResponseType:JSONResponse];
-	
-	if( [[NSUserDefaults standardUserDefaults] stringForKey:@"UserId"] ) {
-		// signed in; show private view
-		[self didSignIn];
-	}else{
-		// not signed in; show public view
-		[self didSignOut];
-	}
+
     [self.window makeKeyAndVisible];
     
     return YES;
@@ -58,12 +50,11 @@
 }
 
 
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-    /*
-     Restart any tasks that were paused (or not yet started) while the application was inactive.
-     */
+- (void)applicationDidBecomeActive:(UIApplication *)application 
+{
+	DDLogVerbose(@"didBecomeActive");
+	[self wakeUp];
 }
-
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     /*
@@ -72,10 +63,33 @@
 }
 
 #pragma mark -
+
+- (void)wakeUp
+{
+	NSString* tHost = [[NSUserDefaults standardUserDefaults] stringForKey:@"ServerUrl"];
+	if( tHost==nil ) {
+		tHost = @"http://uptimetry.com/api/";
+		[[NSUserDefaults standardUserDefaults] setValue:tHost forKey:@"ServerUrl"];
+		[[NSUserDefaults standardUserDefaults] synchronize];
+	}
+	
+	[ObjectiveResourceConfig setSite:tHost];
+	
+	if( [[NSUserDefaults standardUserDefaults] stringForKey:@"UserId"] ) {
+		// signed in; show private view
+		[self didSignIn];
+	}else{
+		// not signed in; show public view
+		[self didSignOut];
+	}
+}
+
+#pragma mark -
 #pragma mark Sign In/Out
 
 - (void)didSignIn
 {
+	DDLogVerbose(@"didSignIn");
 	[navigationController popToRootViewControllerAnimated:NO];
 	[publicViewController.view removeFromSuperview];
 	[window addSubview:navigationController.view];
@@ -83,6 +97,8 @@
 
 - (void)didSignOut
 {
+	[publicViewController.view resignFirstResponder];
+	DDLogVerbose(@"didSignOut");
 	[navigationController.view removeFromSuperview];
 	[window addSubview:publicViewController.view];
 }

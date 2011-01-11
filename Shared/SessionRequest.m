@@ -42,7 +42,8 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 	tReq.delegate = self;
 	
 	if( session ) {
-		NSString* tJson = [session convertToRemoteExpectedType];
+		NSArray	 *tExclusions = [NSArray arrayWithObjects:[Session getRemoteClassIdName],@"userId",nil];
+		NSString* tJson = [session performSelector:[Session getRemoteSerializeMethod] withObject:tExclusions];
 		[tReq appendPostData:[tJson dataUsingEncoding:NSISOLatin1StringEncoding]];
 		[tReq addRequestHeader:@"Content-Type" value:@"application/json"];
 	}else{

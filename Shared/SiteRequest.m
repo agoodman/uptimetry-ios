@@ -91,7 +91,10 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 {
 	DDLogVerbose(@"%@",[request responseString]);
 	int tStatusCode = [request responseStatusCode];
-	if( tStatusCode==422 ) {
+	if( tStatusCode==401 ) {
+		[[NSUserDefaults standardUserDefaults] removeObjectForKey:@"UserId"];
+		
+	}else if ( tStatusCode==422 ) {
 		// PUT or POST validation error
 		NSString* tJson = [request responseString];
 		NSDictionary* tDict = [tJson JSONValue];

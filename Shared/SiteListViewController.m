@@ -110,7 +110,7 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (IBAction)showAccount
 {
-	AccountViewController* tAccount = [[[AccountViewController alloc] initWithStyle:UITableViewStyleGrouped] autorelease];
+	AccountViewController* tAccount = [[[AccountViewController alloc] init] autorelease];
 	[self.navigationController pushViewController:tAccount animated:YES];
 //	MobileNavigationController* tWrapper = [[[MobileNavigationController alloc] initWithRootViewController:tAccount] autorelease];
 //	[self.navigationController presentModalViewController:tWrapper animated:YES]; 
@@ -240,6 +240,7 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 	Site* tSite = [sites objectAtIndex:indexPath.row];
 	cell.textLabel.text = tSite.url;
 	cell.detailTextLabel.text = tSite.email;
+	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
 }

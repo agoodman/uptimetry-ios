@@ -35,10 +35,10 @@
 	return tUser;
 }
 
-+ (NSString*)getRemoteCollectionName
-{
-	return @"user";
-}
+//+ (NSString*)getRemoteCollectionName
+//{
+//	return @"user";
+//}
 
 - (void)dealloc
 {
