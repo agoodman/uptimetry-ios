@@ -15,6 +15,7 @@
 @protocol UserRequestDelegate
 -(void)userCreated:(User*)user;
 -(void)userReceived:(User*)user;
+-(void)userUpdated;
 -(void)userDeleted;
 -(void)userFieldsInvalid:(NSArray*)errors;
 -(void)userRequestFailed;
@@ -33,6 +34,7 @@
 
 +(UserRequest*)requestCreateUser:(User*)user delegate:(id<UserRequestDelegate>)delegate;
 +(UserRequest*)requestReadUser:(User*)user delegate:(id<UserRequestDelegate>)delegate;
++(UserRequest*)requestUpdateUser:(User*)user delegate:(id<UserRequestDelegate>)delegate;
 +(UserRequest*)requestDeleteUser:(id<UserRequestDelegate>)delegate;
 
 @end

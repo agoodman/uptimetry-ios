@@ -15,6 +15,13 @@
 		2860E32E111B888700E27156 /* AppDelegate_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 2860E32C111B888700E27156 /* AppDelegate_iPad.m */; };
 		2860E32F111B888700E27156 /* MainWindow_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2860E32D111B888700E27156 /* MainWindow_iPad.xib */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
+		7E0AC4E712DBEE1E00E70AD5 /* public-bg12w.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E0AC4E612DBEE1E00E70AD5 /* public-bg12w.png */; };
+		7E15E80312DBFE0E0047C328 /* DoubleLabelTextFieldViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E15E80212DBFE0E0047C328 /* DoubleLabelTextFieldViewController.m */; };
+		7E15E80912DBFE3D0047C328 /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E15E80812DBFE3D0047C328 /* AccountViewController.m */; };
+		7E15E81212DBFE690047C328 /* SingleLabelTextFieldViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E15E81112DBFE690047C328 /* SingleLabelTextFieldViewController.m */; };
+		7E15E82412DBFECB0047C328 /* CaptionLabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E15E82312DBFECB0047C328 /* CaptionLabelCell.m */; };
+		7E15E83D12DC00070047C328 /* CaptionLabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7E15E83C12DC00070047C328 /* CaptionLabelCell.xib */; };
+		7E15E86712DC027B0047C328 /* SingleLabelTextFieldView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7E15E86612DC027B0047C328 /* SingleLabelTextFieldView.xib */; };
 		7E1EF12612DA282B007A3DDB /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E1EF12412DA282B007A3DDB /* icon.png */; };
 		7E1EF12712DA282B007A3DDB /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E1EF12512DA282B007A3DDB /* icon@2x.png */; };
 		7E1EF13512DA290E007A3DDB /* SiteListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E1EF13412DA290E007A3DDB /* SiteListViewController.m */; };
@@ -112,6 +119,17 @@
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Shared/main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* Uptimetry_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Uptimetry_Prefix.pch; sourceTree = "<group>"; };
+		7E0AC4E612DBEE1E00E70AD5 /* public-bg12w.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "public-bg12w.png"; sourceTree = "<group>"; };
+		7E15E80112DBFE0E0047C328 /* DoubleLabelTextFieldViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DoubleLabelTextFieldViewController.h; path = Shared/DoubleLabelTextFieldViewController.h; sourceTree = "<group>"; };
+		7E15E80212DBFE0E0047C328 /* DoubleLabelTextFieldViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DoubleLabelTextFieldViewController.m; path = Shared/DoubleLabelTextFieldViewController.m; sourceTree = "<group>"; };
+		7E15E80712DBFE3D0047C328 /* AccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountViewController.h; path = Shared/AccountViewController.h; sourceTree = "<group>"; };
+		7E15E80812DBFE3D0047C328 /* AccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccountViewController.m; path = Shared/AccountViewController.m; sourceTree = "<group>"; };
+		7E15E81012DBFE690047C328 /* SingleLabelTextFieldViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SingleLabelTextFieldViewController.h; path = Shared/SingleLabelTextFieldViewController.h; sourceTree = "<group>"; };
+		7E15E81112DBFE690047C328 /* SingleLabelTextFieldViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SingleLabelTextFieldViewController.m; path = Shared/SingleLabelTextFieldViewController.m; sourceTree = "<group>"; };
+		7E15E82212DBFECB0047C328 /* CaptionLabelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CaptionLabelCell.h; path = Shared/CaptionLabelCell.h; sourceTree = "<group>"; };
+		7E15E82312DBFECB0047C328 /* CaptionLabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CaptionLabelCell.m; path = Shared/CaptionLabelCell.m; sourceTree = "<group>"; };
+		7E15E83C12DC00070047C328 /* CaptionLabelCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CaptionLabelCell.xib; path = Shared/CaptionLabelCell.xib; sourceTree = "<group>"; };
+		7E15E86612DC027B0047C328 /* SingleLabelTextFieldView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = SingleLabelTextFieldView.xib; path = Shared/SingleLabelTextFieldView.xib; sourceTree = "<group>"; };
 		7E1EF12412DA282B007A3DDB /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		7E1EF12512DA282B007A3DDB /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
 		7E1EF13312DA290E007A3DDB /* SiteListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SiteListViewController.h; path = Shared/SiteListViewController.h; sourceTree = "<group>"; };
@@ -388,6 +406,7 @@
 		2860E32A111B888700E27156 /* iPad */ = {
 			isa = PBXGroup;
 			children = (
+				7E0AC4E612DBEE1E00E70AD5 /* public-bg12w.png */,
 				7E8BAB0D12DB9786008BA955 /* public-bg12.png */,
 				7E8BA7B412DA4E26008BA955 /* SignInView_Pad.xib */,
 				7E8BA7B512DA4E26008BA955 /* PublicView_Pad.xib */,
@@ -408,6 +427,16 @@
 		28EEBF621118D79A00187D67 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				7E15E86612DC027B0047C328 /* SingleLabelTextFieldView.xib */,
+				7E15E83C12DC00070047C328 /* CaptionLabelCell.xib */,
+				7E15E82212DBFECB0047C328 /* CaptionLabelCell.h */,
+				7E15E82312DBFECB0047C328 /* CaptionLabelCell.m */,
+				7E15E81012DBFE690047C328 /* SingleLabelTextFieldViewController.h */,
+				7E15E81112DBFE690047C328 /* SingleLabelTextFieldViewController.m */,
+				7E15E80712DBFE3D0047C328 /* AccountViewController.h */,
+				7E15E80812DBFE3D0047C328 /* AccountViewController.m */,
+				7E15E80112DBFE0E0047C328 /* DoubleLabelTextFieldViewController.h */,
+				7E15E80212DBFE0E0047C328 /* DoubleLabelTextFieldViewController.m */,
 				7E8BA80312DA7A1F008BA955 /* SignUpViewController_Shared.h */,
 				7E8BA80412DA7A1F008BA955 /* SignUpViewController_Shared.m */,
 				7E8BA6B012DA3E43008BA955 /* MobileNavigationController.h */,
@@ -881,6 +910,9 @@
 				7E8BAB0E12DB9786008BA955 /* public-bg12.png in Resources */,
 				7E8BAB1112DB9792008BA955 /* public-bg12@2x~iphone.png in Resources */,
 				7E8BAB1212DB9792008BA955 /* public-bg12~iphone.png in Resources */,
+				7E0AC4E712DBEE1E00E70AD5 /* public-bg12w.png in Resources */,
+				7E15E83D12DC00070047C328 /* CaptionLabelCell.xib in Resources */,
+				7E15E86712DC027B0047C328 /* SingleLabelTextFieldView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -956,6 +988,10 @@
 				7E8BA80B12DA7A1F008BA955 /* UserRequest.m in Sources */,
 				7E8BA81412DA7B7F008BA955 /* Site.m in Sources */,
 				7E8BA81912DA7BFF008BA955 /* SiteRequest.m in Sources */,
+				7E15E80312DBFE0E0047C328 /* DoubleLabelTextFieldViewController.m in Sources */,
+				7E15E80912DBFE3D0047C328 /* AccountViewController.m in Sources */,
+				7E15E81212DBFE690047C328 /* SingleLabelTextFieldViewController.m in Sources */,
+				7E15E82412DBFECB0047C328 /* CaptionLabelCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -966,18 +1002,21 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Aubrey Goodman (W6YQG4U9LB)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Uptimetry_Prefix.pch;
 				INFOPLIST_FILE = "Uptimetry-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 3.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/FlurryLib\"",
 					"\"$(SRCROOT)/objectiveresource/google_toolbox/TigerGcov\"",
 				);
 				PRODUCT_NAME = Uptimetry;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5C41FD52-EF91-43EC-B57D-37FE372A5D3C";
 			};
 			name = Debug;
 		};
@@ -985,16 +1024,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Aubrey Goodman (W6YQG4U9LB)";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Uptimetry_Prefix.pch;
 				INFOPLIST_FILE = "Uptimetry-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 3.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/FlurryLib\"",
 					"\"$(SRCROOT)/objectiveresource/google_toolbox/TigerGcov\"",
 				);
 				PRODUCT_NAME = Uptimetry;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5C41FD52-EF91-43EC-B57D-37FE372A5D3C";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

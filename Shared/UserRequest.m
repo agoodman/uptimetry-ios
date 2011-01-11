@@ -29,6 +29,11 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 	return [[UserRequest alloc] initWithAction:@"show" withObject:user delegate:delegate];
 }
 
++ (UserRequest*)requestUpdateUser:(User *)user delegate:(id <UserRequestDelegate>)delegate
+{
+	return [[UserRequest alloc] initWithAction:@"update" withObject:user delegate:delegate];
+}
+
 + (UserRequest*)requestDeleteUser:(User*)user delegate:(id <UserRequestDelegate>)delegate
 {
 	return [[UserRequest alloc] initWithAction:@"destroy" withObject:user delegate:delegate];
@@ -43,10 +48,8 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 	ASIHTTPRequest* tReq;
 	if( [@"index" isEqualToString:aAction] || [@"create" isEqualToString:aAction] ) {
 		tPath = [User getRemoteCollectionPath];
-	}else if( [@"show" isEqualToString:aAction] ) {
+	}else if( [@"show" isEqualToString:aAction] || [@"update" isEqualToString:aAction] ) {
 		tPath = [NSString stringWithFormat:@"%@user%@",[User getRemoteSite],[User getRemoteProtocolExtension]];
-	}else if( [@"update" isEqualToString:aAction] ) {
-		tPath = [User getRemoteElementPath:[NSString stringWithFormat:@"%@",user.userId]];
 	}else{
 		[self release];
 		return nil;
@@ -104,6 +107,8 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 		@catch (NSException * e) {
 			[delegate userRequestFailed];
 		}
+	}else if( tStatusCode==200 && [action isEqualToString:@"update"] ) {
+		[delegate userUpdated];
 	}else if( tStatusCode==200 && [action isEqualToString:@"destroy"] ) {
 		[delegate userDeleted];
 	}else if( tStatusCode==200 && [action isEqualToString:@"show"] ) {

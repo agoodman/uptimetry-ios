@@ -8,6 +8,7 @@
 
 #import "SiteListViewController.h"
 #import "AppDelegate_Shared.h"
+#import "AccountViewController.h"
 
 
 static int ddLogLevel = LOG_LEVEL_VERBOSE;
@@ -37,7 +38,7 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 - (void)viewDidLoad 
 {
     [super viewDidLoad];
-	self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStylePlain target:self action:@selector(showSettings)] autorelease];
+	self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Account" style:UIBarButtonItemStylePlain target:self action:@selector(showAccount)] autorelease];
 	
 	
 	NSArray* tButtons = [NSArray arrayWithObjects:
@@ -113,9 +114,12 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 //	[self.navigationController presentModalViewController:tWrapper animated:YES];
 }
 
-- (IBAction)showSettings
+- (IBAction)showAccount
 {
-	Alert(@"TODO", @"show settings view");
+	AccountViewController* tAccount = [[[AccountViewController alloc] initWithStyle:UITableViewStyleGrouped] autorelease];
+	[self.navigationController pushViewController:tAccount animated:YES];
+//	MobileNavigationController* tWrapper = [[[MobileNavigationController alloc] initWithRootViewController:tAccount] autorelease];
+//	[self.navigationController presentModalViewController:tWrapper animated:YES]; 
 }
 
 - (void)hideHud

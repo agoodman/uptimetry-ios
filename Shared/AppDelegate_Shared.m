@@ -76,6 +76,7 @@
 
 - (void)didSignIn
 {
+	[navigationController popToRootViewControllerAnimated:NO];
 	[publicViewController.view removeFromSuperview];
 	[window addSubview:navigationController.view];
 }
