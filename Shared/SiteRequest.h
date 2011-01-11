@@ -34,8 +34,8 @@
 
 +(SiteRequest*)requestSites:(id<SiteRequestDelegate>)delegate;
 +(SiteRequest*)requestCreateSite:(Site*)session delegate:(id<SiteRequestDelegate>)delegate;
-+(SiteRequest*)requestReadSite:(Site*)user delegate:(id<SiteRequestDelegate>)delegate;
-+(SiteRequest*)requestUpdateSite:(Site*)user delegate:(id<SiteRequestDelegate>)delegate;
-+(SiteRequest*)requestDeleteSite:(id<SiteRequestDelegate>)delegate;
++(SiteRequest*)requestReadSite:(Site*)site delegate:(id<SiteRequestDelegate>)delegate;
++(SiteRequest*)requestUpdateSite:(Site*)site delegate:(id<SiteRequestDelegate>)delegate;
++(SiteRequest*)requestDeleteSite:(Site*)site delegate:(id<SiteRequestDelegate>)delegate;
 
 @end

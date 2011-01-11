@@ -38,8 +38,8 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 - (void)viewDidLoad 
 {
     [super viewDidLoad];
-	self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Account" style:UIBarButtonItemStylePlain target:self action:@selector(showAccount)] autorelease];
 	
+	self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Account" style:UIBarButtonItemStylePlain target:self action:@selector(showAccount)] autorelease];	
 	
 	NSArray* tButtons = [NSArray arrayWithObjects:
 						 [UIImage imageNamed:@"Refresh.png"],
@@ -96,22 +96,16 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (void)refreshSites
 {
-	self.hud = [[[MBProgressHUD alloc] initWithView:self.view] autorelease];
-	hud.labelText = @"Loading";
-	[self.view addSubview:hud];
-	[hud show:YES];
-	
+	[self showHud];
 	[SiteRequest requestSites:self];
 }
 
 - (void)addSite
 {
-	Alert(@"TODO", @"show new site view");
-//	SingleLabelTextFieldViewController* tNewSite = [[[SingleLabelTextFieldViewController alloc] initWithTitle:@"New Site" label:@"Title" caption:@"" text:@""] autorelease];
-//	tNewSite.delegate = self;
-//	
-//	MobileNavigationController* tWrapper = [[[MobileNavigationController alloc] initWithRootViewController:tNewSite] autorelease];
-//	[self.navigationController presentModalViewController:tWrapper animated:YES];
+	DoubleLabelTextFieldViewController* tNewSite = [[[DoubleLabelTextFieldViewController alloc] initWithTitle:@"New Site" label1:@"URL" label2:@"Email" caption1:@"(required)" caption2:@"(required)" text1:nil text2:nil] autorelease];
+	tNewSite.delegate = self;
+	
+	[self.navigationController pushViewController:tNewSite animated:YES];
 }
 
 - (IBAction)showAccount
@@ -120,6 +114,14 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 	[self.navigationController pushViewController:tAccount animated:YES];
 //	MobileNavigationController* tWrapper = [[[MobileNavigationController alloc] initWithRootViewController:tAccount] autorelease];
 //	[self.navigationController presentModalViewController:tWrapper animated:YES]; 
+}
+
+- (void)showHud
+{
+	self.hud = [[[MBProgressHUD alloc] initWithView:self.view] autorelease];
+	hud.labelText = @"Loading";
+	[self.view addSubview:hud];
+	[hud show:YES];
 }
 
 - (void)hideHud
@@ -146,11 +148,13 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 	tSite.url = text1;
 	tSite.email = text2;
 
+	[self showHud];
 	if( editingSite ) {
 		tSite.siteId = editingSite.siteId;
+		[SiteRequest requestUpdateSite:tSite delegate:self];
+	}else{
+		[SiteRequest requestCreateSite:tSite delegate:self];
 	}
-	
-	[SiteRequest requestUpdateSite:tSite delegate:self];
 }
 
 #pragma mark -
@@ -174,7 +178,7 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 - (void)siteReceived:(Site*)site
 {
 	[self hideHud];
-	[self.navigationController dismissModalViewControllerAnimated:YES];
+	[self.navigationController popViewControllerAnimated:YES];
 	
 	NSMutableArray* tSites = [[[NSMutableArray alloc] initWithArray:self.sites] autorelease];
 	[tSites addObject:site];
@@ -187,7 +191,14 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (void)siteUpdated
 {
+	[self hideHud];
 	[self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)siteDeleted
+{
+	[self hideHud];
+	[self refreshSites];
 }
 
 - (void)siteFieldsInvalid:(NSArray *)errors
@@ -197,6 +208,7 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 	for (NSString* err in errors) {
 		[tErrors appendFormat:@"%@\n",err];
 	}
+	DDLogVerbose(tErrors);
 	Alert(@"Unable to Save", tErrors);
 }
 
@@ -233,29 +245,20 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 }
 
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath 
+{
     return YES;
 }
-*/
 
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath 
+{
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source.
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+		Site* tSite = [sites objectAtIndex:indexPath.row];
+		[SiteRequest requestDeleteSite:tSite delegate:self];
     }   
 }
-*/
-
 
 /*
 // Override to support rearranging the table view.
@@ -264,17 +267,19 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 */
 
 
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath 
+{
+    return NO;
 }
-*/
 
 
 #pragma mark -
 #pragma mark Table view delegate
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return UITableViewCellEditingStyleDelete;
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath 
 {

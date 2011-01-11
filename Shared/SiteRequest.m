@@ -40,6 +40,11 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 	return [[SiteRequest alloc] initWithAction:@"update" withObject:site delegate:aDelegate];
 }
 
++ (SiteRequest*)requestDeleteSite:(Site *)site delegate:(id <SiteRequestDelegate>)delegate
+{
+	return [[SiteRequest alloc] initWithAction:@"destroy" withObject:site delegate:delegate];
+}
+
 - (id)initWithAction:(NSString*)aAction withObject:(Site*)site delegate:(id<SiteRequestDelegate>)aDelegate
 {
 	self.action = aAction;
@@ -49,7 +54,7 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 	ASIHTTPRequest* tReq;
 	if( [@"index" isEqualToString:aAction] || [@"create" isEqualToString:aAction] ) {
 		tPath = [Site getRemoteCollectionPath];
-	}else if( [@"show" isEqualToString:aAction] || [@"update" isEqualToString:aAction] ) {
+	}else if( [@"show" isEqualToString:aAction] || [@"update" isEqualToString:aAction] || [@"destroy" isEqualToString:aAction] ) {
 		tPath = [Site getRemoteElementPath:[NSString stringWithFormat:@"%@",site.siteId]];
 	}else{
 		[self release];
@@ -67,6 +72,10 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 	
 	if( [@"update" isEqualToString:aAction] ) {
 		[tReq setRequestMethod:@"PUT"];
+	}
+	
+	if( [@"destroy" isEqualToString:aAction] ) {
+		[tReq setRequestMethod:@"DELETE"];
 	}
 	
 	tReq.delegate = self;

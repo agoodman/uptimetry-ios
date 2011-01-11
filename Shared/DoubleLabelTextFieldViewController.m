@@ -76,13 +76,13 @@
 - (void)donePressed
 {
 	[FlurryAPI logEvent:@"DoubleLabelTextDone"];
-	if( [text1.text isEqualToString:@""] ) {
-		[[[[UIAlertView alloc] initWithTitle:@"Required Field Missing" message:@"You must enter a name" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK",nil] autorelease] show];
-	}else if( [text2.text isEqualToString:@""] ) {
-		[[[[UIAlertView alloc] initWithTitle:@"Required Field Missing" message:@"You must enter a URL" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK",nil] autorelease] show];
-	}else{
+//	if( [text1.text isEqualToString:@""] ) {
+//		[[[[UIAlertView alloc] initWithTitle:@"Required Field Missing" message:@"You must enter a URL" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK",nil] autorelease] show];
+//	}else if( [text2.text isEqualToString:@""] ) {
+//		[[[[UIAlertView alloc] initWithTitle:@"Required Field Missing" message:@"You must enter an email" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK",nil] autorelease] show];
+//	}else{
 		[delegate doubleLabelTextField:self didCompleteWithText1:text1.text text2:text2.text];
-	}
+//	}
 }
 
 #pragma mark -
