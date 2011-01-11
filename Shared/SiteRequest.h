@@ -18,6 +18,7 @@
 -(void)siteUpdated;
 -(void)siteDeleted;
 -(void)siteFieldsInvalid:(NSArray*)errors;
+-(void)siteUnauthorized;
 -(void)siteRequestFailed;
 @end
 

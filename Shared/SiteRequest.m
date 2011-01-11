@@ -144,10 +144,7 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 	DDLogVerbose([request responseString]);
 	int tStatusCode = [request responseStatusCode];
 	if( tStatusCode==401 ) {
-		NSString* tJson = [request responseString];
-		NSDictionary* tDict = [tJson JSONValue];
-		NSArray* tErrors = [tDict objectForKey:@"errors"];
-		[delegate siteFieldsInvalid:tErrors];
+		[delegate siteUnauthorized];
 	}else{
 		[delegate siteRequestFailed];
 	}

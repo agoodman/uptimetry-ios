@@ -28,7 +28,7 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 	tSite.url = [dictionary objectForKey:@"url"];
 	tSite.email = [dictionary objectForKey:@"email"];
 	NSString* tLastAttempt = [dictionary objectForKey:@"last_successful_attempt"];
-	if( ![tLastAttempt isEqual:[NSNull null]] ) {
+	if( tLastAttempt && ![tLastAttempt isEqual:[NSNull null]] ) {
 		tSite.lastSuccessfulAttempt = [tFormat dateFromString:tLastAttempt];
 	}
 	return tSite;

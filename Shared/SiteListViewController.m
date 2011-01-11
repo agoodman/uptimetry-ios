@@ -212,6 +212,12 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 	Alert(@"Unable to Save", tErrors);
 }
 
+- (void)siteUnauthorized
+{
+	AppDelegate_Shared* tAppDelegate = (AppDelegate_Shared*)[[UIApplication sharedApplication] delegate];
+	[tAppDelegate didSignOut];
+}
+
 #pragma mark -
 #pragma mark Table view data source
 

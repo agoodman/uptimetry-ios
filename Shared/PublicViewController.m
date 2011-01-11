@@ -72,16 +72,14 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 {
 	[super viewDidAppear:animated];
 
-	dispatch_async(dispatch_get_main_queue(), ^{
-		DDLogVerbose(@"PublicView.didAppear");
-		[UIView beginAnimations:@"SubtleBgMotion" context:nil];
-		[UIView setAnimationBeginsFromCurrentState:YES];
-		[UIView setAnimationDuration:30];
-		[UIView setAnimationRepeatCount:999];
-		[UIView setAnimationCurve:UIViewAnimationCurveLinear];
-		background.transform = CGAffineTransformMakeRotation(60*M_PI/180.0);
-		[UIView commitAnimations];
-	});
+	DDLogVerbose(@"PublicView.didAppear");
+	[UIView beginAnimations:@"SubtleBgMotion" context:nil];
+	[UIView setAnimationBeginsFromCurrentState:YES];
+	[UIView setAnimationDuration:30];
+	[UIView setAnimationRepeatCount:999];
+	[UIView setAnimationCurve:UIViewAnimationCurveLinear];
+	background.transform = CGAffineTransformMakeRotation(60*M_PI/180.0);
+	[UIView commitAnimations];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation 

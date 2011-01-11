@@ -68,7 +68,9 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 	DDLogVerbose(@"%@",[request responseString]);
 	int tStatusCode = [request responseStatusCode];
 	NSString* tAction = [request requestMethod];
-	if( tStatusCode==200 && [tAction isEqualToString:@"DELETE"] ) {
+	if( tStatusCode==422 ) {
+		[delegate sessionInvalid];
+	}else if( tStatusCode==200 && [tAction isEqualToString:@"DELETE"] ) {
 		[self clearPersistentSession];
 		[delegate sessionDeleted];
 	}else if( tStatusCode==200 && [tAction isEqualToString:@"POST"] ) {

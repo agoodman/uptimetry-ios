@@ -337,6 +337,11 @@
 {
 }
 
+- (void)userFieldsInvalid:(NSArray *)errors
+{
+	
+}
+
 - (void)userRequestFailed
 {
 	[self sessionDeleted];
