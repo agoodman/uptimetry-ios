@@ -58,7 +58,7 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 	tReq = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:tPath]];
 	
 	if( [@"create" isEqualToString:aAction] || [@"update" isEqualToString:aAction] ) {
-		NSArray	 *tExclusions = [NSArray arrayWithObjects:[Site getRemoteClassIdName],@"createdAt",@"updatedAt",nil];
+		NSArray	 *tExclusions = [NSArray arrayWithObjects:[Site getRemoteClassIdName],@"createdAt",@"updatedAt",@"lastSuccessfulAttempt",@"userId",nil];
 		NSString* tJson = [site performSelector:[Site getRemoteSerializeMethod] withObject:tExclusions];
 		//		NSString* tJson = [site convertToRemoteExpectedType];
 		[tReq appendPostData:[tJson dataUsingEncoding:NSISOLatin1StringEncoding]];
@@ -129,6 +129,7 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (void)requestFailed:(ASIHTTPRequest *)request
 {
+	DDLogVerbose([request responseString]);
 	int tStatusCode = [request responseStatusCode];
 	if( tStatusCode==401 ) {
 		NSString* tJson = [request responseString];
