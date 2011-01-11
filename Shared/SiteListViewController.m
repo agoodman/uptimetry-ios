@@ -130,10 +130,35 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 }
 
 #pragma mark -
+#pragma mark DoubleLabelTextFieldDelegate
+
+- (void)doubleLabelTextFieldDidCancel:(DoubleLabelTextFieldViewController *)src
+{
+	[self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)doubleLabelTextField:(DoubleLabelTextFieldViewController *)src didCompleteWithText1:(NSString *)text1 text2:(NSString *)text2
+{
+	int tUserId = [[NSUserDefaults standardUserDefaults] integerForKey:@"UserId"];
+
+	Site* tSite = [[[Site alloc] init] autorelease];
+	tSite.userId = [NSNumber numberWithInt:tUserId];
+	tSite.url = text1;
+	tSite.email = text2;
+
+	if( editingSite ) {
+		tSite.siteId = editingSite.siteId;
+	}
+	
+	[SiteRequest requestUpdateSite:tSite delegate:self];
+}
+
+#pragma mark -
 #pragma mark SiteRequestDelegate
 
 - (void)siteRequestFailed
 {
+	editingSite = nil;
 	[self hideHud];
 	NetworkAlert;
 }
@@ -159,6 +184,11 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 //	SiteEditViewController* tEdit = [[[SiteEditViewController alloc] initWithSite:site shared:NO] autorelease];
 //	[self.navigationController pushViewController:tEdit animated:YES];
 }	
+
+- (void)siteUpdated
+{
+	[self.navigationController popViewControllerAnimated:YES];
+}
 
 - (void)siteFieldsInvalid:(NSArray *)errors
 {
@@ -246,15 +276,12 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 #pragma mark -
 #pragma mark Table view delegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-    <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-    // ...
-    // Pass the selected object to the new view controller.
-    [self.navigationController pushViewController:detailViewController animated:YES];
-    [detailViewController release];
-	 */
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath 
+{
+	editingSite = [sites objectAtIndex:indexPath.row];
+	DoubleLabelTextFieldViewController* tSiteEdit = [[[DoubleLabelTextFieldViewController alloc] initWithTitle:@"Edit Site" label1:@"URL" label2:@"Email" caption1:@"(required)" caption2:@"(required)" text1:editingSite.url text2:editingSite.email] autorelease];
+	tSiteEdit.delegate = self;
+	[self.navigationController pushViewController:tSiteEdit animated:YES];
 }
 
 

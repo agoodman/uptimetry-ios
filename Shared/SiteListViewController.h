@@ -9,13 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "SiteRequest.h"
 #import "MBProgressHUD.h"
+#import "DoubleLabelTextFieldViewController.h"
 
 
-@interface SiteListViewController : UITableViewController <SiteRequestDelegate> {
+@interface SiteListViewController : UITableViewController <SiteRequestDelegate,DoubleLabelTextFieldDelegate> {
 
 	NSArray* sites;
 	UISegmentedControl* control;
 	MBProgressHUD* hud;
+
+	Site* editingSite;
 	
 }
 

@@ -31,8 +31,7 @@
     [super viewDidLoad];
 
 	self.navigationItem.title = @"Account";
-	self.view.backgroundColor = [UIColor colorWithRed:235.0/256.0 green:231.0/256.0 blue:247.0/256.0 alpha:1.0];
-//	self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(donePressed)] autorelease];
+	self.view.backgroundColor = [UIColor colorWithRed:237.0/256.0 green:230.0/256.0 blue:241.0/256.0 alpha:1.0];
 	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Sign Out" style:UIBarButtonItemStylePlain target:self action:@selector(signOut)] autorelease];
 	
 	[self refreshUser];
