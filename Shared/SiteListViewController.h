@@ -26,5 +26,6 @@
 @property (retain) MBProgressHUD* hud;
 @property (retain) UISegmentedControl* control;
 
+-(void)showWhatsNext;
 
 @end

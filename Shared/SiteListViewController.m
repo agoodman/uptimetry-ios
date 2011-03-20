@@ -13,9 +13,20 @@
 
 static int ddLogLevel = LOG_LEVEL_VERBOSE;
 
+@interface SiteListViewController (private)
+-(void)refreshSites;
+-(void)addSite;
+-(void)showHud;
+@end
+
 @implementation SiteListViewController
 
 @synthesize sites, hud, control;
+
+- (void)showWhatsNext
+{
+	Alert(@"What's Next?",@"That's it. You're done. We will notify you by email if your site becomes unavailable.");
+}
 
 #pragma mark -
 #pragma mark Initialization
@@ -185,9 +196,13 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 	self.sites = tSites;
 	[self.tableView reloadData];
 	
-//	SiteEditViewController* tEdit = [[[SiteEditViewController alloc] initWithSite:site shared:NO] autorelease];
-//	[self.navigationController pushViewController:tEdit animated:YES];
+	[self showWhatsNext];
 }	
+
+- (void)siteCreated:(Site*)site
+{
+	// do nothing;
+}
 
 - (void)siteUpdated
 {
