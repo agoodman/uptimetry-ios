@@ -7,3 +7,6 @@
 [submodule "CocoaLumberjack"]
 	path = CocoaLumberjack
 	url = git://github.com/robbiehanson/CocoaLumberjack.git
+[submodule "inventory-kit"]
+	path = inventory-kit
+	url = git@github.com:agoodman/inventory-kit.git

@@ -10,7 +10,7 @@
 #import "NSString+SBJSON.h"
 
 
-static int ddLogLevel = LOG_LEVEL_VERBOSE;
+static int ddLogLevel = LOG_LEVEL_ERROR;
 
 @interface SiteRequest (private)
 -(id)initWithAction:(NSString*)action withObject:(Site*)site delegate:(id<SiteRequestDelegate>)aDelegate;

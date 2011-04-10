@@ -17,7 +17,7 @@
 
 @implementation SessionRequest
 
-static int ddLogLevel = LOG_LEVEL_VERBOSE;
+static int ddLogLevel = LOG_LEVEL_ERROR;
 
 @synthesize delegate;
 

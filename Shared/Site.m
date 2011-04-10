@@ -9,7 +9,7 @@
 #import "Site.h"
 
 
-static int ddLogLevel = LOG_LEVEL_VERBOSE;
+static int ddLogLevel = LOG_LEVEL_ERROR;
 
 @implementation Site
 
@@ -17,7 +17,7 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 +(Site*)siteWithDictionary:(NSDictionary*)dictionary
 {
-	int tUserId = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserId"];
+	int tUserId = [[NSUserDefaults standardUserDefaults] integerForKey:@"UserId"];
 	
 	NSDateFormatter* tFormat = [[[NSDateFormatter alloc] init] autorelease];
 	[tFormat setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
