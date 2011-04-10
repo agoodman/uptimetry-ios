@@ -85,6 +85,17 @@
 		7E1EF89112DA383C007A3DDB /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E1EF89012DA383C007A3DDB /* CFNetwork.framework */; };
 		7E1EF89712DA3865007A3DDB /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E1EF89612DA3865007A3DDB /* libz.1.2.3.dylib */; };
 		7E1EF89B12DA38C5007A3DDB /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E1EF89A12DA38C5007A3DDB /* MobileCoreServices.framework */; };
+		7E6EF1A41346ADA20010D8D5 /* IKApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6EF1911346ADA20010D8D5 /* IKApiClient.m */; };
+		7E6EF1A51346ADA20010D8D5 /* IKCustomer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6EF1931346ADA20010D8D5 /* IKCustomer.m */; };
+		7E6EF1A61346ADA20010D8D5 /* IKPaymentTransactionObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6EF1951346ADA20010D8D5 /* IKPaymentTransactionObserver.m */; };
+		7E6EF1A71346ADA20010D8D5 /* IKProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6EF1971346ADA20010D8D5 /* IKProduct.m */; };
+		7E6EF1A81346ADA20010D8D5 /* IKProductObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6EF1991346ADA20010D8D5 /* IKProductObserver.m */; };
+		7E6EF1A91346ADA20010D8D5 /* IKSubscription.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6EF19D1346ADA20010D8D5 /* IKSubscription.m */; };
+		7E6EF1AA1346ADA20010D8D5 /* InventoryKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6EF19F1346ADA20010D8D5 /* InventoryKit.m */; };
+		7E6EF1AB1346ADA20010D8D5 /* NSString+SHA1.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6EF1A11346ADA20010D8D5 /* NSString+SHA1.m */; };
+		7E6EF1AC1346ADA20010D8D5 /* ProductRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6EF1A31346ADA20010D8D5 /* ProductRequest.m */; };
+		7E6EF1B51346AF290010D8D5 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E6EF1B41346AF290010D8D5 /* StoreKit.framework */; };
+		7E6EF1CB1346B1260010D8D5 /* TransitionProducts.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7E6EF1CA1346B1260010D8D5 /* TransitionProducts.plist */; };
 		7E8BA67F12DA39DA008BA955 /* AppDelegate_Shared.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E8BA67E12DA39DA008BA955 /* AppDelegate_Shared.m */; };
 		7E8BA6B212DA3E43008BA955 /* MobileNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E8BA6B112DA3E43008BA955 /* MobileNavigationController.m */; };
 		7E8BA6C212DA40B0008BA955 /* PublicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E8BA6C112DA40B0008BA955 /* PublicViewController.m */; };
@@ -322,6 +333,28 @@
 		7E1EF89012DA383C007A3DDB /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		7E1EF89612DA3865007A3DDB /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = usr/lib/libz.1.2.3.dylib; sourceTree = SDKROOT; };
 		7E1EF89A12DA38C5007A3DDB /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		7E6EF1901346ADA20010D8D5 /* IKApiClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKApiClient.h; sourceTree = "<group>"; };
+		7E6EF1911346ADA20010D8D5 /* IKApiClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IKApiClient.m; sourceTree = "<group>"; };
+		7E6EF1921346ADA20010D8D5 /* IKCustomer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKCustomer.h; sourceTree = "<group>"; };
+		7E6EF1931346ADA20010D8D5 /* IKCustomer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IKCustomer.m; sourceTree = "<group>"; };
+		7E6EF1941346ADA20010D8D5 /* IKPaymentTransactionObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKPaymentTransactionObserver.h; sourceTree = "<group>"; };
+		7E6EF1951346ADA20010D8D5 /* IKPaymentTransactionObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IKPaymentTransactionObserver.m; sourceTree = "<group>"; };
+		7E6EF1961346ADA20010D8D5 /* IKProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKProduct.h; sourceTree = "<group>"; };
+		7E6EF1971346ADA20010D8D5 /* IKProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IKProduct.m; sourceTree = "<group>"; };
+		7E6EF1981346ADA20010D8D5 /* IKProductObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKProductObserver.h; sourceTree = "<group>"; };
+		7E6EF1991346ADA20010D8D5 /* IKProductObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IKProductObserver.m; sourceTree = "<group>"; };
+		7E6EF19A1346ADA20010D8D5 /* IKPurchaseDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKPurchaseDelegate.h; sourceTree = "<group>"; };
+		7E6EF19B1346ADA20010D8D5 /* IKRestoreDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKRestoreDelegate.h; sourceTree = "<group>"; };
+		7E6EF19C1346ADA20010D8D5 /* IKSubscription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKSubscription.h; sourceTree = "<group>"; };
+		7E6EF19D1346ADA20010D8D5 /* IKSubscription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IKSubscription.m; sourceTree = "<group>"; };
+		7E6EF19E1346ADA20010D8D5 /* InventoryKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InventoryKit.h; sourceTree = "<group>"; };
+		7E6EF19F1346ADA20010D8D5 /* InventoryKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InventoryKit.m; sourceTree = "<group>"; };
+		7E6EF1A01346ADA20010D8D5 /* NSString+SHA1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SHA1.h"; sourceTree = "<group>"; };
+		7E6EF1A11346ADA20010D8D5 /* NSString+SHA1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SHA1.m"; sourceTree = "<group>"; };
+		7E6EF1A21346ADA20010D8D5 /* ProductRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductRequest.h; sourceTree = "<group>"; };
+		7E6EF1A31346ADA20010D8D5 /* ProductRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductRequest.m; sourceTree = "<group>"; };
+		7E6EF1B41346AF290010D8D5 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		7E6EF1CA1346B1260010D8D5 /* TransitionProducts.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TransitionProducts.plist; sourceTree = "<group>"; };
 		7E8BA67D12DA39DA008BA955 /* AppDelegate_Shared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate_Shared.h; path = Shared/AppDelegate_Shared.h; sourceTree = "<group>"; };
 		7E8BA67E12DA39DA008BA955 /* AppDelegate_Shared.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate_Shared.m; path = Shared/AppDelegate_Shared.m; sourceTree = "<group>"; };
 		7E8BA6B012DA3E43008BA955 /* MobileNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MobileNavigationController.h; path = Shared/MobileNavigationController.h; sourceTree = "<group>"; };
@@ -379,6 +412,7 @@
 				7E1EF89112DA383C007A3DDB /* CFNetwork.framework in Frameworks */,
 				7E1EF89712DA3865007A3DDB /* libz.1.2.3.dylib in Frameworks */,
 				7E1EF89B12DA38C5007A3DDB /* MobileCoreServices.framework in Frameworks */,
+				7E6EF1B51346AF290010D8D5 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -476,6 +510,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				7E6EF18F1346ADA20010D8D5 /* InventoryKit */,
 				7E00C26512DCBFBF00F5C3EB /* icon-small.png */,
 				7E00C26612DCBFBF00F5C3EB /* icon-small@2x.png */,
 				7E00C23B12DCBEC600F5C3EB /* icon-72.png */,
@@ -494,6 +529,8 @@
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				7E8BA8C412DA84C5008BA955 /* Settings.bundle */,
+				7E6EF1B41346AF290010D8D5 /* StoreKit.framework */,
+				7E6EF1CA1346B1260010D8D5 /* TransitionProducts.plist */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -851,6 +888,34 @@
 			path = CocoaLumberjack/Lumberjack;
 			sourceTree = "<group>";
 		};
+		7E6EF18F1346ADA20010D8D5 /* InventoryKit */ = {
+			isa = PBXGroup;
+			children = (
+				7E6EF1901346ADA20010D8D5 /* IKApiClient.h */,
+				7E6EF1911346ADA20010D8D5 /* IKApiClient.m */,
+				7E6EF1921346ADA20010D8D5 /* IKCustomer.h */,
+				7E6EF1931346ADA20010D8D5 /* IKCustomer.m */,
+				7E6EF1941346ADA20010D8D5 /* IKPaymentTransactionObserver.h */,
+				7E6EF1951346ADA20010D8D5 /* IKPaymentTransactionObserver.m */,
+				7E6EF1961346ADA20010D8D5 /* IKProduct.h */,
+				7E6EF1971346ADA20010D8D5 /* IKProduct.m */,
+				7E6EF1981346ADA20010D8D5 /* IKProductObserver.h */,
+				7E6EF1991346ADA20010D8D5 /* IKProductObserver.m */,
+				7E6EF19A1346ADA20010D8D5 /* IKPurchaseDelegate.h */,
+				7E6EF19B1346ADA20010D8D5 /* IKRestoreDelegate.h */,
+				7E6EF19C1346ADA20010D8D5 /* IKSubscription.h */,
+				7E6EF19D1346ADA20010D8D5 /* IKSubscription.m */,
+				7E6EF19E1346ADA20010D8D5 /* InventoryKit.h */,
+				7E6EF19F1346ADA20010D8D5 /* InventoryKit.m */,
+				7E6EF1A01346ADA20010D8D5 /* NSString+SHA1.h */,
+				7E6EF1A11346ADA20010D8D5 /* NSString+SHA1.m */,
+				7E6EF1A21346ADA20010D8D5 /* ProductRequest.h */,
+				7E6EF1A31346ADA20010D8D5 /* ProductRequest.m */,
+			);
+			name = InventoryKit;
+			path = "inventory-kit/InventoryKit";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -942,6 +1007,7 @@
 				7E00C23E12DCBECE00F5C3EB /* icon-small-50.png in Resources */,
 				7E00C26712DCBFBF00F5C3EB /* icon-small.png in Resources */,
 				7E00C26812DCBFBF00F5C3EB /* icon-small@2x.png in Resources */,
+				7E6EF1CB1346B1260010D8D5 /* TransitionProducts.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1022,6 +1088,15 @@
 				7E15E81212DBFE690047C328 /* SingleLabelTextFieldViewController.m in Sources */,
 				7E15E82412DBFECB0047C328 /* CaptionLabelCell.m in Sources */,
 				7E15E8A912DC091B0047C328 /* SiteListViewController_Pad.m in Sources */,
+				7E6EF1A41346ADA20010D8D5 /* IKApiClient.m in Sources */,
+				7E6EF1A51346ADA20010D8D5 /* IKCustomer.m in Sources */,
+				7E6EF1A61346ADA20010D8D5 /* IKPaymentTransactionObserver.m in Sources */,
+				7E6EF1A71346ADA20010D8D5 /* IKProduct.m in Sources */,
+				7E6EF1A81346ADA20010D8D5 /* IKProductObserver.m in Sources */,
+				7E6EF1A91346ADA20010D8D5 /* IKSubscription.m in Sources */,
+				7E6EF1AA1346ADA20010D8D5 /* InventoryKit.m in Sources */,
+				7E6EF1AB1346ADA20010D8D5 /* NSString+SHA1.m in Sources */,
+				7E6EF1AC1346ADA20010D8D5 /* ProductRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
