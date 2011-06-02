@@ -7,25 +7,37 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <iAd/iAd.h>
 #import "SiteRequest.h"
 #import "MBProgressHUD.h"
 #import "DoubleLabelTextFieldViewController.h"
+#import "InventoryKit.h"
 
 
-@interface SiteListViewController : UITableViewController <SiteRequestDelegate,DoubleLabelTextFieldDelegate> {
+@interface SiteListViewController : UIViewController <SiteRequestDelegate,DoubleLabelTextFieldDelegate,ADBannerViewDelegate,MBProgressHUDDelegate,IKPurchaseDelegate> {
 
 	NSArray* sites;
+	IBOutlet UITableView* tableView;
+	IBOutlet UIView* slidingView;
+	IBOutlet ADBannerView* banner;
 	UISegmentedControl* control;
 	MBProgressHUD* hud;
 
 	Site* editingSite;
-	
+	CGRect visibleSlidingFramePortrait, hiddenSlidingFramePortrait;
+	CGRect visibleTableFramePortrait, hiddenTableFramePortrait;
+	CGRect visibleSlidingFrameLandscape, hiddenSlidingFrameLandscape;
+	CGRect visibleTableFrameLandscape, hiddenTableFrameLandscape;
+	BOOL bannerVisible;
 }
 
 @property (retain) NSArray* sites;
+@property (retain) UITableView* tableView;
+@property (retain) UIView* slidingView;
 @property (retain) MBProgressHUD* hud;
 @property (retain) UISegmentedControl* control;
 
 -(void)showWhatsNext;
+-(IBAction)showUpgrade;
 
 @end

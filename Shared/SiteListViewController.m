@@ -21,11 +21,16 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 @implementation SiteListViewController
 
-@synthesize sites, hud, control;
+@synthesize sites, tableView, slidingView, hud, control;
 
 - (void)showWhatsNext
 {
 	Alert(@"What's Next?",@"That's it. You're done. We will notify you by email if your site becomes unavailable.");
+}
+
+- (IBAction)showUpgrade
+{
+	[InventoryKit purchaseProduct:@"com.uptimetry.ad" delegate:self];
 }
 
 #pragma mark -
@@ -61,6 +66,12 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 	control.momentary = YES;
 	[control addTarget:self action:@selector(controlSelected:) forControlEvents:UIControlEventAllEvents];
 	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:control] autorelease];
+	
+	// disable ad if user has paid
+	if( [InventoryKit productActivated:@"com.uptimetry.ad"] ) {
+		DDLogVerbose(@"Disabling ad");
+		banner.delegate = nil;
+	}
 }
 
 - (void)viewWillAppear:(BOOL)animated 
@@ -90,6 +101,15 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Override to allow orientations other than the default portrait orientation.
     return YES;
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+	if( UIInterfaceOrientationIsPortrait(toInterfaceOrientation) ) {
+		banner.currentContentSizeIdentifier = ADBannerContentSizeIdentifierPortrait;
+	}else{
+		banner.currentContentSizeIdentifier = ADBannerContentSizeIdentifierLandscape;
+	}
 }
 
 #pragma mark -
@@ -130,6 +150,7 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 - (void)showHud
 {
 	self.hud = [[[MBProgressHUD alloc] initWithView:self.view] autorelease];
+	hud.delegate = self;
 	hud.labelText = @"Loading";
 	[self.view addSubview:hud];
 	[hud show:YES];
@@ -138,7 +159,11 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 - (void)hideHud
 {
 	[hud hide:YES];
-	[hud removeFromSuperview];
+}
+
+- (void)hudWasHidden:(MBProgressHUD*)aHud
+{
+	[aHud removeFromSuperview];
 	self.hud = nil;
 }
 
@@ -229,6 +254,7 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (void)siteUnauthorized
 {
+	[self hideHud];
 	AppDelegate_Shared* tAppDelegate = (AppDelegate_Shared*)[[UIApplication sharedApplication] delegate];
 	[tAppDelegate didSignOut];
 }
@@ -311,6 +337,55 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 	[self.navigationController pushViewController:tSiteEdit animated:YES];
 }
 
+#pragma mark -
+#pragma mark ADBannerViewDelegate
+
+- (void)bannerViewDidLoadAd:(ADBannerView *)aBanner
+{
+	if( !bannerVisible ) {
+		DDLogVerbose(@"ShowBanner");
+		BOOL tOrientationPortrait = self.view.frame.size.height > self.view.frame.size.width;
+		// animate sliding view to show banner
+		CGRect tSlidingViewFrame = tOrientationPortrait ? visibleSlidingFramePortrait : visibleSlidingFrameLandscape;
+		CGRect tTableViewFrame = tOrientationPortrait ? visibleTableFramePortrait : visibleTableFrameLandscape;
+		DDLogVerbose(@"slidingView -> (%d,%d,%d,%d)",(int)tSlidingViewFrame.origin.x,(int)tSlidingViewFrame.origin.y,(int)tSlidingViewFrame.size.width,(int)tSlidingViewFrame.size.height);
+		DDLogVerbose(@"tableView -> (%d,%d,%d,%d)",(int)tTableViewFrame.origin.x,(int)tTableViewFrame.origin.y,(int)tTableViewFrame.size.width,(int)tTableViewFrame.size.height);
+		[UIView beginAnimations:@"ShowBanner" context:nil];
+		slidingView.frame = tSlidingViewFrame;
+		tableView.frame = tTableViewFrame;
+		[UIView commitAnimations];
+		
+		bannerVisible = YES;
+	}
+}
+
+- (void)bannerView:(ADBannerView *)aBanner didFailToReceiveAdWithError:(NSError *)error
+{
+	if( bannerVisible ) {
+		DDLogVerbose(@"HideBanner");
+		BOOL tOrientationPortrait = self.view.frame.size.height > self.view.frame.size.width;
+		// animate sliding view to hide banner
+		CGRect tSlidingViewFrame = tOrientationPortrait ? hiddenSlidingFramePortrait : hiddenSlidingFrameLandscape;
+		CGRect tTableViewFrame = tOrientationPortrait ? hiddenTableFramePortrait : hiddenTableFrameLandscape;
+		DDLogVerbose(@"slidingView -> (%d,%d,%d,%d)",(int)tSlidingViewFrame.origin.x,(int)tSlidingViewFrame.origin.y,(int)tSlidingViewFrame.size.width,(int)tSlidingViewFrame.size.height);
+		DDLogVerbose(@"tableView -> (%d,%d,%d,%d)",(int)tTableViewFrame.origin.x,(int)tTableViewFrame.origin.y,(int)tTableViewFrame.size.width,(int)tTableViewFrame.size.height);
+		[UIView beginAnimations:@"HideBanner" context:nil];
+		slidingView.frame = tSlidingViewFrame;
+		tableView.frame = tTableViewFrame;
+		[UIView commitAnimations];
+		
+		bannerVisible = NO;
+	}
+}
+
+#pragma mark -
+#pragma mark IKPurchaseDelegate
+
+- (void)purchaseDidCompleteForProductWithKey:(NSString*)productKey
+{
+	[self bannerView:banner didFailToReceiveAdWithError:nil];
+	banner.delegate = nil;
+}
 
 #pragma mark -
 #pragma mark Memory management
@@ -330,6 +405,10 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (void)dealloc {
 	[sites release];
+	banner.delegate = nil;
+	[banner release];
+	[tableView release];
+	[slidingView release];
     [super dealloc];
 }
 
