@@ -9,9 +9,10 @@
 #import "AppDelegate_Shared.h"
 #import "FlurryAPI.h"
 #import "DDTTYLogger.h"
+#import "InventoryKit.h"
 
 
-static int ddLogLevel = LOG_LEVEL_VERBOSE;
+static int ddLogLevel = LOG_LEVEL_ERROR;
 
 @interface AppDelegate_Shared (private)
 -(void)wakeUp;
@@ -27,6 +28,9 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions 
 {
+	// prepare transition with 0.3; remove this for 0.4
+	[InventoryKit prepareTransitionProducts];
+	
 	// start flurry session
 	[FlurryAPI startSession:@"5JTUR7IT3A12S4XS1EIE"];
 
@@ -93,6 +97,13 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 	[navigationController popToRootViewControllerAnimated:NO];
 	[publicViewController.view removeFromSuperview];
 	[window addSubview:navigationController.view];
+
+	float tAlertVersion = [[NSUserDefaults standardUserDefaults] floatForKey:@"AlertVersion"];
+	if( tAlertVersion<0.3 ) {
+		Alert(@"Welcome!",@"Thanks for using Uptimetry™. Find us on Twitter (@uptimetry) if you have questions or problems.");
+		[[NSUserDefaults standardUserDefaults] setFloat:0.3 forKey:@"AlertVersion"];
+		[[NSUserDefaults standardUserDefaults] synchronize];
+	}
 }
 
 - (void)didSignOut

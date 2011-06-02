@@ -11,7 +11,7 @@
 #import "AccountViewController.h"
 
 
-static int ddLogLevel = LOG_LEVEL_VERBOSE;
+static int ddLogLevel = LOG_LEVEL_ERROR;
 
 @interface SiteListViewController (private)
 -(void)refreshSites;

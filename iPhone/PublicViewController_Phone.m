@@ -13,7 +13,7 @@
 #import "SignUpViewController_Phone.h"
 
 
-static int ddLogLevel = LOG_LEVEL_VERBOSE;
+static int ddLogLevel = LOG_LEVEL_ERROR;
 
 @implementation PublicViewController_Phone
 
