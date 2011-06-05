@@ -16,6 +16,9 @@
 	NSNumber* userId;
 	NSString* url;
 	NSString* email;
+	NSString* cssSelector;
+	NSString* xpath;
+	NSNumber* downCount;
 	NSDate* lastSuccessfulAttempt;
 	
 }
@@ -24,6 +27,9 @@
 @property (retain) NSNumber* userId;
 @property (retain) NSString* url;
 @property (retain) NSString* email;
+@property (retain) NSString* cssSelector;
+@property (retain) NSString* xpath;
+@property (retain) NSNumber* downCount;
 @property (retain) NSDate* lastSuccessfulAttempt;
 
 +(Site*)siteWithDictionary:(NSDictionary*)dictionary;

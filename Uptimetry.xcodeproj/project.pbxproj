@@ -125,6 +125,8 @@
 		7E8BAB1212DB9792008BA955 /* public-bg12~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E8BAB1012DB9792008BA955 /* public-bg12~iphone.png */; };
 		7ECD565F1381AB3200D8FF66 /* SiteListView_Phone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7ECD565E1381AB3200D8FF66 /* SiteListView_Phone.xib */; };
 		7ECD56711381AC9000D8FF66 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ECD56701381AC9000D8FF66 /* iAd.framework */; };
+		7EEA3CAA13983B9500C17989 /* SiteEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EEA3CA913983B9500C17989 /* SiteEditViewController.m */; };
+		7EEA3CC013983EF200C17989 /* SiteEditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7EEA3CBF13983EF200C17989 /* SiteEditView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -402,6 +404,9 @@
 		7E8BAB1012DB9792008BA955 /* public-bg12~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "public-bg12~iphone.png"; sourceTree = "<group>"; };
 		7ECD565E1381AB3200D8FF66 /* SiteListView_Phone.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SiteListView_Phone.xib; sourceTree = "<group>"; };
 		7ECD56701381AC9000D8FF66 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
+		7EEA3CA813983B9500C17989 /* SiteEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SiteEditViewController.h; path = Shared/SiteEditViewController.h; sourceTree = "<group>"; };
+		7EEA3CA913983B9500C17989 /* SiteEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SiteEditViewController.m; path = Shared/SiteEditViewController.m; sourceTree = "<group>"; };
+		7EEA3CBF13983EF200C17989 /* SiteEditView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = SiteEditView.xib; path = Shared/SiteEditView.xib; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Uptimetry-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Uptimetry-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -515,6 +520,9 @@
 				7E8BA6C012DA40B0008BA955 /* PublicViewController.h */,
 				7E8BA6C112DA40B0008BA955 /* PublicViewController.m */,
 				7E15EA2612DC36CC0047C328 /* AccountView.xib */,
+				7EEA3CA813983B9500C17989 /* SiteEditViewController.h */,
+				7EEA3CA913983B9500C17989 /* SiteEditViewController.m */,
+				7EEA3CBF13983EF200C17989 /* SiteEditView.xib */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -541,8 +549,6 @@
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				7E8BA8C412DA84C5008BA955 /* Settings.bundle */,
-				7E6EF1B41346AF290010D8D5 /* StoreKit.framework */,
-				7E6EF1CA1346B1260010D8D5 /* TransitionProducts.plist */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -1023,6 +1029,7 @@
 				7E00C26812DCBFBF00F5C3EB /* icon-small@2x.png in Resources */,
 				7ECD565F1381AB3200D8FF66 /* SiteListView_Phone.xib in Resources */,
 				7E557AB2139590AC002F8821 /* SiteListView_Pad.xib in Resources */,
+				7EEA3CC013983EF200C17989 /* SiteEditView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1113,6 +1120,7 @@
 				7E557B211397D3D5002F8821 /* InventoryKit.m in Sources */,
 				7E557B221397D3D5002F8821 /* NSString+SHA1.m in Sources */,
 				7E557B3A1397D4E7002F8821 /* ProductRequest.m in Sources */,
+				7EEA3CAA13983B9500C17989 /* SiteEditViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1123,7 +1131,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Aubrey Goodman (W6YQG4U9LB)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1137,7 +1145,7 @@
 					"\"$(SRCROOT)/objectiveresource/google_toolbox/TigerGcov\"",
 				);
 				PRODUCT_NAME = Uptimetry;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5C41FD52-EF91-43EC-B57D-37FE372A5D3C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 			};
 			name = Debug;
 		};
@@ -1208,6 +1216,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

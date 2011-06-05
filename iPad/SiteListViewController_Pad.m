@@ -7,6 +7,8 @@
 //
 
 #import "SiteListViewController_Pad.h"
+#import "MobileNavigationController.h"
+#import "SiteEditViewController.h"
 
 
 @implementation SiteListViewController_Pad
@@ -27,9 +29,21 @@
 }
 
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+//- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+//{
+//	return YES;
+//}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath 
 {
-	return YES;
+	editingSite = [sites objectAtIndex:indexPath.row];
+	SiteEditViewController* tSiteEdit = [[[SiteEditViewController alloc] initWithNibName:@"SiteEditView" bundle:[NSBundle mainBundle]] autorelease];
+	tSiteEdit.site = editingSite;
+//	DoubleLabelTextFieldViewController* tSiteEdit = [[[DoubleLabelTextFieldViewController alloc] initWithTitle:@"Edit Site" label1:@"URL" label2:@"Email" caption1:@"(required)" caption2:@"(required)" text1:editingSite.url text2:editingSite.email] autorelease];
+//	tSiteEdit.delegate = self;
+	MobileNavigationController* tWrapper = [[[MobileNavigationController alloc] initWithRootViewController:tSiteEdit] autorelease];
+	[self.navigationController presentModalViewController:tWrapper animated:YES];
 }
+
 
 @end

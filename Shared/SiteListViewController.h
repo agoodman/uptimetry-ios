@@ -12,9 +12,10 @@
 #import "MBProgressHUD.h"
 #import "DoubleLabelTextFieldViewController.h"
 #import "InventoryKit.h"
+#import <StoreKit/StoreKit.h>
 
 
-@interface SiteListViewController : UIViewController <SiteRequestDelegate,DoubleLabelTextFieldDelegate,ADBannerViewDelegate,MBProgressHUDDelegate,IKPurchaseDelegate> {
+@interface SiteListViewController : UIViewController <SiteRequestDelegate,DoubleLabelTextFieldDelegate,ADBannerViewDelegate,MBProgressHUDDelegate,IKPurchaseDelegate,SKProductsRequestDelegate> {
 
 	NSArray* sites;
 	IBOutlet UITableView* tableView;

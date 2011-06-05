@@ -13,7 +13,7 @@ static int ddLogLevel = LOG_LEVEL_ERROR;
 
 @implementation Site
 
-@synthesize siteId, userId, url, email, lastSuccessfulAttempt;
+@synthesize siteId, userId, url, email, cssSelector, xpath, downCount, lastSuccessfulAttempt;
 
 +(Site*)siteWithDictionary:(NSDictionary*)dictionary
 {
@@ -27,6 +27,9 @@ static int ddLogLevel = LOG_LEVEL_ERROR;
 	tSite.userId = [NSNumber numberWithInt:tUserId];
 	tSite.url = [dictionary objectForKey:@"url"];
 	tSite.email = [dictionary objectForKey:@"email"];
+	tSite.cssSelector = [dictionary objectForKey:@"css_selector"];
+	tSite.xpath = [dictionary objectForKey:@"xpath"];
+	tSite.downCount = [dictionary objectForKey:@"down_count"];
 	NSString* tLastAttempt = [dictionary objectForKey:@"last_successful_attempt"];
 	if( tLastAttempt && ![tLastAttempt isEqual:[NSNull null]] ) {
 		tSite.lastSuccessfulAttempt = [tFormat dateFromString:tLastAttempt];
@@ -39,6 +42,9 @@ static int ddLogLevel = LOG_LEVEL_ERROR;
 	[userId release];
 	[url release];
 	[email release];
+	[cssSelector release];
+	[xpath release];
+	[downCount release];
 	[lastSuccessfulAttempt release];
 	[super dealloc];
 }

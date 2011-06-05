@@ -9,9 +9,10 @@
 #import "SiteListViewController.h"
 #import "AppDelegate_Shared.h"
 #import "AccountViewController.h"
+#import "SiteEditViewController.h"
 
 
-static int ddLogLevel = LOG_LEVEL_ERROR;
+static int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 @interface SiteListViewController (private)
 -(void)refreshSites;
@@ -30,7 +31,14 @@ static int ddLogLevel = LOG_LEVEL_ERROR;
 
 - (IBAction)showUpgrade
 {
-	[InventoryKit purchaseProduct:@"com.uptimetry.ad" delegate:self];
+	if( [SKPaymentQueue canMakePayments] ) {
+		SKProductsRequest* tRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:[NSSet setWithObject:@"com.uptimetry.ad"]];
+		tRequest.delegate = self;
+		[self showHud];
+		[tRequest start];
+	}else{
+		Alert(@"Service Unavailable",@"Please try again later");
+	}
 }
 
 #pragma mark -
@@ -332,8 +340,10 @@ static int ddLogLevel = LOG_LEVEL_ERROR;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath 
 {
 	editingSite = [sites objectAtIndex:indexPath.row];
-	DoubleLabelTextFieldViewController* tSiteEdit = [[[DoubleLabelTextFieldViewController alloc] initWithTitle:@"Edit Site" label1:@"URL" label2:@"Email" caption1:@"(required)" caption2:@"(required)" text1:editingSite.url text2:editingSite.email] autorelease];
-	tSiteEdit.delegate = self;
+	SiteEditViewController* tSiteEdit = [[[SiteEditViewController alloc] initWithNibName:@"SiteEditView" bundle:[NSBundle mainBundle]] autorelease];
+	tSiteEdit.site = editingSite;
+//	DoubleLabelTextFieldViewController* tSiteEdit = [[[DoubleLabelTextFieldViewController alloc] initWithTitle:@"Edit Site" label1:@"URL" label2:@"Email" caption1:@"(required)" caption2:@"(required)" text1:editingSite.url text2:editingSite.email] autorelease];
+//	tSiteEdit.delegate = self;
 	[self.navigationController pushViewController:tSiteEdit animated:YES];
 }
 
@@ -381,10 +391,37 @@ static int ddLogLevel = LOG_LEVEL_ERROR;
 #pragma mark -
 #pragma mark IKPurchaseDelegate
 
+- (void)purchaseDidStartForProductWithKey:(NSString *)productKey
+{
+	DDLogVerbose(@"purchase did start for product: %@",productKey);
+}
+
 - (void)purchaseDidCompleteForProductWithKey:(NSString*)productKey
 {
-	[self bannerView:banner didFailToReceiveAdWithError:nil];
-	banner.delegate = nil;
+	DDLogVerbose(@"purchase did complete for product: %@",productKey);
+//	[self bannerView:banner didFailToReceiveAdWithError:nil];
+//	banner.delegate = nil;
+}
+
+- (void)purchaseDidFailForProductWithKey:(NSString *)productKey
+{
+	Alert(@"TODO",@"handle failed purchase: disable ad");
+	DDLogVerbose(@"purchase did fail for product: %@",productKey);
+}
+
+#pragma mark -
+#pragma mark SKProductRequestDelegate
+
+- (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response
+{
+	DDLogVerbose(@"product response received: %@",[response description]);
+	if( [response.products containsObject:@"com.uptimetry.ad"] ) {
+		[InventoryKit purchaseProduct:@"com.uptimetry.ad" delegate:self];
+	}else if( [response.invalidProductIdentifiers containsObject:@"com.uptimetry.ad"] ) {
+		Alert(@"Product Unavailable",@"Please try again later.");
+	}
+	[request autorelease];
+	[self hideHud];
 }
 
 #pragma mark -

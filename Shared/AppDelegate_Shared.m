@@ -28,8 +28,8 @@ static int ddLogLevel = LOG_LEVEL_ERROR;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions 
 {
-	// prepare transition with 0.3; remove this for 0.4
-	[InventoryKit prepareTransitionProducts];
+	// configure IK to listen for payment transactions
+	[InventoryKit registerWithPaymentQueue];
 	
 	// start flurry session
 	[FlurryAPI startSession:@"5JTUR7IT3A12S4XS1EIE"];
