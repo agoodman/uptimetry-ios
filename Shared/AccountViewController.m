@@ -9,6 +9,7 @@
 #import "AccountViewController.h"
 #import "CaptionLabelCell.h"
 #import "AppDelegate_Shared.h"
+#import "SingleLabelTextFieldViewController.h"
 
 
 @interface AccountViewController (private)
@@ -190,7 +191,16 @@
 		if( indexPath.row==0 ) {
 			SingleLabelTextFieldViewController* tName = [[[SingleLabelTextFieldViewController alloc] initWithTitle:@"Edit Name" label:@"Name" caption:nil text:[NSString stringWithFormat:@"%@ %@",user.firstName,user.lastName]] autorelease];
 			editingField = @"name";
-			tName.delegate = self;
+			tName.cancelBlock = ^{
+				[self.navigationController popViewControllerAnimated:YES];
+			};
+			tName.doneBlock = ^(NSString* aString){
+				NSArray* tNames = [aString componentsSeparatedByString:@" "];
+				user.firstName = [tNames objectAtIndex:0];
+				user.lastName = [tNames objectAtIndex:1];
+				[UserRequest requestUpdateUser:user delegate:self];
+				[self.navigationController popViewControllerAnimated:YES];
+			};
 			[self.navigationController pushViewController:tName animated:YES];											 
 		}else if( indexPath.row==1 ) {
 			[[[[UIAlertView alloc] initWithTitle:@"TODO" message:@"edit address" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK",nil] autorelease] show];
@@ -201,7 +211,14 @@
 		if( indexPath.row==0 ) {
 			SingleLabelTextFieldViewController* tEmail = [[[SingleLabelTextFieldViewController alloc] initWithTitle:@"Edit Email" label:@"Email" caption:nil text:user.email] autorelease];
 			editingField = @"email";
-			tEmail.delegate = self;
+			tEmail.cancelBlock = ^{
+				[self.navigationController popViewControllerAnimated:YES];
+			};
+			tEmail.doneBlock = ^(NSString* aString){
+				user.email = aString;
+				[UserRequest requestUpdateUser:user delegate:self];
+				[self.navigationController popViewControllerAnimated:YES];
+			};
 			[self.navigationController pushViewController:tEmail animated:YES];											 
 		}else if( indexPath.row==1 ) {
 			[[[[UIAlertView alloc] initWithTitle:@"TODO" message:@"reset password" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK",nil] autorelease] show];
@@ -270,28 +287,6 @@
     return YES;
 }
 */
-
-#pragma mark -
-#pragma mark SingleLabelTextFieldDelegate
-
-- (void)singleLabelTextFieldDidCancel:(SingleLabelTextFieldViewController *)controller
-{
-	[self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)singleLabelTextField:(SingleLabelTextFieldViewController*)controller didCompleteWithText:(NSString*)text
-{
-	if( [editingField isEqualToString:@"name"] ) {
-		NSArray* tNames = [text componentsSeparatedByString:@" "];
-		user.firstName = [tNames objectAtIndex:0];
-		user.lastName = [tNames objectAtIndex:1];
-		[UserRequest requestUpdateUser:user delegate:self];
-	}else if( [editingField isEqualToString:@"email"] ) {
-		user.email = text;
-		[UserRequest requestUpdateUser:user delegate:self];
-	}
-	[self.navigationController popViewControllerAnimated:YES];
-}
 
 #pragma mark -
 #pragma mark UIAlertViewDelegate

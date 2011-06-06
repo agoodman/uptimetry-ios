@@ -7,13 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SingleLabelTextFieldViewController.h"
 #import "User.h"
 #import "SessionRequest.h"
 #import "UserRequest.h"
 
 
-@interface AccountViewController : UITableViewController <UIAlertViewDelegate, SingleLabelTextFieldDelegate, SessionRequestDelegate, UserRequestDelegate> {
+@interface AccountViewController : UITableViewController <UIAlertViewDelegate, SessionRequestDelegate, UserRequestDelegate> {
 
 	UIAlertView* signOutConfirm;
 	User* user;

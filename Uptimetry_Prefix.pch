@@ -11,3 +11,5 @@
 
 #define Alert(aTitle,aMessage) [[[[UIAlertView alloc] initWithTitle:aTitle message:aMessage delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK",nil] autorelease] show]
 #define NetworkAlert Alert(@"Network error",@"Please check your network connection.")
+
+#define kProductDisableAd @"com.uptimetry.ad"

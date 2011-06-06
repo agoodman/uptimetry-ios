@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 
 
-@protocol SingleLabelTextFieldDelegate;
-
+typedef void(^SingleLabelTextFieldCancelBlock)(void);
+typedef void(^SingleLabelTextFieldDoneBlock)(NSString*);
 
 @interface SingleLabelTextFieldViewController : UIViewController {
 
@@ -22,24 +22,18 @@
 	IBOutlet UILabel* caption;
 	IBOutlet UITextField* textField;
 	
-	id<SingleLabelTextFieldDelegate> delegate;
+	SingleLabelTextFieldCancelBlock cancelBlock;
+	SingleLabelTextFieldDoneBlock doneBlock;
 	
 }
 
 @property (retain) UILabel* label;
 @property (retain) UILabel* caption;
 @property (retain) UITextField* textField;
-@property (assign) id<SingleLabelTextFieldDelegate> delegate;
+@property (copy) SingleLabelTextFieldCancelBlock cancelBlock;
+@property (copy) SingleLabelTextFieldDoneBlock doneBlock;
 
 -(id)initWithTitle:(NSString*)aTitle label:(NSString*)aLabel caption:(NSString*)aCaption text:(NSString*)aText;
 
-
-@end
-
-
-@protocol SingleLabelTextFieldDelegate
-
--(void)singleLabelTextFieldDidCancel:(SingleLabelTextFieldViewController*)controller;
--(void)singleLabelTextField:(SingleLabelTextFieldViewController*)controller didCompleteWithText:(NSString*)text;
 
 @end

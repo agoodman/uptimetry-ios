@@ -7,22 +7,29 @@
 //
 
 #import "SiteEditViewController.h"
+#import "SingleLabelTextFieldViewController.h"
 
 
 @implementation SiteEditViewController
 
-@synthesize site;
+@synthesize site, cancelBlock, doneBlock;
 
 #pragma mark -
 
 - (void)cancelPressed
 {
-	[self.navigationController dismissModalViewControllerAnimated:YES];
+	cancelBlock();
 }
 
 - (void)donePressed
 {
-	Alert(@"TODO",@"save changes");
+	if( !site.url ) {
+		Alert(@"Required Field Missing",@"You must enter a URL");
+	}else if( !site.email ) {
+		Alert(@"Required Field Missing",@"You must enter an email");
+	}else{
+		doneBlock(site);
+	}
 }
 
 #pragma mark -
@@ -43,20 +50,31 @@
 #pragma mark -
 #pragma mark View lifecycle
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation 
+{
+	return YES;
+}
+
 - (void)viewDidLoad 
 {
     [super viewDidLoad];
 
-	self.navigationItem.title = @"Edit Site";
+	if( site.url && site.email ) {
+		self.navigationItem.title = @"Edit Site";
+	}else{
+		self.navigationItem.title = @"Create Site";
+	}
 	self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelPressed)] autorelease];
 	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(donePressed)] autorelease];
 }
 
-/*
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated 
+{
     [super viewWillAppear:animated];
+	
+	[self.tableView reloadData];
 }
-*/
+
 /*
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -107,7 +125,13 @@
 	}else if( section==1 ) {
 		return @"Email";
 	}else if( section==2 ) {
-		return @"Content Matcher";
+		if( site.cssSelector && ![site.cssSelector isEqual:[NSNull null]] ) {
+			return @"Content Matcher (CSS Selector)";
+		}else if( site.xpath && ![site.xpath isEqual:[NSNull null]] ) {
+			return @"Content Matcher (XPath)";
+		}else{
+			return @"Content Matcher";
+		}
 	}
 	return nil;
 }
@@ -123,13 +147,21 @@
     }
     
     if( indexPath.section==0 ) {
-		cell.textLabel.text = site.url;
+		if( site.url ) {
+			cell.textLabel.text = site.url;
+		}else{
+			cell.textLabel.text = @"Enter a URL";
+		}
 	}else if( indexPath.section==1 ) {
-		cell.textLabel.text = site.email;
+		if( site.email ) {
+			cell.textLabel.text = site.email;
+		}else{
+			cell.textLabel.text = @"Enter an email";
+		}
 	}else if( indexPath.section==2 ) {
-		if( site.cssSelector ) {
+		if( site.cssSelector && ![site.cssSelector isEqual:[NSNull null]] ) {
 			cell.textLabel.text = site.cssSelector;
-		}else if( site.xpath ) {
+		}else if( site.xpath && ![site.xpath isEqual:[NSNull null]] ) {
 			cell.textLabel.text = site.xpath;
 		}else{
 			cell.textLabel.text = @"Add Content Matcher";
@@ -185,9 +217,86 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath 
 {
-	Alert(@"TODO",@"edit field");
+	if( indexPath.section==0 ) {
+		SingleLabelTextFieldViewController* tUrl = [[[SingleLabelTextFieldViewController alloc] initWithTitle:@"Edit URL" label:@"URL" caption:@"required" text:site.url] autorelease];
+		tUrl.cancelBlock = ^{
+			[self.navigationController popViewControllerAnimated:YES];
+		};
+		tUrl.doneBlock = ^(NSString* aString){
+			site.url = aString;
+			[self.navigationController popViewControllerAnimated:YES];
+		};
+		[self.navigationController pushViewController:tUrl animated:YES];
+	}else if( indexPath.section==1 ) {
+		SingleLabelTextFieldViewController* tEmail = [[[SingleLabelTextFieldViewController alloc] initWithTitle:@"Edit Email" label:@"Email" caption:@"required" text:site.email] autorelease];
+		tEmail.cancelBlock = ^{
+			[self.navigationController popViewControllerAnimated:YES];
+		};
+		tEmail.doneBlock = ^(NSString* aString){
+			site.email = aString;
+			[self.navigationController popViewControllerAnimated:YES];
+		};
+		[self.navigationController pushViewController:tEmail animated:YES];
+		
+	}else if( indexPath.section==2 ) {
+		if( site.cssSelector && ![site.cssSelector isEqual:[NSNull null]] ) {
+			SingleLabelTextFieldViewController* tCss = [[[SingleLabelTextFieldViewController alloc] initWithTitle:@"Edit CSS Selector" label:@"CSS Selector" caption:@"optional" text:site.cssSelector] autorelease];
+			tCss.cancelBlock = ^{
+				[self.navigationController popViewControllerAnimated:YES];
+			};
+			tCss.doneBlock = ^(NSString* aString){
+				site.cssSelector = aString;
+				[self.navigationController popViewControllerAnimated:YES];
+			};
+			[self.navigationController pushViewController:tCss animated:YES];
+		}else if( site.xpath && ![site.xpath isEqual:[NSNull null]] ) {
+			SingleLabelTextFieldViewController* tXpath = [[[SingleLabelTextFieldViewController alloc] initWithTitle:@"Edit XPath" label:@"XPath" caption:@"optional" text:site.xpath] autorelease];
+			tXpath.cancelBlock = ^{
+				[self.navigationController popViewControllerAnimated:YES];
+			};
+			tXpath.doneBlock = ^(NSString* aString){
+				site.xpath = aString;
+				[self.navigationController popViewControllerAnimated:YES];
+			};
+			[self.navigationController pushViewController:tXpath animated:YES];
+		}else{
+			UIActionSheet* tAction = [[[UIActionSheet alloc] initWithTitle:@"Select a type" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"CSS Selector",@"XPath",nil] autorelease];
+			[tAction showInView:self.view];
+		}
+	}
 }
 
+#pragma mark -
+#pragma mark UIActionSheetDelegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+	if( buttonIndex==0 ) {
+		SingleLabelTextFieldViewController* tCss = [[[SingleLabelTextFieldViewController alloc] initWithTitle:@"Edit CSS Selector" label:@"CSS Selector" caption:@"optional" text:site.cssSelector] autorelease];
+		tCss.cancelBlock = ^{
+			[self.navigationController popViewControllerAnimated:YES];
+		};
+		tCss.doneBlock = ^(NSString* aString){
+			site.cssSelector = aString;
+			[self.navigationController popViewControllerAnimated:YES];
+		};
+		[self.navigationController pushViewController:tCss animated:YES];
+		
+	}else if( buttonIndex==1 ) {
+		SingleLabelTextFieldViewController* tXpath = [[[SingleLabelTextFieldViewController alloc] initWithTitle:@"Edit XPath" label:@"XPath" caption:@"optional" text:site.xpath] autorelease];
+		tXpath.cancelBlock = ^{
+			[self.navigationController popViewControllerAnimated:YES];
+		};
+		tXpath.doneBlock = ^(NSString* aString){
+			site.xpath = aString;
+			[self.navigationController popViewControllerAnimated:YES];
+		};
+		[self.navigationController pushViewController:tXpath animated:YES];
+		
+	}else{
+		// do nothing
+	}
+}
 
 #pragma mark -
 #pragma mark Memory management

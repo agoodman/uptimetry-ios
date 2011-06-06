@@ -10,9 +10,11 @@
 #import "FlurryAPI.h"
 
 
+static int ddLogLevel = LOG_LEVEL_VERBOSE;
+
 @implementation SingleLabelTextFieldViewController
 
-@synthesize label, caption, textField, delegate;
+@synthesize label, caption, textField, cancelBlock, doneBlock;
 
 -(id)initWithTitle:(NSString*)aTitle label:(NSString*)aLabel caption:(NSString*)aCaption text:(NSString*)aText
 {
@@ -23,6 +25,11 @@
 	}
 	self.title = aTitle;
 	return self;
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation 
+{
+	return YES;
 }
 
 - (void)viewDidLoad
@@ -42,11 +49,20 @@
 	[_textField release];
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
-	[super viewDidAppear:animated];
+	[super viewWillAppear:animated];
 	
+	DDLogVerbose(@"SingleLabelTextField.viewWillAppear");
 	[textField becomeFirstResponder];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+	[super viewWillDisappear:animated];
+	
+	DDLogVerbose(@"SingleLabelTextField.viewWillDisappear");
+	[textField resignFirstResponder];
 }
 
 - (void)viewDidUnload {
@@ -57,15 +73,13 @@
 - (void)cancelPressed
 {
 	[FlurryAPI logEvent:@"SingleLabelTextCancel"];
-	[textField resignFirstResponder];
-	[delegate singleLabelTextFieldDidCancel:self];
+	cancelBlock();
 }
 
 - (void)donePressed
 {
 	[FlurryAPI logEvent:@"SingleLabelTextDone"];
-	[textField resignFirstResponder];
-	[delegate singleLabelTextField:self didCompleteWithText:textField.text];
+	doneBlock(textField.text);
 }
 
 #pragma mark -

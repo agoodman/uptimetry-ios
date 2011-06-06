@@ -32,7 +32,7 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 - (IBAction)showUpgrade
 {
 	if( [SKPaymentQueue canMakePayments] ) {
-		SKProductsRequest* tRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:[NSSet setWithObject:@"com.uptimetry.ad"]];
+		SKProductsRequest* tRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:[NSSet setWithObject:kProductDisableAd]];
 		tRequest.delegate = self;
 		[self showHud];
 		[tRequest start];
@@ -76,9 +76,10 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:control] autorelease];
 	
 	// disable ad if user has paid
-	if( [InventoryKit productActivated:@"com.uptimetry.ad"] ) {
+	if( [InventoryKit productActivated:kProductDisableAd] ) {
 		DDLogVerbose(@"Disabling ad");
 		banner.delegate = nil;
+		[banner cancelBannerViewAction];
 	}
 }
 
@@ -86,6 +87,7 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 {
     [super viewWillAppear:animated];
 
+	DDLogVerbose(@"SiteList.viewWillAppear");
 	[self refreshSites];
 }
 
@@ -141,10 +143,20 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (void)addSite
 {
-	DoubleLabelTextFieldViewController* tNewSite = [[[DoubleLabelTextFieldViewController alloc] initWithTitle:@"New Site" label1:@"URL" label2:@"Email" caption1:@"(required)" caption2:@"(required)" text1:nil text2:nil] autorelease];
-	tNewSite.delegate = self;
-	
-	[self.navigationController pushViewController:tNewSite animated:YES];
+//	DoubleLabelTextFieldViewController* tNewSite = [[[DoubleLabelTextFieldViewController alloc] initWithTitle:@"New Site" label1:@"URL" label2:@"Email" caption1:@"(required)" caption2:@"(required)" text1:nil text2:nil] autorelease];
+//	tNewSite.delegate = self;
+//	[self.navigationController pushViewController:tNewSite animated:YES];
+	SiteEditViewController* tCreate = [[[SiteEditViewController alloc] initWithNibName:@"SiteEditView" bundle:[NSBundle mainBundle]] autorelease];
+	tCreate.site = [[[Site alloc] init] autorelease];
+	tCreate.cancelBlock = ^{
+		[self.navigationController dismissModalViewControllerAnimated:YES];
+	};
+	tCreate.doneBlock = ^(Site* aSite){
+		[SiteRequest requestCreateSite:aSite delegate:self];
+		[self.navigationController dismissModalViewControllerAnimated:YES];
+	};
+	MobileNavigationController* tWrapper = [[[MobileNavigationController alloc] initWithRootViewController:tCreate] autorelease];
+	[self.navigationController presentModalViewController:tWrapper animated:YES];
 }
 
 - (IBAction)showAccount
@@ -234,13 +246,14 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (void)siteCreated:(Site*)site
 {
+	[self refreshSites];
 	// do nothing;
 }
 
 - (void)siteUpdated
 {
 	[self hideHud];
-	[self.navigationController popViewControllerAnimated:YES];
+//	[self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)siteDeleted
@@ -342,9 +355,21 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 	editingSite = [sites objectAtIndex:indexPath.row];
 	SiteEditViewController* tSiteEdit = [[[SiteEditViewController alloc] initWithNibName:@"SiteEditView" bundle:[NSBundle mainBundle]] autorelease];
 	tSiteEdit.site = editingSite;
-//	DoubleLabelTextFieldViewController* tSiteEdit = [[[DoubleLabelTextFieldViewController alloc] initWithTitle:@"Edit Site" label1:@"URL" label2:@"Email" caption1:@"(required)" caption2:@"(required)" text1:editingSite.url text2:editingSite.email] autorelease];
-//	tSiteEdit.delegate = self;
-	[self.navigationController pushViewController:tSiteEdit animated:YES];
+	tSiteEdit.cancelBlock = ^{
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[self.navigationController dismissModalViewControllerAnimated:YES];
+		});
+	};
+	tSiteEdit.doneBlock = ^(Site* aSite){
+		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+			[SiteRequest requestUpdateSite:aSite delegate:self];
+		});
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[self.navigationController dismissModalViewControllerAnimated:YES];
+		});
+	};
+	MobileNavigationController* tWrapper = [[[MobileNavigationController alloc] initWithRootViewController:tSiteEdit] autorelease];
+	[self.navigationController presentModalViewController:tWrapper animated:YES];
 }
 
 #pragma mark -
@@ -414,14 +439,35 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response
 {
-	DDLogVerbose(@"product response received: %@",[response description]);
-	if( [response.products containsObject:@"com.uptimetry.ad"] ) {
-		[InventoryKit purchaseProduct:@"com.uptimetry.ad" delegate:self];
-	}else if( [response.invalidProductIdentifiers containsObject:@"com.uptimetry.ad"] ) {
+	[self hideHud];
+	DDLogVerbose(@"product response received");
+	DDLogVerbose(@"\tinvalid product ids: %@",response.invalidProductIdentifiers);
+	DDLogVerbose(@"\tvalid products: %@",response.products);
+	if( [response.products containsObject:kProductDisableAd] ) {
+		SKProduct* tProduct = [response.products objectAtIndex:0];
+		UIActionSheet* tAction = [[[UIActionSheet alloc] initWithTitle:tProduct.localizedDescription delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:tProduct.localizedTitle,nil] autorelease];
+		[tAction showInView:self.view];
+	}else if( [response.invalidProductIdentifiers containsObject:kProductDisableAd] ) {
 		Alert(@"Product Unavailable",@"Please try again later.");
+	}else{
+		Alert(@"Oops!",@"The app encountered an unknown error.");
 	}
 	[request autorelease];
-	[self hideHud];
+}
+
+#pragma mark -
+#pragma mark UIActionSheetDelegate
+
+- (void)actionSheetCancel:(UIActionSheet *)actionSheet
+{
+	// do nothing
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+	if( buttonIndex>0 ) {
+		[InventoryKit purchaseProduct:kProductDisableAd delegate:self];
+	}
 }
 
 #pragma mark -

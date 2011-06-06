@@ -15,7 +15,7 @@
 #import <StoreKit/StoreKit.h>
 
 
-@interface SiteListViewController : UIViewController <SiteRequestDelegate,DoubleLabelTextFieldDelegate,ADBannerViewDelegate,MBProgressHUDDelegate,IKPurchaseDelegate,SKProductsRequestDelegate> {
+@interface SiteListViewController : UIViewController <SiteRequestDelegate,DoubleLabelTextFieldDelegate,ADBannerViewDelegate,MBProgressHUDDelegate,IKPurchaseDelegate,SKProductsRequestDelegate,UIActionSheetDelegate> {
 
 	NSArray* sites;
 	IBOutlet UITableView* tableView;

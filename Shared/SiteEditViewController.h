@@ -9,13 +9,19 @@
 #import <UIKit/UIKit.h>
 #import "Site.h"
 
+typedef void(^CancelBlock)(void);
+typedef void(^DoneBlock)(Site*);
 
-@interface SiteEditViewController : UITableViewController {
+@interface SiteEditViewController : UITableViewController <UIActionSheetDelegate> {
 
 	Site* site;
+	CancelBlock cancelBlock;
+	DoneBlock doneBlock;
 	
 }
 
 @property (retain) Site* site;
+@property (copy) CancelBlock cancelBlock;
+@property (copy) DoneBlock doneBlock;
 
 @end
