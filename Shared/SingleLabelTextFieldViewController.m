@@ -54,6 +54,12 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 	[super viewWillAppear:animated];
 	
 	DDLogVerbose(@"SingleLabelTextField.viewWillAppear");
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+	[super viewDidAppear:animated];
+	
 	[textField becomeFirstResponder];
 }
 
