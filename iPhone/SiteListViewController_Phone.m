@@ -7,26 +7,30 @@
 //
 
 #import "SiteListViewController_Phone.h"
+#import "SiteEditViewController.h"
 
 
 @implementation SiteListViewController_Phone
 
-// The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
-/*
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization.
-    }
-    return self;
+- (void)addSite
+{
+	//	DoubleLabelTextFieldViewController* tNewSite = [[[DoubleLabelTextFieldViewController alloc] initWithTitle:@"New Site" label1:@"URL" label2:@"Email" caption1:@"(required)" caption2:@"(required)" text1:nil text2:nil] autorelease];
+	//	tNewSite.delegate = self;
+	//	[self.navigationController pushViewController:tNewSite animated:YES];
+	SiteEditViewController* tCreate = [[[SiteEditViewController alloc] initWithNibName:@"SiteEditView" bundle:[NSBundle mainBundle]] autorelease];
+	tCreate.site = [[[Site alloc] init] autorelease];
+	tCreate.cancelBlock = ^{
+		[self.navigationController popViewControllerAnimated:YES];
+	};
+	tCreate.doneBlock = ^(Site* aSite){
+		[SiteRequest requestCreateSite:aSite delegate:self];
+		[self.navigationController popViewControllerAnimated:YES];
+	};
+	[self.navigationController pushViewController:tCreate animated:YES];
 }
-*/
 
-/*
-// Implement loadView to create a view hierarchy programmatically, without using a nib.
-- (void)loadView {
-}
-*/
+#pragma mark -
+#pragma mark View lifecycle
 
 - (void)viewDidLoad 
 {
@@ -64,6 +68,30 @@
     // e.g. self.myOutlet = nil;
 }
 
+#pragma mark -
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath 
+{
+	editingSite = [sites objectAtIndex:indexPath.row];
+	SiteEditViewController* tSiteEdit = [[[SiteEditViewController alloc] initWithNibName:@"SiteEditView" bundle:[NSBundle mainBundle]] autorelease];
+	tSiteEdit.site = editingSite;
+	tSiteEdit.cancelBlock = ^{
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[self.navigationController popViewControllerAnimated:YES];
+		});
+	};
+	tSiteEdit.doneBlock = ^(Site* aSite){
+		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+			[SiteRequest requestUpdateSite:aSite delegate:self];
+		});
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[self.navigationController popViewControllerAnimated:YES];
+		});
+	};
+	[self.navigationController pushViewController:tSiteEdit animated:YES];
+}
+
+#pragma mark -
 
 - (void)dealloc {
     [super dealloc];
