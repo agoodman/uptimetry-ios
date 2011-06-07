@@ -17,7 +17,7 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 @interface SiteListViewController (private)
 -(void)refreshSites;
 -(void)addSite;
--(void)showHud;
+-(void)showHud:(NSString*)aLabel;
 @end
 
 @implementation SiteListViewController
@@ -34,7 +34,7 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 	if( [SKPaymentQueue canMakePayments] ) {
 		SKProductsRequest* tRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:[NSSet setWithObject:kProductDisableAd]];
 		tRequest.delegate = self;
-		[self showHud];
+		[self showHud:@"Connecting to iTunes"];
 		[tRequest start];
 	}else{
 		Alert(@"Service Unavailable",@"Please try again later");
@@ -91,11 +91,13 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 	[self refreshSites];
 }
 
-/*
-- (void)viewDidAppear:(BOOL)animated {
+- (void)viewDidAppear:(BOOL)animated
+{
     [super viewDidAppear:animated];
+	
+	[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
 }
-*/
+
 /*
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -137,7 +139,7 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (void)refreshSites
 {
-	[self showHud];
+	[self showHud:@"Loading"];
 	[SiteRequest requestSites:self];
 }
 
@@ -167,11 +169,11 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 //	[self.navigationController presentModalViewController:tWrapper animated:YES]; 
 }
 
-- (void)showHud
+- (void)showHud:(NSString*)aLabel
 {
 	self.hud = [[[MBProgressHUD alloc] initWithView:self.view] autorelease];
 	hud.delegate = self;
-	hud.labelText = @"Loading";
+	hud.labelText = aLabel;
 	[self.view addSubview:hud];
 	[hud show:YES];
 }
@@ -204,7 +206,7 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 	tSite.url = text1;
 	tSite.email = text2;
 
-	[self showHud];
+	[self showHud:@"Saving"];
 	if( editingSite ) {
 		tSite.siteId = editingSite.siteId;
 		[SiteRequest requestUpdateSite:tSite delegate:self];
@@ -308,6 +310,17 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 	Site* tSite = [sites objectAtIndex:indexPath.row];
 	cell.textLabel.text = tSite.url;
 	cell.detailTextLabel.text = tSite.email;
+	int tDownCount = -1;
+	if( tSite.downCount && ![tSite.downCount isEqual:[NSNull null]] ) {
+		tDownCount = [tSite.downCount intValue];
+	}
+	if( tDownCount==0 ) {
+		cell.imageView.image = [UIImage imageNamed:@"indicator-ok.png"];
+	}else if( tDownCount==1 ) {
+		cell.imageView.image = [UIImage imageNamed:@"indicator-notice.png"];
+	}else{
+		cell.imageView.image = [UIImage imageNamed:@"indicator-alert.png"];
+	}
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
@@ -358,6 +371,7 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 	tSiteEdit.cancelBlock = ^{
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[self.navigationController dismissModalViewControllerAnimated:YES];
+			[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
 		});
 	};
 	tSiteEdit.doneBlock = ^(Site* aSite){
@@ -366,6 +380,7 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 		});
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[self.navigationController dismissModalViewControllerAnimated:YES];
+			[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
 		});
 	};
 	MobileNavigationController* tWrapper = [[[MobileNavigationController alloc] initWithRootViewController:tSiteEdit] autorelease];
