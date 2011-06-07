@@ -63,7 +63,7 @@ static int ddLogLevel = LOG_LEVEL_ERROR;
 	tReq = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:tPath]];
 	
 	if( [@"create" isEqualToString:aAction] || [@"update" isEqualToString:aAction] ) {
-		NSArray	 *tExclusions = [NSArray arrayWithObjects:[Site getRemoteClassIdName],@"createdAt",@"updatedAt",@"lastSuccessfulAttempt",@"userId",nil];
+		NSArray	 *tExclusions = [NSArray arrayWithObjects:[Site getRemoteClassIdName],@"createdAt",@"updatedAt",@"lastSuccessfulAttempt",@"userId",@"up",@"downCount",nil];
 		NSString* tJson = [site performSelector:[Site getRemoteSerializeMethod] withObject:tExclusions];
 		//		NSString* tJson = [site convertToRemoteExpectedType];
 		[tReq appendPostData:[tJson dataUsingEncoding:NSISOLatin1StringEncoding]];
