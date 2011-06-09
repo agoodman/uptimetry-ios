@@ -7,22 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HudViewController.h"
 #import <iAd/iAd.h>
 #import "SiteRequest.h"
-#import "MBProgressHUD.h"
 #import "DoubleLabelTextFieldViewController.h"
 #import "InventoryKit.h"
 #import <StoreKit/StoreKit.h>
 
 
-@interface SiteListViewController : UIViewController <SiteRequestDelegate,DoubleLabelTextFieldDelegate,ADBannerViewDelegate,MBProgressHUDDelegate,IKPurchaseDelegate,SKProductsRequestDelegate,UIActionSheetDelegate> {
+@interface SiteListViewController : HudViewController <SiteRequestDelegate,DoubleLabelTextFieldDelegate,ADBannerViewDelegate,IKPurchaseDelegate,SKProductsRequestDelegate,UIActionSheetDelegate> {
 
 	NSArray* sites;
 	IBOutlet UITableView* tableView;
 	IBOutlet UIView* slidingView;
 	IBOutlet ADBannerView* banner;
 	UISegmentedControl* control;
-	MBProgressHUD* hud;
 
 	Site* editingSite;
 	CGRect visibleSlidingFramePortrait, hiddenSlidingFramePortrait;

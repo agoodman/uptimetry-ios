@@ -10,6 +10,7 @@
 #import "FlurryAPI.h"
 #import "DDTTYLogger.h"
 #import "InventoryKit.h"
+#import "ASIHTTPRequest.h"
 
 
 static int ddLogLevel = LOG_LEVEL_ERROR;
@@ -30,6 +31,9 @@ static int ddLogLevel = LOG_LEVEL_ERROR;
 {
 	// configure IK to listen for payment transactions
 	[InventoryKit registerWithPaymentQueue];
+	
+	// set default http timeout
+	[ASIHTTPRequest setDefaultTimeOutSeconds:5];
 	
 	// start flurry session
 	[FlurryAPI startSession:@"5JTUR7IT3A12S4XS1EIE"];

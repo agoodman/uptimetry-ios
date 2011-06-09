@@ -125,6 +125,11 @@
 		7E8BAB1212DB9792008BA955 /* public-bg12~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E8BAB1012DB9792008BA955 /* public-bg12~iphone.png */; };
 		7ECD565F1381AB3200D8FF66 /* SiteListView_Phone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7ECD565E1381AB3200D8FF66 /* SiteListView_Phone.xib */; };
 		7ECD56711381AC9000D8FF66 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ECD56701381AC9000D8FF66 /* iAd.framework */; };
+		7EE3FB40139EB0D9009A9C78 /* indicator-alert.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE3FB3D139EB0D9009A9C78 /* indicator-alert.png */; };
+		7EE3FB41139EB0D9009A9C78 /* indicator-notice.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE3FB3E139EB0D9009A9C78 /* indicator-notice.png */; };
+		7EE3FB42139EB0D9009A9C78 /* indicator-ok.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE3FB3F139EB0D9009A9C78 /* indicator-ok.png */; };
+		7EE3FB55139EC53D009A9C78 /* UIViewController+InventoryKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EE3FB54139EC53D009A9C78 /* UIViewController+InventoryKit.m */; };
+		7EE3FB79139EC966009A9C78 /* HudViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EE3FB78139EC966009A9C78 /* HudViewController.m */; };
 		7EEA3CAA13983B9500C17989 /* SiteEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EEA3CA913983B9500C17989 /* SiteEditViewController.m */; };
 		7EEA3CC013983EF200C17989 /* SiteEditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7EEA3CBF13983EF200C17989 /* SiteEditView.xib */; };
 /* End PBXBuildFile section */
@@ -404,6 +409,14 @@
 		7E8BAB1012DB9792008BA955 /* public-bg12~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "public-bg12~iphone.png"; sourceTree = "<group>"; };
 		7ECD565E1381AB3200D8FF66 /* SiteListView_Phone.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SiteListView_Phone.xib; sourceTree = "<group>"; };
 		7ECD56701381AC9000D8FF66 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
+		7EE3FB3D139EB0D9009A9C78 /* indicator-alert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "indicator-alert.png"; path = "Shared/indicator-alert.png"; sourceTree = "<group>"; };
+		7EE3FB3E139EB0D9009A9C78 /* indicator-notice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "indicator-notice.png"; path = "Shared/indicator-notice.png"; sourceTree = "<group>"; };
+		7EE3FB3F139EB0D9009A9C78 /* indicator-ok.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "indicator-ok.png"; path = "Shared/indicator-ok.png"; sourceTree = "<group>"; };
+		7EE3FB53139EC53D009A9C78 /* UIViewController+InventoryKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+InventoryKit.h"; path = "Shared/UIViewController+InventoryKit.h"; sourceTree = "<group>"; };
+		7EE3FB54139EC53D009A9C78 /* UIViewController+InventoryKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+InventoryKit.m"; path = "Shared/UIViewController+InventoryKit.m"; sourceTree = "<group>"; };
+		7EE3FB77139EC966009A9C78 /* HudViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HudViewController.h; path = Shared/HudViewController.h; sourceTree = "<group>"; };
+		7EE3FB78139EC966009A9C78 /* HudViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HudViewController.m; path = Shared/HudViewController.m; sourceTree = "<group>"; };
+		7EE3FBEE139ED767009A9C78 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		7EEA3CA813983B9500C17989 /* SiteEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SiteEditViewController.h; path = Shared/SiteEditViewController.h; sourceTree = "<group>"; };
 		7EEA3CA913983B9500C17989 /* SiteEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SiteEditViewController.m; path = Shared/SiteEditViewController.m; sourceTree = "<group>"; };
 		7EEA3CBF13983EF200C17989 /* SiteEditView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = SiteEditView.xib; path = Shared/SiteEditView.xib; sourceTree = "<group>"; };
@@ -493,6 +506,9 @@
 		28EEBF621118D79A00187D67 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				7EE3FB3D139EB0D9009A9C78 /* indicator-alert.png */,
+				7EE3FB3E139EB0D9009A9C78 /* indicator-notice.png */,
+				7EE3FB3F139EB0D9009A9C78 /* indicator-ok.png */,
 				7E15E91912DC12A20047C328 /* DoubleLabelTextFieldView.xib */,
 				7E15E86612DC027B0047C328 /* SingleLabelTextFieldView.xib */,
 				7E15E83C12DC00070047C328 /* CaptionLabelCell.xib */,
@@ -523,6 +539,10 @@
 				7EEA3CA813983B9500C17989 /* SiteEditViewController.h */,
 				7EEA3CA913983B9500C17989 /* SiteEditViewController.m */,
 				7EEA3CBF13983EF200C17989 /* SiteEditView.xib */,
+				7EE3FB53139EC53D009A9C78 /* UIViewController+InventoryKit.h */,
+				7EE3FB54139EC53D009A9C78 /* UIViewController+InventoryKit.m */,
+				7EE3FB77139EC966009A9C78 /* HudViewController.h */,
+				7EE3FB78139EC966009A9C78 /* HudViewController.m */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -549,6 +569,7 @@
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				7E8BA8C412DA84C5008BA955 /* Settings.bundle */,
+				7EE3FBEE139ED767009A9C78 /* Entitlements.plist */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -1030,6 +1051,9 @@
 				7ECD565F1381AB3200D8FF66 /* SiteListView_Phone.xib in Resources */,
 				7E557AB2139590AC002F8821 /* SiteListView_Pad.xib in Resources */,
 				7EEA3CC013983EF200C17989 /* SiteEditView.xib in Resources */,
+				7EE3FB40139EB0D9009A9C78 /* indicator-alert.png in Resources */,
+				7EE3FB41139EB0D9009A9C78 /* indicator-notice.png in Resources */,
+				7EE3FB42139EB0D9009A9C78 /* indicator-ok.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1121,6 +1145,8 @@
 				7E557B221397D3D5002F8821 /* NSString+SHA1.m in Sources */,
 				7E557B3A1397D4E7002F8821 /* ProductRequest.m in Sources */,
 				7EEA3CAA13983B9500C17989 /* SiteEditViewController.m in Sources */,
+				7EE3FB55139EC53D009A9C78 /* UIViewController+InventoryKit.m in Sources */,
+				7EE3FB79139EC966009A9C78 /* HudViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1131,6 +1157,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_ENTITLEMENTS = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1138,7 +1165,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Uptimetry_Prefix.pch;
 				INFOPLIST_FILE = "Uptimetry-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 3.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/FlurryLib\"",
@@ -1153,24 +1180,25 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Aubrey Goodman (W6YQG4U9LB)";
+				CODE_SIGN_ENTITLEMENTS = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Uptimetry_Prefix.pch;
 				INFOPLIST_FILE = "Uptimetry-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 3.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/FlurryLib\"",
 					"\"$(SRCROOT)/objectiveresource/google_toolbox/TigerGcov\"",
 				);
 				PRODUCT_NAME = Uptimetry;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5C41FD52-EF91-43EC-B57D-37FE372A5D3C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
-		7E15EB7112DC4FCB0047C328 /* Distribution */ = {
+		7E15EB7112DC4FCB0047C328 /* App Store */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -1183,19 +1211,20 @@
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
-			name = Distribution;
+			name = "App Store";
 		};
-		7E15EB7212DC4FCB0047C328 /* Distribution */ = {
+		7E15EB7212DC4FCB0047C328 /* App Store */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_ENTITLEMENTS = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Migrant Studios, LLC";
 				COPY_PHASE_STRIP = YES;
 				CURRENT_PROJECT_VERSION = 0.1;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Uptimetry_Prefix.pch;
 				INFOPLIST_FILE = "Uptimetry-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 3.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/FlurryLib\"",
@@ -1205,7 +1234,47 @@
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "FA846ABD-BF0F-4EE3-83D6-51EC17E93740";
 				VALIDATE_PRODUCT = YES;
 			};
-			name = Distribution;
+			name = "App Store";
+		};
+		7EE3FBEB139ED6DC009A9C78 /* Ad Hoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Migrant Studios, LLC";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PREBINDING = NO;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5F2D940F-48D4-4ECF-BE33-8AE222E43E0A";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Ad Hoc";
+		};
+		7EE3FBEC139ED6DC009A9C78 /* Ad Hoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_ENTITLEMENTS = "~/uptimetry-ios/Entitlements.plist";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Migrant Studios, LLC";
+				COPY_PHASE_STRIP = YES;
+				CURRENT_PROJECT_VERSION = 0.1;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Uptimetry_Prefix.pch;
+				INFOPLIST_FILE = "Uptimetry-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/FlurryLib\"",
+					"\"$(SRCROOT)/objectiveresource/google_toolbox/TigerGcov\"",
+				);
+				PRODUCT_NAME = Uptimetry;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5F2D940F-48D4-4ECF-BE33-8AE222E43E0A";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Ad Hoc";
 		};
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -1245,7 +1314,8 @@
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,
 				1D6058950D05DD3E006BFB54 /* Release */,
-				7E15EB7212DC4FCB0047C328 /* Distribution */,
+				7E15EB7212DC4FCB0047C328 /* App Store */,
+				7EE3FBEC139ED6DC009A9C78 /* Ad Hoc */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1255,7 +1325,8 @@
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
 				C01FCF5008A954540054247B /* Release */,
-				7E15EB7112DC4FCB0047C328 /* Distribution */,
+				7E15EB7112DC4FCB0047C328 /* App Store */,
+				7EE3FBEB139ED6DC009A9C78 /* Ad Hoc */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

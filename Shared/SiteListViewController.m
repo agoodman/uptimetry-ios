@@ -12,7 +12,7 @@
 #import "SiteEditViewController.h"
 
 
-static int ddLogLevel = LOG_LEVEL_VERBOSE;
+static int ddLogLevel = LOG_LEVEL_ERROR;
 
 @interface SiteListViewController (private)
 -(void)refreshSites;
@@ -22,24 +22,24 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 @implementation SiteListViewController
 
-@synthesize sites, tableView, slidingView, hud, control;
+@synthesize sites, tableView, slidingView, control;
 
 - (void)showWhatsNext
 {
 	Alert(@"What's Next?",@"That's it. You're done. We will notify you by email if your site becomes unavailable.");
 }
 
-- (IBAction)showUpgrade
-{
-	if( [SKPaymentQueue canMakePayments] ) {
-		SKProductsRequest* tRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:[NSSet setWithObject:kProductDisableAd]];
-		tRequest.delegate = self;
-		[self showHud:@"Connecting to iTunes"];
-		[tRequest start];
-	}else{
-		Alert(@"Service Unavailable",@"Please try again later");
-	}
-}
+//- (IBAction)showUpgrade
+//{
+//	if( [SKPaymentQueue canMakePayments] ) {
+//		SKProductsRequest* tRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:[NSSet setWithObject:kProductDisableAd]];
+//		tRequest.delegate = self;
+//		[self showHud:@"Connecting to iTunes"];
+//		[tRequest start];
+//	}else{
+//		Alert(@"Service Unavailable",@"Please try again later");
+//	}
+//}
 
 #pragma mark -
 #pragma mark Initialization
@@ -167,26 +167,6 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 	[self.navigationController pushViewController:tAccount animated:YES];
 //	MobileNavigationController* tWrapper = [[[MobileNavigationController alloc] initWithRootViewController:tAccount] autorelease];
 //	[self.navigationController presentModalViewController:tWrapper animated:YES]; 
-}
-
-- (void)showHud:(NSString*)aLabel
-{
-	self.hud = [[[MBProgressHUD alloc] initWithView:self.view] autorelease];
-	hud.delegate = self;
-	hud.labelText = aLabel;
-	[self.view addSubview:hud];
-	[hud show:YES];
-}
-
-- (void)hideHud
-{
-	[hud hide:YES];
-}
-
-- (void)hudWasHidden:(MBProgressHUD*)aHud
-{
-	[aHud removeFromSuperview];
-	self.hud = nil;
 }
 
 #pragma mark -
@@ -439,37 +419,35 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 - (void)purchaseDidCompleteForProductWithKey:(NSString*)productKey
 {
 	DDLogVerbose(@"purchase did complete for product: %@",productKey);
-//	[self bannerView:banner didFailToReceiveAdWithError:nil];
-//	banner.delegate = nil;
+	[self bannerView:banner didFailToReceiveAdWithError:nil];
 }
 
 - (void)purchaseDidFailForProductWithKey:(NSString *)productKey
 {
-	Alert(@"TODO",@"handle failed purchase: disable ad");
 	DDLogVerbose(@"purchase did fail for product: %@",productKey);
 }
 
-#pragma mark -
-#pragma mark SKProductRequestDelegate
-
-- (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response
-{
-	[self hideHud];
-	DDLogVerbose(@"product response received");
-	DDLogVerbose(@"\tinvalid product ids: %@",response.invalidProductIdentifiers);
-	DDLogVerbose(@"\tvalid products: %@",response.products);
-	if( [response.products containsObject:kProductDisableAd] ) {
-		SKProduct* tProduct = [response.products objectAtIndex:0];
-		UIActionSheet* tAction = [[[UIActionSheet alloc] initWithTitle:tProduct.localizedDescription delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:tProduct.localizedTitle,nil] autorelease];
-		[tAction showInView:self.view];
-	}else if( [response.invalidProductIdentifiers containsObject:kProductDisableAd] ) {
-		Alert(@"Product Unavailable",@"Please try again later.");
-	}else{
-		Alert(@"Oops!",@"The app encountered an unknown error.");
-	}
-	[request autorelease];
-}
-
+//#pragma mark -
+//#pragma mark SKProductRequestDelegate
+//
+//- (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response
+//{
+//	[self hideHud];
+//	DDLogVerbose(@"product response received");
+//	DDLogVerbose(@"\tinvalid product ids: %@",response.invalidProductIdentifiers);
+//	DDLogVerbose(@"\tvalid products: %@",response.products);
+//	if( [response.products containsObject:kProductDisableAd] ) {
+//		SKProduct* tProduct = [response.products objectAtIndex:0];
+//		UIActionSheet* tAction = [[[UIActionSheet alloc] initWithTitle:tProduct.localizedDescription delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:tProduct.localizedTitle,nil] autorelease];
+//		[tAction showInView:self.view];
+//	}else if( [response.invalidProductIdentifiers containsObject:kProductDisableAd] ) {
+//		Alert(@"Product Unavailable",@"Please try again later.");
+//	}else{
+//		Alert(@"Oops!",@"The app encountered an unknown error.");
+//	}
+//	[request autorelease];
+//}
+//
 #pragma mark -
 #pragma mark UIActionSheetDelegate
 
@@ -480,7 +458,7 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-	if( buttonIndex>0 ) {
+	if( buttonIndex==0 ) {
 		[InventoryKit purchaseProduct:kProductDisableAd delegate:self];
 	}
 }

@@ -8,11 +8,15 @@
 
 #import "SiteEditViewController.h"
 #import "SingleLabelTextFieldViewController.h"
+#import "InventoryKit.h"
+#import "UIViewController+InventoryKit.h"
 
+
+static int ddLogLevel = LOG_LEVEL_ERROR;
 
 @implementation SiteEditViewController
 
-@synthesize site, cancelBlock, doneBlock;
+@synthesize tableView, site, cancelBlock, doneBlock;
 
 #pragma mark -
 
@@ -125,10 +129,14 @@
 	}else if( section==1 ) {
 		return @"Email";
 	}else if( section==2 ) {
-		if( site.cssSelector && ![site.cssSelector isEqual:[NSNull null]] ) {
-			return @"Content Matcher (CSS Selector)";
-		}else if( site.xpath && ![site.xpath isEqual:[NSNull null]] ) {
-			return @"Content Matcher (XPath)";
+		if( [InventoryKit productActivated:kProductDisableAd] ) {
+			if( site.cssSelector && ![site.cssSelector isEqual:[NSNull null]] ) {
+				return @"Content Matcher (CSS Selector)";
+			}else if( site.xpath && ![site.xpath isEqual:[NSNull null]] ) {
+				return @"Content Matcher (XPath)";
+			}else{
+				return @"Content Matcher";
+			}
 		}else{
 			return @"Content Matcher";
 		}
@@ -159,12 +167,16 @@
 			cell.textLabel.text = @"Enter an email";
 		}
 	}else if( indexPath.section==2 ) {
-		if( site.cssSelector && ![site.cssSelector isEqual:[NSNull null]] ) {
-			cell.textLabel.text = site.cssSelector;
-		}else if( site.xpath && ![site.xpath isEqual:[NSNull null]] ) {
-			cell.textLabel.text = site.xpath;
+		if( [InventoryKit productActivated:kProductDisableAd] ) {
+			if( site.cssSelector && ![site.cssSelector isEqual:[NSNull null]] ) {
+				cell.textLabel.text = site.cssSelector;
+			}else if( site.xpath && ![site.xpath isEqual:[NSNull null]] ) {
+				cell.textLabel.text = site.xpath;
+			}else{
+				cell.textLabel.text = @"Add Content Matcher";
+			}
 		}else{
-			cell.textLabel.text = @"Add Content Matcher";
+			cell.textLabel.text = @"Upgrade to Add Content Matcher";
 		}
 	}
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -215,7 +227,7 @@
 #pragma mark -
 #pragma mark Table view delegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath 
+- (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath 
 {
 	if( indexPath.section==0 ) {
 		SingleLabelTextFieldViewController* tUrl = [[[SingleLabelTextFieldViewController alloc] initWithTitle:@"Edit URL" label:@"URL" caption:@"required" text:site.url] autorelease];
@@ -239,7 +251,45 @@
 		[self.navigationController pushViewController:tEmail animated:YES];
 		
 	}else if( indexPath.section==2 ) {
-		if( site.cssSelector && ![site.cssSelector isEqual:[NSNull null]] ) {
+		if( [InventoryKit productActivated:kProductDisableAd] ) {
+			if( site.cssSelector && ![site.cssSelector isEqual:[NSNull null]] ) {
+				SingleLabelTextFieldViewController* tCss = [[[SingleLabelTextFieldViewController alloc] initWithTitle:@"Edit CSS Selector" label:@"CSS Selector" caption:@"optional" text:site.cssSelector] autorelease];
+				tCss.cancelBlock = ^{
+					[self.navigationController popViewControllerAnimated:YES];
+				};
+				tCss.doneBlock = ^(NSString* aString){
+					site.cssSelector = aString;
+					[self.navigationController popViewControllerAnimated:YES];
+				};
+				[self.navigationController pushViewController:tCss animated:YES];
+			}else if( site.xpath && ![site.xpath isEqual:[NSNull null]] ) {
+				SingleLabelTextFieldViewController* tXpath = [[[SingleLabelTextFieldViewController alloc] initWithTitle:@"Edit XPath" label:@"XPath" caption:@"optional" text:site.xpath] autorelease];
+				tXpath.cancelBlock = ^{
+					[self.navigationController popViewControllerAnimated:YES];
+				};
+				tXpath.doneBlock = ^(NSString* aString){
+					site.xpath = aString;
+					[self.navigationController popViewControllerAnimated:YES];
+				};
+				[self.navigationController pushViewController:tXpath animated:YES];
+			}else{
+				UIActionSheet* tAction = [[[UIActionSheet alloc] initWithTitle:@"Select a type" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"CSS Selector",@"XPath",nil] autorelease];
+				[tAction showInView:self.view];
+			}
+		}else{
+			[self showUpgrade];
+		}
+	}
+	[aTableView deselectRowAtIndexPath:[aTableView indexPathForSelectedRow] animated:YES];
+}
+
+#pragma mark -
+#pragma mark UIActionSheetDelegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+	if( [InventoryKit productActivated:kProductDisableAd] ) {
+		if( buttonIndex==0 ) {
 			SingleLabelTextFieldViewController* tCss = [[[SingleLabelTextFieldViewController alloc] initWithTitle:@"Edit CSS Selector" label:@"CSS Selector" caption:@"optional" text:site.cssSelector] autorelease];
 			tCss.cancelBlock = ^{
 				[self.navigationController popViewControllerAnimated:YES];
@@ -249,7 +299,8 @@
 				[self.navigationController popViewControllerAnimated:YES];
 			};
 			[self.navigationController pushViewController:tCss animated:YES];
-		}else if( site.xpath && ![site.xpath isEqual:[NSNull null]] ) {
+			
+		}else if( buttonIndex==1 ) {
 			SingleLabelTextFieldViewController* tXpath = [[[SingleLabelTextFieldViewController alloc] initWithTitle:@"Edit XPath" label:@"XPath" caption:@"optional" text:site.xpath] autorelease];
 			tXpath.cancelBlock = ^{
 				[self.navigationController popViewControllerAnimated:YES];
@@ -259,43 +310,34 @@
 				[self.navigationController popViewControllerAnimated:YES];
 			};
 			[self.navigationController pushViewController:tXpath animated:YES];
+			
 		}else{
-			UIActionSheet* tAction = [[[UIActionSheet alloc] initWithTitle:@"Select a type" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"CSS Selector",@"XPath",nil] autorelease];
-			[tAction showInView:self.view];
+			// do nothing
+		}
+	}else{
+		if( buttonIndex==0 ) {
+			[InventoryKit purchaseProduct:kProductDisableAd delegate:self];
 		}
 	}
 }
 
 #pragma mark -
-#pragma mark UIActionSheetDelegate
+#pragma mark IKPurchaseDelegate
 
-- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+- (void)purchaseDidStartForProductWithKey:(NSString *)productKey
 {
-	if( buttonIndex==0 ) {
-		SingleLabelTextFieldViewController* tCss = [[[SingleLabelTextFieldViewController alloc] initWithTitle:@"Edit CSS Selector" label:@"CSS Selector" caption:@"optional" text:site.cssSelector] autorelease];
-		tCss.cancelBlock = ^{
-			[self.navigationController popViewControllerAnimated:YES];
-		};
-		tCss.doneBlock = ^(NSString* aString){
-			site.cssSelector = aString;
-			[self.navigationController popViewControllerAnimated:YES];
-		};
-		[self.navigationController pushViewController:tCss animated:YES];
-		
-	}else if( buttonIndex==1 ) {
-		SingleLabelTextFieldViewController* tXpath = [[[SingleLabelTextFieldViewController alloc] initWithTitle:@"Edit XPath" label:@"XPath" caption:@"optional" text:site.xpath] autorelease];
-		tXpath.cancelBlock = ^{
-			[self.navigationController popViewControllerAnimated:YES];
-		};
-		tXpath.doneBlock = ^(NSString* aString){
-			site.xpath = aString;
-			[self.navigationController popViewControllerAnimated:YES];
-		};
-		[self.navigationController pushViewController:tXpath animated:YES];
-		
-	}else{
-		// do nothing
-	}
+	DDLogVerbose(@"purchase did start for product: %@",productKey);
+}
+
+- (void)purchaseDidCompleteForProductWithKey:(NSString*)productKey
+{
+	DDLogVerbose(@"purchase did complete for product: %@",productKey);
+	[self.tableView reloadData];
+}
+
+- (void)purchaseDidFailForProductWithKey:(NSString *)productKey
+{
+	DDLogVerbose(@"purchase did fail for product: %@",productKey);
 }
 
 #pragma mark -
@@ -316,6 +358,7 @@
 
 - (void)dealloc 
 {
+	[tableView release];
 	[site release];
     [super dealloc];
 }

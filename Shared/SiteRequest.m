@@ -141,7 +141,7 @@ static int ddLogLevel = LOG_LEVEL_ERROR;
 
 - (void)requestFailed:(ASIHTTPRequest *)request
 {
-	DDLogVerbose([request responseString]);
+	DDLogVerbose(@"response: %@\nerror: %@",[request responseString],[request error]);
 	int tStatusCode = [request responseStatusCode];
 	if( tStatusCode==401 ) {
 		[delegate siteUnauthorized];

@@ -7,19 +7,23 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HudViewController.h"
 #import "Site.h"
 
 typedef void(^CancelBlock)(void);
 typedef void(^DoneBlock)(Site*);
 
-@interface SiteEditViewController : UITableViewController <UIActionSheetDelegate> {
+@interface SiteEditViewController : HudViewController <UIActionSheetDelegate> {
 
+	UITableView* tableView;
+	
 	Site* site;
 	CancelBlock cancelBlock;
 	DoneBlock doneBlock;
 	
 }
 
+@property (retain) UITableView* tableView;
 @property (retain) Site* site;
 @property (copy) CancelBlock cancelBlock;
 @property (copy) DoneBlock doneBlock;
