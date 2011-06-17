@@ -1160,6 +1160,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 0.4.1;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1183,6 +1184,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				CURRENT_PROJECT_VERSION = 0.4.1;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Uptimetry_Prefix.pch;
 				INFOPLIST_FILE = "Uptimetry-Info.plist";
@@ -1220,7 +1222,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Migrant Studios, LLC";
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 0.1;
+				CURRENT_PROJECT_VERSION = 0.4.1;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Uptimetry_Prefix.pch;
 				INFOPLIST_FILE = "Uptimetry-Info.plist";
@@ -1260,7 +1262,7 @@
 				CODE_SIGN_ENTITLEMENTS = "~/uptimetry-ios/Entitlements.plist";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Migrant Studios, LLC";
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 0.1;
+				CURRENT_PROJECT_VERSION = 0.4.1;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Uptimetry_Prefix.pch;
 				INFOPLIST_FILE = "Uptimetry-Info.plist";

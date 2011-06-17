@@ -14,17 +14,17 @@
 
 - (void)addSite
 {
-	//	DoubleLabelTextFieldViewController* tNewSite = [[[DoubleLabelTextFieldViewController alloc] initWithTitle:@"New Site" label1:@"URL" label2:@"Email" caption1:@"(required)" caption2:@"(required)" text1:nil text2:nil] autorelease];
-	//	tNewSite.delegate = self;
-	//	[self.navigationController pushViewController:tNewSite animated:YES];
 	SiteEditViewController* tCreate = [[[SiteEditViewController alloc] initWithNibName:@"SiteEditView" bundle:[NSBundle mainBundle]] autorelease];
 	tCreate.site = [[[Site alloc] init] autorelease];
 	tCreate.cancelBlock = ^{
 		[self.navigationController popViewControllerAnimated:YES];
 	};
 	tCreate.doneBlock = ^(Site* aSite){
-		[SiteRequest requestCreateSite:aSite delegate:self];
-		[self.navigationController popViewControllerAnimated:YES];
+		[SiteRequest requestCreateSite:aSite 
+							   success:^(Site* aSite) {
+								   [self.navigationController popViewControllerAnimated:YES];
+							   } 
+							   failure:^{}];
 	};
 	[self.navigationController pushViewController:tCreate animated:YES];
 }

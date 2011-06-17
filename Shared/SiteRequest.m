@@ -20,6 +20,46 @@ static int ddLogLevel = LOG_LEVEL_ERROR;
 
 @synthesize action, delegate;
 
++ (void)requestCreateSite:(Site *)site success:(SiteBlock)success failure:(ASIBasicBlock)failure
+{
+	NSString* tPath = [Site getRemoteCollectionPath];
+	NSURL* tUrl = [NSURL URLWithString:tPath];
+	ASIHTTPRequest* tRequest = [ASIHTTPRequest requestWithURL:tUrl];
+	[tRequest setCompletionBlock:^{
+		int tStatusCode = [tRequest responseStatusCode];
+		if( tStatusCode==200 ) {
+			NSString* tJson = [tRequest responseString];
+			NSDictionary* tDict = [tJson JSONValue];
+			NSDictionary* tSiteDict = [tDict objectForKey:@"site"];
+			Site* tSite = [Site siteWithDictionary:tSiteDict];
+			success(tSite);
+		}else if( tStatusCode==422 ) {
+			NSString* tJson = [tRequest responseString];
+			NSDictionary* tDict = [tJson JSONValue];
+			NSArray* tErrors = [tDict objectForKey:@"errors"];
+			NSMutableString* tErrorStr = [[[NSMutableString alloc] init] autorelease];
+			for (NSString* err in tErrors) {
+				[tErrorStr appendFormat:@"%@\n",err];
+			}
+			DDLogVerbose(tErrorStr);
+			Alert(@"Unable to Save", tErrorStr);
+		}else{
+			Alert(@"TODO",@"not sure what happened");
+		}
+	}];
+	[tRequest setFailedBlock:^{
+		Alert(@"Network Error",@"Please make sure you are connected to a network.");
+	}];
+	
+	NSArray	 *tExclusions = [NSArray arrayWithObjects:[Site getRemoteClassIdName],@"createdAt",@"updatedAt",@"lastSuccessfulAttempt",@"userId",@"up",@"downCount",nil];
+	NSString* tJson = [site performSelector:[Site getRemoteSerializeMethod] withObject:tExclusions];
+	[tRequest appendPostData:[tJson dataUsingEncoding:NSISOLatin1StringEncoding]];
+	[tRequest addRequestHeader:@"Content-Type" value:@"application/json"];
+	[tRequest setRequestMethod:@"POST"];
+
+	[tRequest startAsynchronous];
+}
+
 + (SiteRequest*)requestSites:(id <SiteRequestDelegate>)aDelegate
 {
 	return [[SiteRequest alloc] initWithAction:@"index" withObject:nil delegate:aDelegate];

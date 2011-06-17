@@ -66,7 +66,7 @@ static int ddLogLevel = LOG_LEVEL_ERROR;
 	if( site.url && site.email ) {
 		self.navigationItem.title = @"Edit Site";
 	}else{
-		self.navigationItem.title = @"Create Site";
+		self.navigationItem.title = @"Add Site";
 	}
 	self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelPressed)] autorelease];
 	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(donePressed)] autorelease];

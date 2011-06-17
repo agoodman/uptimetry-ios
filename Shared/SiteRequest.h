@@ -11,6 +11,8 @@
 #import "ASIHTTPRequest.h"
 
 
+typedef void (^SiteBlock)(Site*);
+
 @protocol SiteRequestDelegate
 -(void)sitesReceived:(NSArray*)sites;
 -(void)siteCreated:(Site*)site;
@@ -33,6 +35,7 @@
 @property (nonatomic, assign) id<SiteRequestDelegate> delegate;
 @property (nonatomic, retain) NSString* action;
 
++(void)requestCreateSite:(Site*)site success:(SiteBlock)success failure:(ASIBasicBlock)failure;
 +(SiteRequest*)requestSites:(id<SiteRequestDelegate>)delegate;
 +(SiteRequest*)requestCreateSite:(Site*)session delegate:(id<SiteRequestDelegate>)delegate;
 +(SiteRequest*)requestReadSite:(Site*)site delegate:(id<SiteRequestDelegate>)delegate;

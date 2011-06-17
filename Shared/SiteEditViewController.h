@@ -15,7 +15,7 @@ typedef void(^DoneBlock)(Site*);
 
 @interface SiteEditViewController : HudViewController <UIActionSheetDelegate> {
 
-	UITableView* tableView;
+	IBOutlet UITableView* tableView;
 	
 	Site* site;
 	CancelBlock cancelBlock;
