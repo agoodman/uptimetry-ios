@@ -85,6 +85,7 @@
 		7E1EF89112DA383C007A3DDB /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E1EF89012DA383C007A3DDB /* CFNetwork.framework */; };
 		7E1EF89712DA3865007A3DDB /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E1EF89612DA3865007A3DDB /* libz.1.2.3.dylib */; };
 		7E1EF89B12DA38C5007A3DDB /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E1EF89A12DA38C5007A3DDB /* MobileCoreServices.framework */; };
+		7E27CD6A13BA788100F19A86 /* IKSubscriptionPrices.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7E27CD6913BA788100F19A86 /* IKSubscriptionPrices.plist */; };
 		7E557AA713958FD0002F8821 /* SiteListViewController_Phone.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E557AA613958FD0002F8821 /* SiteListViewController_Phone.m */; };
 		7E557AB2139590AC002F8821 /* SiteListView_Pad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7E557AB1139590AC002F8821 /* SiteListView_Pad.xib */; };
 		7E557B1B1397D3D5002F8821 /* IKApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E557B081397D3D5002F8821 /* IKApiClient.m */; };
@@ -123,6 +124,7 @@
 		7E8BAB0E12DB9786008BA955 /* public-bg12.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E8BAB0D12DB9786008BA955 /* public-bg12.png */; };
 		7E8BAB1112DB9792008BA955 /* public-bg12@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E8BAB0F12DB9792008BA955 /* public-bg12@2x~iphone.png */; };
 		7E8BAB1212DB9792008BA955 /* public-bg12~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E8BAB1012DB9792008BA955 /* public-bg12~iphone.png */; };
+		7EB197A913BA551D007FBAA4 /* IKSubscriptionProducts.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7EB197A813BA551D007FBAA4 /* IKSubscriptionProducts.plist */; };
 		7ECD565F1381AB3200D8FF66 /* SiteListView_Phone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7ECD565E1381AB3200D8FF66 /* SiteListView_Phone.xib */; };
 		7ECD56711381AC9000D8FF66 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ECD56701381AC9000D8FF66 /* iAd.framework */; };
 		7EE3FB40139EB0D9009A9C78 /* indicator-alert.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE3FB3D139EB0D9009A9C78 /* indicator-alert.png */; };
@@ -343,6 +345,7 @@
 		7E1EF89012DA383C007A3DDB /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		7E1EF89612DA3865007A3DDB /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = usr/lib/libz.1.2.3.dylib; sourceTree = SDKROOT; };
 		7E1EF89A12DA38C5007A3DDB /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		7E27CD6913BA788100F19A86 /* IKSubscriptionPrices.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = IKSubscriptionPrices.plist; sourceTree = "<group>"; };
 		7E557AA513958FD0002F8821 /* SiteListViewController_Phone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SiteListViewController_Phone.h; sourceTree = "<group>"; };
 		7E557AA613958FD0002F8821 /* SiteListViewController_Phone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SiteListViewController_Phone.m; sourceTree = "<group>"; };
 		7E557AB1139590AC002F8821 /* SiteListView_Pad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SiteListView_Pad.xib; sourceTree = "<group>"; };
@@ -407,6 +410,7 @@
 		7E8BAB0D12DB9786008BA955 /* public-bg12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "public-bg12.png"; sourceTree = "<group>"; };
 		7E8BAB0F12DB9792008BA955 /* public-bg12@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "public-bg12@2x~iphone.png"; sourceTree = "<group>"; };
 		7E8BAB1012DB9792008BA955 /* public-bg12~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "public-bg12~iphone.png"; sourceTree = "<group>"; };
+		7EB197A813BA551D007FBAA4 /* IKSubscriptionProducts.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = IKSubscriptionProducts.plist; sourceTree = "<group>"; };
 		7ECD565E1381AB3200D8FF66 /* SiteListView_Phone.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SiteListView_Phone.xib; sourceTree = "<group>"; };
 		7ECD56701381AC9000D8FF66 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		7EE3FB3D139EB0D9009A9C78 /* indicator-alert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "indicator-alert.png"; path = "Shared/indicator-alert.png"; sourceTree = "<group>"; };
@@ -570,6 +574,8 @@
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				7E8BA8C412DA84C5008BA955 /* Settings.bundle */,
 				7EE3FBEE139ED767009A9C78 /* Entitlements.plist */,
+				7EB197A813BA551D007FBAA4 /* IKSubscriptionProducts.plist */,
+				7E27CD6913BA788100F19A86 /* IKSubscriptionPrices.plist */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -1054,6 +1060,8 @@
 				7EE3FB40139EB0D9009A9C78 /* indicator-alert.png in Resources */,
 				7EE3FB41139EB0D9009A9C78 /* indicator-notice.png in Resources */,
 				7EE3FB42139EB0D9009A9C78 /* indicator-ok.png in Resources */,
+				7EB197A913BA551D007FBAA4 /* IKSubscriptionProducts.plist in Resources */,
+				7E27CD6A13BA788100F19A86 /* IKSubscriptionPrices.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1158,7 +1166,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Aubrey Goodman (W6YQG4U9LB)";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 0.4.1;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1173,7 +1181,7 @@
 					"\"$(SRCROOT)/objectiveresource/google_toolbox/TigerGcov\"",
 				);
 				PRODUCT_NAME = Uptimetry;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AC1D56D8-FDC4-4C30-8F93-2EFDEAC77615";
 			};
 			name = Debug;
 		};
@@ -1182,7 +1190,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Aubrey Goodman (W6YQG4U9LB)";
 				COPY_PHASE_STRIP = YES;
 				CURRENT_PROJECT_VERSION = 0.4.1;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1195,7 +1203,7 @@
 					"\"$(SRCROOT)/objectiveresource/google_toolbox/TigerGcov\"",
 				);
 				PRODUCT_NAME = Uptimetry;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AC1D56D8-FDC4-4C30-8F93-2EFDEAC77615";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
