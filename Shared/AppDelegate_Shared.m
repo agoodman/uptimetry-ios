@@ -31,6 +31,7 @@ static int ddLogLevel = LOG_LEVEL_ERROR;
 {
 	// configure IK to listen for payment transactions
 	[InventoryKit registerWithPaymentQueue];
+	[InventoryKit setApiToken:@"806ce0cdd2"];
 	
 	// set default http timeout
 	[ASIHTTPRequest setDefaultTimeOutSeconds:5];
