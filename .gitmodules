@@ -10,3 +10,6 @@
 [submodule "inventory-kit"]
 	path = inventory-kit
 	url = git@github.com:agoodman/inventory-kit.git
+[submodule "BlocksKit"]
+	path = BlocksKit
+	url = git@github.com:agoodman/BlocksKit.git
