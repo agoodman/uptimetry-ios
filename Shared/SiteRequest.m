@@ -20,7 +20,7 @@ static int ddLogLevel = LOG_LEVEL_ERROR;
 
 @synthesize action, delegate;
 
-+ (void)requestCreateSite:(Site *)site success:(SiteBlock)success failure:(ASIBasicBlock)failure
++ (void)requestCreateSite:(Site *)site success:(SiteBlock)success failure:(SiteErrorBlock)failure
 {
 	NSString* tPath = [Site getRemoteCollectionPath];
 	NSURL* tUrl = [NSURL URLWithString:tPath];
@@ -42,13 +42,22 @@ static int ddLogLevel = LOG_LEVEL_ERROR;
 				[tErrorStr appendFormat:@"%@\n",err];
 			}
 			DDLogVerbose(tErrorStr);
-			Alert(@"Unable to Save", tErrorStr);
+			failure(tStatusCode, tErrors);
 		}else{
-			Alert(@"TODO",@"not sure what happened");
+			failure(tStatusCode, [NSArray arrayWithObject:@"An unknown error occurred"]);
 		}
 	}];
 	[tRequest setFailedBlock:^{
-		Alert(@"Network Error",@"Please make sure you are connected to a network.");
+		int tStatusCode = [tRequest responseStatusCode];
+		NSString* tJson = [tRequest responseString];
+		NSDictionary* tDict = [tJson JSONValue];
+		NSArray* tErrors = [tDict objectForKey:@"errors"];
+		NSMutableString* tErrorStr = [[[NSMutableString alloc] init] autorelease];
+		for (NSString* err in tErrors) {
+			[tErrorStr appendFormat:@"%@\n",err];
+		}
+		DDLogVerbose(tErrorStr);
+		failure(tStatusCode, tErrors);
 	}];
 	
 	NSArray	 *tExclusions = [NSArray arrayWithObjects:[Site getRemoteClassIdName],@"createdAt",@"updatedAt",@"lastSuccessfulAttempt",@"userId",@"up",@"downCount",nil];

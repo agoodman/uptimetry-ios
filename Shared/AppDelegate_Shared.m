@@ -13,7 +13,7 @@
 #import "ASIHTTPRequest.h"
 
 
-static int ddLogLevel = LOG_LEVEL_ERROR;
+static int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 @interface AppDelegate_Shared (private)
 -(void)wakeUp;
@@ -42,39 +42,7 @@ static int ddLogLevel = LOG_LEVEL_ERROR;
 	// setup logging
 	[DDLog addLogger:[DDTTYLogger sharedInstance]];
 	
-	// configure ObjectiveResource
-	[ObjectiveResourceConfig setResponseType:JSONResponse];
-
-    [self.window makeKeyAndVisible];
-    
-    return YES;
-}
-
-
-- (void)applicationWillResignActive:(UIApplication *)application {
-    /*
-     Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-     Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-     */
-}
-
-
-- (void)applicationDidBecomeActive:(UIApplication *)application 
-{
-	DDLogVerbose(@"didBecomeActive");
-	[self wakeUp];
-}
-
-- (void)applicationWillTerminate:(UIApplication *)application {
-    /*
-     Called when the application is about to terminate.
-     */
-}
-
-#pragma mark -
-
-- (void)wakeUp
-{
+	// default server url
 	NSString* tHost = [[NSUserDefaults standardUserDefaults] stringForKey:@"ServerUrl"];
 	if( tHost==nil ) {
 		tHost = @"http://uptimetry.com/api/";
@@ -82,8 +50,10 @@ static int ddLogLevel = LOG_LEVEL_ERROR;
 		[[NSUserDefaults standardUserDefaults] synchronize];
 	}
 	
+	// configure ObjectiveResource
 	[ObjectiveResourceConfig setSite:tHost];
-	
+	[ObjectiveResourceConfig setResponseType:JSONResponse];
+
 	if( [[NSUserDefaults standardUserDefaults] stringForKey:@"UserId"] ) {
 		// signed in; show private view
 		[self didSignIn];
@@ -91,6 +61,27 @@ static int ddLogLevel = LOG_LEVEL_ERROR;
 		// not signed in; show public view
 		[self didSignOut];
 	}
+
+    [self.window makeKeyAndVisible];
+    
+    return YES;
+}
+
+
+- (void)applicationWillResignActive:(UIApplication *)application 
+{
+	DDLogVerbose(@"willResignActive");
+}
+
+
+- (void)applicationDidBecomeActive:(UIApplication *)application 
+{
+	DDLogVerbose(@"didBecomeActive");
+}
+
+- (void)applicationWillTerminate:(UIApplication *)application 
+{
+	DDLogVerbose(@"willTerminate");
 }
 
 #pragma mark -
@@ -130,10 +121,9 @@ static int ddLogLevel = LOG_LEVEL_ERROR;
 #pragma mark -
 #pragma mark Memory management
 
-- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-    /*
-     Free up as much memory as possible by purging cached data objects that can be recreated (or reloaded from disk) later.
-     */
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application 
+{
+	DDLogVerbose(@"didReceiveMemoryWarning");
 }
 
 

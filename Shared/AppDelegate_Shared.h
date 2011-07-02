@@ -8,16 +8,17 @@
 
 #import <Foundation/Foundation.h>
 #import "MobileNavigationController.h"
-#import "SignInViewController.h"
-#import "PublicViewController.h"
+#import "SignInViewController_Shared.h"
+#import "PublicViewController_Shared.h"
 
 
 @interface AppDelegate_Shared : NSObject <UIApplicationDelegate,SignInDelegate> {
 
 	UIWindow* window;
 	MobileNavigationController* navigationController;
-	PublicViewController* publicViewController;
+	PublicViewController_Shared* publicViewController;
 	
+	BOOL signedIn;
 }
 
 -(void)didSignIn;
@@ -25,6 +26,6 @@
 
 @property (retain) IBOutlet UIWindow* window;
 @property (retain) IBOutlet MobileNavigationController* navigationController;
-@property (retain) IBOutlet PublicViewController* publicViewController;
+@property (retain) IBOutlet PublicViewController_Shared* publicViewController;
 
 @end

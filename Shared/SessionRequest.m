@@ -60,12 +60,12 @@ static int ddLogLevel = LOG_LEVEL_ERROR;
 
 - (void)requestStarted:(ASIHTTPRequest *)request
 {
-	DDLogVerbose(@"%@",[request url]);
+	DDLogVerbose(@"requesting %@",[request url]);
 }
 
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
-	DDLogVerbose(@"%@",[request responseString]);
+	DDLogVerbose(@"received: %@",[request responseString]);
 	int tStatusCode = [request responseStatusCode];
 	NSString* tAction = [request requestMethod];
 	if( tStatusCode==422 ) {
@@ -101,6 +101,7 @@ static int ddLogLevel = LOG_LEVEL_ERROR;
 
 - (void)requestFailed:(ASIHTTPRequest *)request
 {
+	DDLogVerbose(@"received: %@",[request responseString]);
 	[self clearPersistentSession];
 
 	int tStatusCode = [request responseStatusCode];

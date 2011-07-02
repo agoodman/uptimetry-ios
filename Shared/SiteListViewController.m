@@ -10,6 +10,8 @@
 #import "AppDelegate_Shared.h"
 #import "AccountViewController.h"
 #import "SiteEditViewController.h"
+#import "UIAlertView+BlocksKit.h"
+#import "SubscriptionListViewController_Shared.h"
 
 
 static int ddLogLevel = LOG_LEVEL_ERROR;
@@ -151,16 +153,32 @@ static int ddLogLevel = LOG_LEVEL_ERROR;
 		[self.navigationController dismissModalViewControllerAnimated:YES];
 	};
 	tCreate.doneBlock = ^(Site* aSite){
-		[SiteRequest requestCreateSite:aSite 
-							   success:^(Site* aSite) {
-								   NSMutableArray* tSites = [NSMutableArray arrayWithArray:self.sites];
-								   [tSites addObject:aSite];
-								   self.sites = tSites;
-								   
-								   [self.navigationController dismissModalViewControllerAnimated:YES];
-								   [self.tableView reloadData];
-							   } 
-							   failure:^{}];
+		SiteBlock tSuccess = ^(Site* aSite) {
+			NSMutableArray* tSites = [NSMutableArray arrayWithArray:self.sites];
+			[tSites addObject:aSite];
+			self.sites = tSites;
+			
+			[self.navigationController dismissModalViewControllerAnimated:YES];
+			[self.tableView reloadData];
+		};
+		
+		SiteErrorBlock tFailure = ^(int aStatusCode, NSArray* aErrors) {
+			if( aStatusCode==402 ) {
+				UIAlertView* tAlert = [[[UIAlertView alloc] initWithTitle:@"Subscription Upgrade Required" message:@"You must upgrade your subscription before you can add a site"] autorelease];
+				[tAlert addButtonWithTitle:@"Upgrade" handler:^{
+					SubscriptionListViewController_Shared* tSubs = [[[SubscriptionListViewController_Shared alloc] init] autorelease];
+					tSubs.successBlock = ^(NSString* aProductIdentifier) { 
+						[self.navigationController dismissModalViewControllerAnimated:YES]; 
+					};
+					tSubs.cancelBlock = ^{ [self.navigationController dismissModalViewControllerAnimated:YES]; };
+					[self.navigationController presentModalViewController:tSubs animated:YES];
+				}];
+				[tAlert setCancelButtonWithTitle:@"Cancel" handler:^{}];
+				[tAlert show];
+			}
+		};
+		
+		[SiteRequest requestCreateSite:aSite success:tSuccess failure:tFailure];
 	};
 	MobileNavigationController* tWrapper = [[[MobileNavigationController alloc] initWithRootViewController:tCreate] autorelease];
 	[self.navigationController presentModalViewController:tWrapper animated:YES];

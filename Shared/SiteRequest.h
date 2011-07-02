@@ -12,6 +12,7 @@
 
 
 typedef void (^SiteBlock)(Site*);
+typedef void (^SiteErrorBlock)(int,NSArray*);
 
 @protocol SiteRequestDelegate
 -(void)sitesReceived:(NSArray*)sites;
@@ -35,7 +36,7 @@ typedef void (^SiteBlock)(Site*);
 @property (nonatomic, assign) id<SiteRequestDelegate> delegate;
 @property (nonatomic, retain) NSString* action;
 
-+(void)requestCreateSite:(Site*)site success:(SiteBlock)success failure:(ASIBasicBlock)failure;
++(void)requestCreateSite:(Site*)site success:(SiteBlock)success failure:(SiteErrorBlock)failure;
 +(SiteRequest*)requestSites:(id<SiteRequestDelegate>)delegate;
 +(SiteRequest*)requestCreateSite:(Site*)session delegate:(id<SiteRequestDelegate>)delegate;
 +(SiteRequest*)requestReadSite:(Site*)site delegate:(id<SiteRequestDelegate>)delegate;

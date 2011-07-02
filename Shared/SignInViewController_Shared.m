@@ -6,12 +6,14 @@
 //  Copyright 2011 Migrant Studios. All rights reserved.
 //
 
-#import "SignInViewController.h"
+#import "SignInViewController_Shared.h"
 #import "Session.h"
 #import "FlurryAPI.h"
 
 
-@implementation SignInViewController
+static int ddLogLevel = LOG_LEVEL_VERBOSE;
+
+@implementation SignInViewController_Shared
 
 @synthesize delegate, email, password;
 
@@ -44,14 +46,27 @@
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
+
+	self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelPressed)] autorelease];
+	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(donePressed)] autorelease];
+
 	[FlurryAPI logEvent:@"SignIn"];
+	DDLogVerbose(@"SignIn.viewDidLoad");
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
 	
+	DDLogVerbose(@"SignIn.viewWillAppear");
 	[email becomeFirstResponder];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+	[super viewDidAppear:animated];
+	
+	DDLogVerbose(@"SignIn.viewDidAppear");
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation 
@@ -66,10 +81,11 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
-- (void)viewDidUnload {
+- (void)viewDidUnload 
+{
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+
+	DDLogVerbose(@"SignIn.viewDidUnload");
 }
 
 #pragma mark -

@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PublicViewController.h"
+#import "PublicViewController_Shared.h"
 
 
-@interface PublicViewController_Phone : PublicViewController {
+@interface PublicViewController_Phone : PublicViewController_Shared {
 
 }
 

@@ -287,7 +287,7 @@
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>MobileNavigationController</string>
-							<string>PublicViewController</string>
+							<string>PublicViewController_Shared</string>
 							<string>UIWindow</string>
 						</object>
 					</object>
@@ -307,7 +307,7 @@
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">publicViewController</string>
-								<string key="candidateClassName">PublicViewController</string>
+								<string key="candidateClassName">PublicViewController_Shared</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">window</string>
@@ -379,7 +379,15 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">PublicViewController</string>
+					<string key="className">PublicViewController_Pad</string>
+					<string key="superclassName">PublicViewController_Shared</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">iPad/PublicViewController_Pad.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">PublicViewController_Shared</string>
 					<string key="superclassName">UIViewController</string>
 					<object class="NSMutableDictionary" key="actions">
 						<bool key="EncodedWithXMLCoder">YES</bool>
@@ -425,16 +433,8 @@
 						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Shared/PublicViewController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">PublicViewController_Pad</string>
-					<string key="superclassName">PublicViewController</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">iPad/PublicViewController_Pad.h</string>
+						<string key="majorKey">IBUserSource</string>
+						<string key="minorKey"/>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

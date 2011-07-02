@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SignInViewController.h"
+#import "SignInViewController_Shared.h"
 
 
-@interface PublicViewController : UIViewController <SignInDelegate> {
+@interface PublicViewController_Shared : UIViewController <SignInDelegate> {
 
 	IBOutlet UIImageView* background;
 	

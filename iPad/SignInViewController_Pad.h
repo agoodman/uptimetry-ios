@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SignInViewController.h"
+#import "SignInViewController_Shared.h"
 
 
-@interface SignInViewController_Pad : SignInViewController {
+@interface SignInViewController_Pad : SignInViewController_Shared {
 
 }
 

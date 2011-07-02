@@ -29,7 +29,7 @@ static int ddLogLevel = LOG_LEVEL_ERROR;
 	[FlurryAPI logEvent:@"SignIn"];
 	DDLogVerbose(@"Sign In");
 	
-	SignInViewController* tSignIn = [[[SignInViewController_Phone alloc] initWithNibName:@"SignInView_Phone" bundle:[NSBundle mainBundle]] autorelease];
+	SignInViewController_Phone* tSignIn = [[[SignInViewController_Phone alloc] initWithNibName:@"SignInView_Phone" bundle:[NSBundle mainBundle]] autorelease];
 	tSignIn.delegate = self;
 	MobileNavigationController* tWrapper = [[[MobileNavigationController alloc] initWithRootViewController:tSignIn] autorelease];
 	[self presentModalViewController:tWrapper animated:YES];

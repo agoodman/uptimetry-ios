@@ -12,11 +12,13 @@
 #import "MobileNavigationController.h"
 
 
+static int ddLogLevel = LOG_LEVEL_VERBOSE;
+
 @implementation PublicViewController_Pad
 
 - (IBAction)signIn
 {
-	SignInViewController* tSignIn = [[[SignInViewController_Pad alloc] init] autorelease];
+	SignInViewController_Pad* tSignIn = [[[SignInViewController_Pad alloc] init] autorelease];
 	tSignIn.delegate = self;
 	MobileNavigationController* tNav = [[[MobileNavigationController alloc] initWithRootViewController:tSignIn] autorelease];
 	[self presentModalViewController:tNav animated:YES];

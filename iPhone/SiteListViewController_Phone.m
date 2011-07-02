@@ -8,6 +8,8 @@
 
 #import "SiteListViewController_Phone.h"
 #import "SiteEditViewController.h"
+#import "UIAlertView+BlocksKit.h"
+#import "SubscriptionListViewController_Shared.h"
 
 
 @implementation SiteListViewController_Phone
@@ -20,11 +22,34 @@
 		[self.navigationController popViewControllerAnimated:YES];
 	};
 	tCreate.doneBlock = ^(Site* aSite){
-		[SiteRequest requestCreateSite:aSite 
-							   success:^(Site* aSite) {
-								   [self.navigationController popViewControllerAnimated:YES];
-							   } 
-							   failure:^{}];
+		SiteBlock tSuccess = ^(Site* aSite) {
+			NSMutableArray* tSites = [NSMutableArray arrayWithArray:self.sites];
+			[tSites addObject:aSite];
+			self.sites = tSites;
+			
+			[self.navigationController popViewControllerAnimated:YES];
+			[self.tableView reloadData];
+		};
+		
+		SiteErrorBlock tFailure = ^(int aStatusCode, NSArray* aErrors) {
+			if( aStatusCode==402 ) {
+				UIAlertView* tAlert = [UIAlertView alertWithTitle:@"Subscription Upgrade Required" message:@"You must upgrade your subscription before you can add a site"];
+				[tAlert addButtonWithTitle:@"Upgrade" handler:^{
+					SubscriptionListViewController_Shared* tSubs = [[[SubscriptionListViewController_Shared alloc] init] autorelease];
+					tSubs.successBlock = ^(NSString* aProductIdentifier) { 
+						[self.navigationController popViewControllerAnimated:YES]; 
+					};
+					tSubs.cancelBlock = ^{ [self.navigationController popViewControllerAnimated:YES]; };
+					[self.navigationController pushViewController:tSubs animated:YES];
+				}];
+				[tAlert setCancelButtonWithTitle:@"Cancel" handler:^{}];
+				[tAlert show];
+			}else{
+				NetworkAlert;
+			}
+		};
+
+		[SiteRequest requestCreateSite:aSite success:tSuccess failure:tFailure];
 	};
 	[self.navigationController pushViewController:tCreate animated:YES];
 }

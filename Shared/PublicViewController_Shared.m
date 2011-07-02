@@ -6,15 +6,15 @@
 //  Copyright 2011 Migrant Studios LLC. All rights reserved.
 //
 
-#import "PublicViewController.h"
+#import "PublicViewController_Shared.h"
 #import "AppDelegate_Shared.h"
 #import "FlurryAPI.h"
 #import "MobileNavigationController.h"
 
 
-static int ddLogLevel = LOG_LEVEL_ERROR;
+static int ddLogLevel = LOG_LEVEL_VERBOSE;
 
-@implementation PublicViewController
+@implementation PublicViewController_Shared
 
 #pragma mark IBActions
 

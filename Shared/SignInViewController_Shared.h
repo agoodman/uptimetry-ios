@@ -1,5 +1,5 @@
 //
-//  SignInViewController.h
+//  SignInViewController_Shared.h
 //  verifip
 //
 //  Created by Aubrey Goodman on 6/1/10.
@@ -16,7 +16,7 @@
 @end
 
 
-@interface SignInViewController : UIViewController <SessionRequestDelegate> {
+@interface SignInViewController_Shared : UIViewController <SessionRequestDelegate> {
 
 	id<SignInDelegate> delegate;
 	UITextField* email;
