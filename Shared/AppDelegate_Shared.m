@@ -29,9 +29,13 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions 
 {
+	// setup logging first!
+	[DDLog addLogger:[DDTTYLogger sharedInstance]];
+		
 	// configure IK to listen for payment transactions
 	[InventoryKit registerWithPaymentQueue];
-	[InventoryKit setApiToken:@"806ce0cdd2"];
+	[InventoryKit useSandbox:YES];
+	[InventoryKit setApiToken:@"d04d10eb3a"];
 	
 	// set default http timeout
 	[ASIHTTPRequest setDefaultTimeOutSeconds:5];
@@ -39,9 +43,6 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 	// start flurry session
 	[FlurryAPI startSession:@"5JTUR7IT3A12S4XS1EIE"];
 
-	// setup logging
-	[DDLog addLogger:[DDTTYLogger sharedInstance]];
-	
 	// default server url
 	NSString* tHost = [[NSUserDefaults standardUserDefaults] stringForKey:@"ServerUrl"];
 	if( tHost==nil ) {
@@ -89,6 +90,9 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (void)didSignIn
 {
+	// configure IK with current user
+	[InventoryKit setCustomerEmail:[[NSUserDefaults standardUserDefaults] stringForKey:@"UserEmail"]];
+	
 	DDLogVerbose(@"didSignIn");
 	[navigationController popToRootViewControllerAnimated:NO];
 	[publicViewController.view removeFromSuperview];
