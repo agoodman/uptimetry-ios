@@ -15,7 +15,7 @@
 
 + (NSString*)getRemoteCollectionName
 {
-	return @"sessions";
+	return @"session";
 }
 
 @end
