@@ -19,6 +19,29 @@ static int ddLogLevel = LOG_LEVEL_ERROR;
 
 @synthesize delegate, action;
 
++ (void)requestUser:(int)aUserId success:(UserBlock)successBlock failure:(ErrorBlock)failureBlock
+{
+	NSString* tPath = [NSString stringWithFormat:@"%@user.json",[User getRemoteSite]];
+	ASIHTTPRequest* tRequest = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:tPath]];
+	[tRequest setCompletionBlock:^{
+		int tStatusCode = [tRequest responseStatusCode];
+		if( tStatusCode==200 ) {
+			NSString* tJson = [tRequest responseString];
+			NSDictionary* tDict = [tJson JSONValue];
+			NSDictionary* tUserDict = [tDict objectForKey:@"user"];
+			User* tUser = [User userWithDictionary:tUserDict];
+			successBlock(tUser);
+		}else{
+			failureBlock(tStatusCode, [tRequest responseString]);
+		}
+	}];
+	[tRequest setFailedBlock:^{
+		int tStatusCode = [tRequest responseStatusCode];
+		failureBlock(tStatusCode, [tRequest responseString]);
+	}];
+	[tRequest startAsynchronous];
+}
+
 + (UserRequest*)requestCreateUser:(User *)user delegate:(id <UserRequestDelegate>)delegate
 {
 	return [[UserRequest alloc] initWithAction:@"create" withObject:user delegate:delegate];

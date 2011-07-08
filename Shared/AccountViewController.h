@@ -10,18 +10,21 @@
 #import "User.h"
 #import "SessionRequest.h"
 #import "UserRequest.h"
+#import "InventoryKit.h"
 
 
-@interface AccountViewController : UITableViewController <UIAlertViewDelegate, SessionRequestDelegate, UserRequestDelegate> {
+@interface AccountViewController : UITableViewController <UIAlertViewDelegate, SessionRequestDelegate, UserRequestDelegate, IKRestoreDelegate> {
 
 	UIAlertView* signOutConfirm;
 	User* user;
-
+	NSArray* subscriptions;
+	
 	NSString* editingField;
 	
 }
 
 @property (nonatomic, retain) User* user;
+@property (retain) NSArray* subscriptions;
 
 
 @end

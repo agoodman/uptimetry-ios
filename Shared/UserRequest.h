@@ -12,6 +12,9 @@
 #import "NSString+SBJSON.h"
 
 
+typedef void (^UserBlock)(User*);
+
+
 @protocol UserRequestDelegate
 -(void)userCreated:(User*)user;
 -(void)userReceived:(User*)user;
@@ -32,6 +35,7 @@
 @property (nonatomic, assign) id<UserRequestDelegate> delegate;
 @property (nonatomic, retain) NSString* action;
 
++(void)requestUser:(int)aUserId success:(UserBlock)successBlock failure:(ErrorBlock)failureBlock;
 +(UserRequest*)requestCreateUser:(User*)user delegate:(id<UserRequestDelegate>)delegate;
 +(UserRequest*)requestReadUser:(User*)user delegate:(id<UserRequestDelegate>)delegate;
 +(UserRequest*)requestUpdateUser:(User*)user delegate:(id<UserRequestDelegate>)delegate;

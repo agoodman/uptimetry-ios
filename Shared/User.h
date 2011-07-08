@@ -19,6 +19,7 @@
 	NSString* password;
 	BOOL termsOfServiceAccepted;
 	BOOL emailConfirmed;
+	NSNumber* siteAllowance;
 	
 }
 
@@ -29,6 +30,7 @@
 @property (nonatomic, retain) NSString* password;
 @property BOOL termsOfServiceAccepted;
 @property BOOL emailConfirmed;
+@property (nonatomic, retain) NSNumber* siteAllowance;
 
 +(User*)userWithDictionary:(NSDictionary*)dict;
 

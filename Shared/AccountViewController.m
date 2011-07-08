@@ -10,6 +10,7 @@
 #import "CaptionLabelCell.h"
 #import "AppDelegate_Shared.h"
 #import "SingleLabelTextFieldViewController.h"
+#import "SubscriptionListViewController_Shared.h"
 
 
 @interface AccountViewController (private)
@@ -19,7 +20,7 @@
 
 @implementation AccountViewController
 
-@synthesize user;
+@synthesize user, subscriptions;
 
 - (id)init 
 {
@@ -111,23 +112,17 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView*)tableView 
 {
-    return 2;
+    return 3;
 }
 
 
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section 
 {
-	if( section==0 ) {
-		return 1;
+	if( section==2 ) {
+		return 2 + self.subscriptions.count;
 	}
-	if( section==2 || section==3 ) {
-		return 1;
-	}
-	if( section==1 ) {
-		return 1;
-	}
-    return 0;
+    return 1;
 }
 
 
@@ -172,13 +167,19 @@
 			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		}
 	}else if( indexPath.section==2 ) {
-//		cell.caption.text = @"";
-//		cell.label.text = @"Settings";
-//		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-//	}else if( indexPath.section==3 ) {
-		cell.caption.text = @"";
-		cell.label.text = @"Sign Out";
-		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+		if( indexPath.row==0 ) {
+			cell.caption.text = @"purchase";
+			cell.label.text = @"Select Subscription";
+			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+		}else if( indexPath.row>0 && indexPath.row-1<self.subscriptions.count ) {
+			cell.caption.text = @"active";
+			cell.label.text = [self.subscriptions objectAtIndex:indexPath.row-1];
+			cell.accessoryType = UITableViewCellAccessoryCheckmark;
+		}else{
+			cell.caption.text = @"reset";
+			cell.label.text = @"Restore Purchases";
+			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+		}
 	}
 	
     return cell;
@@ -224,12 +225,18 @@
 			[[[[UIAlertView alloc] initWithTitle:@"TODO" message:@"reset password" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK",nil] autorelease] show];
 		}
 	}else if( indexPath.section==2 ) {
-//		NSString* tUrl = [[NSUserDefaults standardUserDefaults] stringForKey:@"ServerUrl"];
-//		SettingsViewController* tSettings = [[SettingsViewController alloc] initWithUrl:tUrl];
-//		tSettings.delegate = self;
-//		[self.navigationController pushViewController:tSettings animated:YES];
-//		[tSettings release];
-//	}else if( indexPath.section==3 ) {
+		if( indexPath.row==0 ) {
+			SubscriptionListViewController_Shared* tSubs = [[[SubscriptionListViewController_Shared alloc] init] autorelease];
+			tSubs.successBlock = ^(NSString* aProductIdentifier) { 
+				[self.navigationController popViewControllerAnimated:YES];
+			};
+			tSubs.cancelBlock = ^{ [self.navigationController popViewControllerAnimated:YES]; };
+			[self.navigationController pushViewController:tSubs animated:YES];
+		}else if( indexPath.row>0 && indexPath.row-1<self.subscriptions.count ) {
+			
+		}else{
+			[InventoryKit restoreProducts:self];
+		}
 	}
 }
 
@@ -245,7 +252,7 @@
 	}else if( section==1 ) {
 		return @"Account Information";
 	}else{
-		return @"Session";
+		return @"Subscription";
 	}
 }
 
@@ -324,6 +331,15 @@
 		[self userRequestFailed];
 	}else{
 		self.user = aUser;
+		NSDictionary* tDict = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"IKSubscriptionProducts" ofType:@"plist"]];
+		NSMutableArray* tSubscriptions = [NSMutableArray array];
+		for (NSString* productId in [tDict allKeys]) {
+			if( [InventoryKit productActivated:productId] ) {
+				NSDictionary* tSub = [tDict objectForKey:productId];
+				[tSubscriptions addObject:[tSub objectForKey:@"title"]];
+			}
+		}
+		self.subscriptions = tSubscriptions;
 		[self.tableView reloadData];
 	}
 }
@@ -340,6 +356,19 @@
 - (void)userRequestFailed
 {
 	[self sessionDeleted];
+}
+
+#pragma mark -
+#pragma mark IKRestoreDelegate
+
+- (void)productRestoreFailed:(NSError *)error
+{
+	Alert(@"Restore Failed",@"Unable to restore products");
+}
+
+- (void)productsRestored
+{
+	Alert(@"Products Restored",@"Your products were successfully restored.");
 }
 
 #pragma mark -

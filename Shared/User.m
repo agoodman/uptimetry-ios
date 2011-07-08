@@ -13,7 +13,7 @@
 
 @implementation User
 
-@synthesize userId, firstName, lastName, email, password, termsOfServiceAccepted, emailConfirmed;
+@synthesize userId, firstName, lastName, email, password, termsOfServiceAccepted, emailConfirmed, siteAllowance;
 
 + (User*)findCurrent
 {
@@ -32,6 +32,7 @@
 	tUser.email = [dict objectForKey:@"email"];
 	tUser.termsOfServiceAccepted = [dict objectForKey:@"terms_of_service_accepted"];
 	tUser.emailConfirmed = [dict objectForKey:@"email_confirmed"];
+	tUser.siteAllowance = [dict objectForKey:@"site_allowance"];
 	return tUser;
 }
 
@@ -47,6 +48,7 @@
 	[lastName release];
 	[email release];
 	[password release];
+	[siteAllowance release];
 	[super dealloc];
 }
 
