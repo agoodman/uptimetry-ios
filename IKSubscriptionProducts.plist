@@ -3,14 +3,39 @@
 <plist version="1.0">
 <dict>
 	<key>com.uptimetry.subscription.micro</key>
-	<string></string>
+	<dict>
+		<key>title</key>
+		<string>Micro</string>
+		<key>duration</key>
+		<string>2592000</string>
+	</dict>
 	<key>com.uptimetry.subscription.small</key>
-	<string></string>
+	<dict>
+		<key>title</key>
+		<string>Small</string>
+		<key>duration</key>
+		<string>2592000</string>
+	</dict>
 	<key>com.uptimetry.subscription.medium</key>
-	<string></string>
+	<dict>
+		<key>title</key>
+		<string>Medium</string>
+		<key>duration</key>
+		<string>2592000</string>
+	</dict>
 	<key>com.uptimetry.subscription.large</key>
-	<string></string>
+	<dict>
+		<key>title</key>
+		<string>Large</string>
+		<key>duration</key>
+		<string>2592000</string>
+	</dict>
 	<key>com.uptimetry.subscription.jumbo</key>
-	<string></string>
+	<dict>
+		<key>title</key>
+		<string>Jumbo</string>
+		<key>duration</key>
+		<string>2592000</string>
+	</dict>
 </dict>
 </plist>
