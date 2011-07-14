@@ -9,6 +9,7 @@
 #import "SubscriptionListViewController_Shared.h"
 #import "UIActionSheet+BlocksKit.h"
 #import "UIBarButtonItem+BlocksKit.h"
+#import "UserRequest.h"
 
 
 static int ddLogLevel = LOG_LEVEL_VERBOSE;
@@ -113,6 +114,11 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 	NSDictionary* tSubscription = [subscriptions objectAtIndex:indexPath.row];
 	cell.textLabel.text = [tSubscription objectForKey:@"title"];
 	cell.detailTextLabel.text = [tSubscription objectForKey:@"description"];
+	if( [InventoryKit productActivated:[tSubscription objectForKey:@"identifier"]] ) {
+		cell.accessoryType = UITableViewCellAccessoryCheckmark;
+	}else{
+		cell.accessoryType = UITableViewCellAccessoryNone;
+	}
     
     return cell;
 }
@@ -217,9 +223,24 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 - (void)purchaseDidCompleteForProductWithKey:(NSString *)productKey
 {
 	dispatch_async(dispatch_get_main_queue(), ^{
-		[hud hide:YES];
-		successBlock(productKey);
+		hud.labelText = @"Verifying Purchase";
 	});
+	
+	UserBlock tSuccess = ^(User* aUser) {
+		DDLogVerbose(@"Received user - email: %@, site_allowance: %@",aUser.email,aUser.siteAllowance);
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[hud hide:YES];
+			successBlock(productKey);
+		});
+	};
+
+	ErrorBlock tFailure = ^(int aStatusCode, NSString* aResponse) {
+		DDLogVerbose(@"Error retrieving user after purchase: (%d) %@",aStatusCode,aResponse);
+	};
+	
+	[UserRequest requestUser:[[NSUserDefaults standardUserDefaults] integerForKey:@"UserId"] 
+					 success:tSuccess 
+					 failure:tFailure];
 }
 
 - (void)purchaseDidFailForProductWithKey:(NSString *)productKey

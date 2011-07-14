@@ -44,6 +44,12 @@
 				}];
 				[tAlert setCancelButtonWithTitle:@"Cancel" handler:^{}];
 				[tAlert show];
+			}else if( aStatusCode==422 ) {
+				NSMutableString* tMsg = [NSMutableString string];
+				for (NSString* tError in aErrors) {
+					[tMsg appendFormat:@"%@\n",tError];
+				}
+				Alert(@"Invalid Fields",tMsg);
 			}else{
 				NetworkAlert;
 			}
