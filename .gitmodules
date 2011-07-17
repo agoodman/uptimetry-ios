@@ -13,3 +13,6 @@
 [submodule "BlocksKit"]
 	path = BlocksKit
 	url = git@github.com:agoodman/BlocksKit.git
+[submodule "ennui"]
+	path = ennui
+	url = git@github.com:agoodman/ennui.git
