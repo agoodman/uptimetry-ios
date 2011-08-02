@@ -9,6 +9,7 @@
 #import "SubscriptionListViewController_Shared.h"
 #import "UIActionSheet+BlocksKit.h"
 #import "UIBarButtonItem+BlocksKit.h"
+#import "NSObject+BlocksKit.h"
 #import "UserRequest.h"
 
 
@@ -192,11 +193,12 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 		};
 		
 		IKStringBlock tSuccess = ^(NSString* productIdentifier) {
-			ASIBasicBlock tUserStart = ^{
-				async_main(^{ 
-					hud.labelText = @"Verifying Purchase"; 
-				});
-			};
+			async_main(^{ 
+				hud.progress = 0;
+				hud.labelText = @"Verifying Purchase"; 
+			});
+			
+			ASIBasicBlock tUserStart = ^{};
 			
 			UserBlock tUserSuccess = ^(User* aUser) {
 				DDLogVerbose(@"Received user - email: %@, site_allowance: %@",aUser.email,aUser.siteAllowance);
@@ -210,10 +212,22 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 				DDLogVerbose(@"Error retrieving user after purchase: (%d) %@",aStatusCode,aResponse);
 			};
 			
-			[UserRequest requestUser:[[NSUserDefaults standardUserDefaults] integerForKey:@"UserId"] 
-						  startBlock:tUserStart
-						successBlock:tUserSuccess 
-						failureBlock:tUserFailure];
+			// fake a progress bar
+			for (float k=0;k<10;k+=2.5)
+				[NSObject performBlock:^{
+					async_main(^{
+						hud.progress = k / 10.0;
+					});
+				}
+							afterDelay:k];
+			
+			[NSObject performBlock:^{
+				[UserRequest requestUser:[[NSUserDefaults standardUserDefaults] integerForKey:@"UserId"] 
+							  startBlock:tUserStart
+							successBlock:tUserSuccess 
+							failureBlock:tUserFailure];
+			} 
+					   afterDelay:10.0];
 		};
 		
 		IKErrorBlock tFailure = ^(int aCode, NSString* aDescription) {
