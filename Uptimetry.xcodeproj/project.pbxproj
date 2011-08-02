@@ -125,7 +125,6 @@
 		7E8BAB0E12DB9786008BA955 /* public-bg12.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E8BAB0D12DB9786008BA955 /* public-bg12.png */; };
 		7E8BAB1112DB9792008BA955 /* public-bg12@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E8BAB0F12DB9792008BA955 /* public-bg12@2x~iphone.png */; };
 		7E8BAB1212DB9792008BA955 /* public-bg12~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E8BAB1012DB9792008BA955 /* public-bg12~iphone.png */; };
-		7E923B6013E7874D00557419 /* PlanCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7E923B5F13E7874D00557419 /* PlanCell.xib */; };
 		7E96338F13BB94B60004531A /* SubscriptionListViewController_Shared.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E96338E13BB94B60004531A /* SubscriptionListViewController_Shared.m */; };
 		7E9633CC13BBAE660004531A /* NSArray+BlocksKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E9633AD13BBAE660004531A /* NSArray+BlocksKit.m */; };
 		7E9633CD13BBAE660004531A /* NSDictionary+BlocksKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E9633AF13BBAE660004531A /* NSDictionary+BlocksKit.m */; };
@@ -440,7 +439,6 @@
 		7E8BAB0D12DB9786008BA955 /* public-bg12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "public-bg12.png"; sourceTree = "<group>"; };
 		7E8BAB0F12DB9792008BA955 /* public-bg12@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "public-bg12@2x~iphone.png"; sourceTree = "<group>"; };
 		7E8BAB1012DB9792008BA955 /* public-bg12~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "public-bg12~iphone.png"; sourceTree = "<group>"; };
-		7E923B5F13E7874D00557419 /* PlanCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = PlanCell.xib; path = Shared/PlanCell.xib; sourceTree = "<group>"; };
 		7E96338D13BB94B60004531A /* SubscriptionListViewController_Shared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SubscriptionListViewController_Shared.h; path = Shared/SubscriptionListViewController_Shared.h; sourceTree = "<group>"; };
 		7E96338E13BB94B60004531A /* SubscriptionListViewController_Shared.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SubscriptionListViewController_Shared.m; path = Shared/SubscriptionListViewController_Shared.m; sourceTree = "<group>"; };
 		7E9633A813BBAE660004531A /* BKMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKMacros.h; sourceTree = "<group>"; };
@@ -585,7 +583,6 @@
 		28EEBF621118D79A00187D67 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				7E923B5F13E7874D00557419 /* PlanCell.xib */,
 				7EE3FB3D139EB0D9009A9C78 /* indicator-alert.png */,
 				7EE3FB3E139EB0D9009A9C78 /* indicator-notice.png */,
 				7EE3FB3F139EB0D9009A9C78 /* indicator-ok.png */,
@@ -1205,7 +1202,6 @@
 				7EE3FB42139EB0D9009A9C78 /* indicator-ok.png in Resources */,
 				7EB197A913BA551D007FBAA4 /* IKSubscriptionProducts.plist in Resources */,
 				7E27CD6A13BA788100F19A86 /* IKSubscriptionPrices.plist in Resources */,
-				7E923B6013E7874D00557419 /* PlanCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
