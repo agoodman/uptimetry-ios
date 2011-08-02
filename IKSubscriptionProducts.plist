@@ -5,35 +5,35 @@
 	<key>com.uptimetry.subscription.micro</key>
 	<dict>
 		<key>title</key>
-		<string>Micro</string>
+		<string>Micro - 3 URLs</string>
 		<key>duration</key>
 		<string>2592000</string>
 	</dict>
 	<key>com.uptimetry.subscription.small</key>
 	<dict>
 		<key>title</key>
-		<string>Small</string>
+		<string>Small - 5 URLs</string>
 		<key>duration</key>
 		<string>2592000</string>
 	</dict>
 	<key>com.uptimetry.subscription.medium</key>
 	<dict>
 		<key>title</key>
-		<string>Medium</string>
+		<string>Medium - 10 URLs</string>
 		<key>duration</key>
 		<string>2592000</string>
 	</dict>
 	<key>com.uptimetry.subscription.large</key>
 	<dict>
 		<key>title</key>
-		<string>Large</string>
+		<string>Large - 20 URLs</string>
 		<key>duration</key>
 		<string>2592000</string>
 	</dict>
 	<key>com.uptimetry.subscription.jumbo</key>
 	<dict>
 		<key>title</key>
-		<string>Jumbo</string>
+		<string>Jumbo - 50 URLs</string>
 		<key>duration</key>
 		<string>2592000</string>
 	</dict>

@@ -35,7 +35,8 @@ typedef void (^UserBlock)(User*);
 @property (nonatomic, assign) id<UserRequestDelegate> delegate;
 @property (nonatomic, retain) NSString* action;
 
-+(void)requestUser:(int)aUserId success:(UserBlock)successBlock failure:(ErrorBlock)failureBlock;
++(void)requestUser:(int)aUserId startBlock:(ASIBasicBlock)startBlock successBlock:(UserBlock)successBlock failureBlock:(ErrorBlock)failureBlock;
++(void)requestCreateUser:(User*)aUser startBlock:(ASIBasicBlock)startBlock successBlock:(UserBlock)successBlock failureBlock:(ErrorBlock)failureBlock;
 +(UserRequest*)requestCreateUser:(User*)user delegate:(id<UserRequestDelegate>)delegate;
 +(UserRequest*)requestReadUser:(User*)user delegate:(id<UserRequestDelegate>)delegate;
 +(UserRequest*)requestUpdateUser:(User*)user delegate:(id<UserRequestDelegate>)delegate;

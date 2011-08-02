@@ -131,7 +131,8 @@ static int ddLogLevel = LOG_LEVEL_ERROR;
 - (void)controlSelected:(UISegmentedControl*)aControl
 {
 	if( aControl.selectedSegmentIndex==0 ) {
-		// refresh
+		// force refresh
+		self.sites = nil;
 		[self refreshSites];
 	}else{
 		// add
@@ -141,13 +142,16 @@ static int ddLogLevel = LOG_LEVEL_ERROR;
 
 - (void)refreshSites
 {
-	[self showHud:@"Loading"];
-	[SiteRequest requestSites:self];
+	if( self.sites==nil ) {
+		[self showHud:@"Loading"];
+		[SiteRequest requestSites:self];
+	}
 }
 
 - (void)addSite
 {
 	SiteEditViewController* tCreate = [[[SiteEditViewController alloc] initWithNibName:@"SiteEditView" bundle:[NSBundle mainBundle]] autorelease];
+	MobileNavigationController* tWrapper = [[[MobileNavigationController alloc] initWithRootViewController:tCreate] autorelease];
 	tCreate.site = [[[Site alloc] init] autorelease];
 	tCreate.cancelBlock = ^{
 		[self.navigationController dismissModalViewControllerAnimated:YES];
@@ -168,19 +172,26 @@ static int ddLogLevel = LOG_LEVEL_ERROR;
 				[tAlert addButtonWithTitle:@"Upgrade" handler:^{
 					SubscriptionListViewController_Shared* tSubs = [[[SubscriptionListViewController_Shared alloc] init] autorelease];
 					tSubs.successBlock = ^(NSString* aProductIdentifier) { 
-						[self.navigationController dismissModalViewControllerAnimated:YES]; 
+						[tWrapper popViewControllerAnimated:YES]; 
 					};
-					tSubs.cancelBlock = ^{ [self.navigationController dismissModalViewControllerAnimated:YES]; };
-					[self.navigationController presentModalViewController:tSubs animated:YES];
+					tSubs.cancelBlock = ^{ [tWrapper popViewControllerAnimated:YES]; };
+					[tWrapper pushViewController:tSubs animated:YES];
 				}];
 				[tAlert setCancelButtonWithTitle:@"Cancel" handler:^{}];
 				[tAlert show];
+			}else if( aStatusCode==422 ) {
+				NSMutableString* tMsg = [NSMutableString string];
+				for (NSString* tError in aErrors) {
+					[tMsg appendFormat:@"%@\n",tError];
+				}
+				Alert(@"Invalid Fields",tMsg);
+			}else{
+				NetworkAlert;
 			}
 		};
 		
 		[SiteRequest requestCreateSite:aSite success:tSuccess failure:tFailure];
 	};
-	MobileNavigationController* tWrapper = [[[MobileNavigationController alloc] initWithRootViewController:tCreate] autorelease];
 	[self.navigationController presentModalViewController:tWrapper animated:YES];
 }
 

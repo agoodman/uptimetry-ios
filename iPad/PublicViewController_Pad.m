@@ -28,6 +28,17 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 {
 	// no parent implementation; super not required
 	SignUpViewController_Pad* tSignUp = [[[SignUpViewController_Pad alloc] init] autorelease];
+	tSignUp.successBlock = ^(User* aUser) {
+		async_main(^{
+			[self dismissModalViewControllerAnimated:YES];
+			Alert(@"Account Created",@"Sign in to get started");
+		});
+	};
+	tSignUp.failureBlock = ^{
+		async_main(^{
+			[self dismissModalViewControllerAnimated:YES];
+		});
+	};
 	
 	MobileNavigationController* tWrapper = [[[MobileNavigationController alloc] initWithRootViewController:tSignUp] autorelease];
 	[self presentModalViewController:tWrapper animated:YES];

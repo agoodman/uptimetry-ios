@@ -21,7 +21,7 @@ static int ddLogLevel = LOG_LEVEL_ERROR;
 		[self showHud:@"Connecting to iTunes"];
 		[tRequest start];
 	}else{
-		Alert(@"Service Unavailable",@"Please try again later");
+		Alert(@"iTunes Unavailable",@"Can not connect to iTunes.");
 	}
 }
 

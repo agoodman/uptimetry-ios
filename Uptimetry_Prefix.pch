@@ -13,3 +13,8 @@
 #define NetworkAlert Alert(@"Network error",@"Please check your network connection.")
 
 #define kProductDisableAd @"com.uptimetry.ad"
+
+typedef void (^ErrorBlock)(int,NSString*);
+
+#define async_main(aBlock) dispatch_async(dispatch_get_main_queue(), aBlock)
+#define async_global(aBlock) dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), aBlock)

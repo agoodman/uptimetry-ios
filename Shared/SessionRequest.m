@@ -46,6 +46,7 @@ static int ddLogLevel = LOG_LEVEL_ERROR;
 		NSString* tJson = [session performSelector:[Session getRemoteSerializeMethod] withObject:tExclusions];
 		[tReq appendPostData:[tJson dataUsingEncoding:NSISOLatin1StringEncoding]];
 		[tReq addRequestHeader:@"Content-Type" value:@"application/json"];
+		[tReq setRequestMethod:@"POST"];
 	}else{
 		[tReq setRequestMethod:@"DELETE"];
 	}

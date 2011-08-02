@@ -9,9 +9,16 @@
 #import "SiteListViewController_Pad.h"
 #import "MobileNavigationController.h"
 #import "SiteEditViewController.h"
+#import "AccountViewController_Pad.h"
 
 
 @implementation SiteListViewController_Pad
+
+- (void)showAccount
+{
+	AccountViewController_Pad* tAccount = [[[AccountViewController_Pad alloc] init] autorelease];
+	[self.navigationController pushViewController:tAccount animated:YES];	
+}
 
 - (void)viewDidLoad
 {

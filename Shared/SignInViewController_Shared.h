@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HudViewController.h"
 #import "SessionRequest.h"
 
 
@@ -16,7 +17,7 @@
 @end
 
 
-@interface SignInViewController_Shared : UIViewController <SessionRequestDelegate> {
+@interface SignInViewController_Shared : HudViewController <SessionRequestDelegate> {
 
 	id<SignInDelegate> delegate;
 	UITextField* email;

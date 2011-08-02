@@ -18,5 +18,7 @@
 
 @property (retain) MBProgressHUD* hud;
 
+-(void)showHud:(NSString*)aLabel;
+-(void)hideHud;
 
 @end

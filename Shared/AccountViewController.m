@@ -15,6 +15,7 @@
 
 @interface AccountViewController (private)
 -(void)refreshUser;
+-(void)showSubscriptionSelect;
 @end
 
 
@@ -106,6 +107,34 @@
 {
 	signOutConfirm = [[UIAlertView alloc] initWithTitle:@"Confirm Sign Out" message:@"Are you sure?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK",nil];
 	[signOutConfirm show];
+}
+
+- (void)showSubscriptionSelect
+{
+	SubscriptionListViewController_Shared* tSubs = [[[SubscriptionListViewController_Shared alloc] init] autorelease];
+	tSubs.successBlock = ^(NSString* aProductIdentifier) { 
+		[self.navigationController popViewControllerAnimated:YES];
+	};
+	tSubs.cancelBlock = ^{ [self.navigationController popViewControllerAnimated:YES]; };
+	[self.navigationController pushViewController:tSubs animated:YES];
+}
+
+- (void)restoreProducts
+{
+	IKBasicBlock tSuccess = ^{
+		async_main(^{
+			Alert(@"Products Restored",@"Your products were successfully restored.");
+		});
+	};
+	
+	IKErrorBlock tFailure = ^(int aCode, NSString* aDescription) {
+		async_main(^{
+			Alert(@"Restore Failed",aDescription);
+		});
+	};
+	
+	[InventoryKit restoreProductsWithSuccessBlock:tSuccess
+									 failureBlock:tFailure];
 }
 
 #pragma mark Table view methods
@@ -226,16 +255,11 @@
 		}
 	}else if( indexPath.section==2 ) {
 		if( indexPath.row==0 ) {
-			SubscriptionListViewController_Shared* tSubs = [[[SubscriptionListViewController_Shared alloc] init] autorelease];
-			tSubs.successBlock = ^(NSString* aProductIdentifier) { 
-				[self.navigationController popViewControllerAnimated:YES];
-			};
-			tSubs.cancelBlock = ^{ [self.navigationController popViewControllerAnimated:YES]; };
-			[self.navigationController pushViewController:tSubs animated:YES];
+			[self showSubscriptionSelect];
 		}else if( indexPath.row>0 && indexPath.row-1<self.subscriptions.count ) {
 			
 		}else{
-			[InventoryKit restoreProducts:self];
+			[self restoreProducts];
 		}
 	}
 }

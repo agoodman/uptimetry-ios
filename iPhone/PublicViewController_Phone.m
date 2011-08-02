@@ -19,7 +19,7 @@ static int ddLogLevel = LOG_LEVEL_ERROR;
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation 
 {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return (interfaceOrientation == UIInterfaceOrientationPortrait || interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown);
 }
 
 #pragma mark -
@@ -39,6 +39,17 @@ static int ddLogLevel = LOG_LEVEL_ERROR;
 {
 	// no parent implementation; super not required
 	SignUpViewController_Phone* tSignUp = [[[SignUpViewController_Phone alloc] init] autorelease];
+	tSignUp.successBlock = ^(User* aUser) {
+		async_main(^{
+			[self dismissModalViewControllerAnimated:YES];
+			Alert(@"Account Created",@"Sign in to get started");
+		});
+	};
+	tSignUp.failureBlock = ^{
+		async_main(^{
+			[self dismissModalViewControllerAnimated:YES];
+		});
+	};
 	
 	MobileNavigationController* tWrapper = [[[MobileNavigationController alloc] initWithRootViewController:tSignUp] autorelease];
 	[self presentModalViewController:tWrapper animated:YES];

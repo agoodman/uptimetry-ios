@@ -1,9 +1,9 @@
 //
 //  SignUpViewController_Shared.m
-//  VerifipMobile
+//  CraigsCrawler
 //
 //  Created by Aubrey Goodman on 10/27/10.
-//  Copyright 2010 Migrant Studios LLC. All rights reserved.
+//  Copyright 2011 Migrant Studios LLC. All rights reserved.
 //
 
 #import "SignUpViewController_Shared.h"
@@ -12,7 +12,7 @@
 
 @implementation SignUpViewController_Shared
 
-@synthesize firstName, lastName, email, password;
+@synthesize firstName, lastName, email, password, successBlock, failureBlock;
 
 - (void)viewDidLoad
 {
@@ -34,7 +34,7 @@
 - (void)cancelPressed
 {
 	[FlurryAPI logEvent:@"SignUpCancel"];
-	[self.navigationController dismissModalViewControllerAnimated:YES];
+	failureBlock();
 }
 
 - (void)donePressed
@@ -50,7 +50,38 @@
 	tUser.termsOfServiceAccepted = YES;
 	tUser.emailConfirmed = YES;
 	
-	[UserRequest requestCreateUser:tUser delegate:self];
+//	[UserRequest requestCreateUser:tUser delegate:self];
+	
+	ASIBasicBlock tStart = ^{
+		async_main(^{
+			[firstName resignFirstResponder];
+			[lastName resignFirstResponder];
+			[email resignFirstResponder];
+			[password resignFirstResponder];
+			[self showHud:@"Creating Account"];
+		});
+	};
+	
+	UserBlock tSuccess = ^(User* aUser) {
+		async_main(^{
+			[self hideHud];
+		});
+		async_global(^{
+			successBlock(aUser);
+		});
+	};
+	
+	ErrorBlock tFailure = ^(int aStatusCode, NSString* aDescription) {
+		async_main(^{
+			[self hideHud];
+			Alert(@"Unable to create account",aDescription);
+		});
+	};
+	
+	[UserRequest requestCreateUser:tUser 
+						startBlock:tStart
+					  successBlock:tSuccess 
+					  failureBlock:tFailure];
 }
 
 #pragma mark -
@@ -83,6 +114,7 @@
 	[firstName release];
 	[lastName release];
 	[email release];
+	[password release];
 	
 	[super dealloc];
 }

@@ -9,22 +9,31 @@
 #import "HudViewController.h"
 
 
+static int ddLogLevel = LOG_LEVEL_VERBOSE;
+
 @implementation HudViewController
 
 @synthesize hud;
 
 - (void)showHud:(NSString*)aLabel
 {
-	self.hud = [[[MBProgressHUD alloc] initWithView:self.view] autorelease];
-	hud.delegate = self;
-	hud.labelText = aLabel;
-	[self.view addSubview:hud];
-	[hud show:YES];
+	if( self.hud==nil ) {
+		DDLogVerbose(@"showHud");
+		self.hud = [[[MBProgressHUD alloc] initWithView:self.view] autorelease];
+		hud.delegate = self;
+		hud.labelText = aLabel;
+		hud.removeFromSuperViewOnHide = YES;
+		[self.view addSubview:hud];
+		[hud show:YES];
+	}
 }
 
 - (void)hideHud
 {
-	[self.hud hide:YES];
+	if( self.hud ) {
+		DDLogVerbose(@"hideHud");
+		[self.hud hide:YES];
+	}
 }
 
 #pragma mark -
@@ -32,7 +41,7 @@
 
 - (void)hudWasHidden:(MBProgressHUD*)aHud
 {
-	[aHud removeFromSuperview];
+//	[aHud removeFromSuperview];
 	self.hud = nil;
 }
 

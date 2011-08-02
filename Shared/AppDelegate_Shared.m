@@ -45,8 +45,9 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 	// default server url
 	NSString* tHost = [[NSUserDefaults standardUserDefaults] stringForKey:@"ServerUrl"];
-	if( tHost==nil ) {
-		tHost = @"http://uptimetry.com/api/";
+	if( true || tHost==nil ) {
+//		tHost = @"http://uptimetry.com/api/";
+		tHost = @"http://sandbox.uptimetry.com/api/";
 		[[NSUserDefaults standardUserDefaults] setValue:tHost forKey:@"ServerUrl"];
 		[[NSUserDefaults standardUserDefaults] synchronize];
 	}
@@ -108,6 +109,9 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (void)didSignOut
 {
+	// configure IK with no active user
+	[InventoryKit setCustomerEmail:nil];
+	
 	[publicViewController.view resignFirstResponder];
 	DDLogVerbose(@"didSignOut");
 	[navigationController.view removeFromSuperview];

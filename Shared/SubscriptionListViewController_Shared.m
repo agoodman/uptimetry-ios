@@ -18,6 +18,24 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 @synthesize subscriptions, successBlock, cancelBlock, hud;
 
+- (void)requestProducts
+{
+	if( [SKPaymentQueue canMakePayments] ) {
+		hud.labelText = @"Connecting to iTunes";
+		[hud show:YES];
+		
+		NSDictionary* tSubscriptionProducts = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"IKSubscriptionProducts" ofType:@"plist"]];
+		NSSet* tProductIds = [NSSet setWithArray:[tSubscriptionProducts allKeys]];
+		SKProductsRequest* tRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:tProductIds];
+		tRequest.delegate = self;
+		[tRequest start];
+	}else{
+		async_main(^{
+			Alert(@"iTunes Unavailable",@"Can not connect to iTunes.");
+		});
+	}
+}
+
 #pragma mark -
 #pragma mark Initialization
 
@@ -47,14 +65,8 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 	self.hud = [[[MBProgressHUD alloc] initWithView:self.navigationController.view] autorelease];
 	[self.navigationController.view addSubview:hud];
-	hud.labelText = @"Connecting to iTunes";
-	[hud show:YES];
 	
-	NSDictionary* tSubscriptionProducts = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"IKSubscriptionProducts" ofType:@"plist"]];
-	NSSet* tProductIds = [NSSet setWithArray:[tSubscriptionProducts allKeys]];
-	SKProductsRequest* tRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:tProductIds];
-	tRequest.delegate = self;
-	[tRequest start];
+	[self requestProducts];
 }
 
 /*
@@ -172,7 +184,49 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 	NSDictionary* tSubscription = [subscriptions objectAtIndex:indexPath.row];
 	UIActionSheet* tAction = [[[UIActionSheet alloc] initWithTitle:[tSubscription objectForKey:@"description"]] autorelease];
 	[tAction addButtonWithTitle:@"Select Plan" handler:^{
-		[InventoryKit purchaseProduct:[tSubscription objectForKey:@"identifier"] delegate:self];
+		IKBasicBlock tStart = ^{
+			async_main(^{
+				hud.labelText = @"Purchasing";
+				[hud show:YES];
+			});
+		};
+		
+		IKStringBlock tSuccess = ^(NSString* productIdentifier) {
+			ASIBasicBlock tUserStart = ^{
+				async_main(^{ 
+					hud.labelText = @"Verifying Purchase"; 
+				});
+			};
+			
+			UserBlock tUserSuccess = ^(User* aUser) {
+				DDLogVerbose(@"Received user - email: %@, site_allowance: %@",aUser.email,aUser.siteAllowance);
+				async_main(^{
+					[hud hide:YES];
+					successBlock(productIdentifier);
+				});
+			};
+			
+			ErrorBlock tUserFailure = ^(int aStatusCode, NSString* aResponse) {
+				DDLogVerbose(@"Error retrieving user after purchase: (%d) %@",aStatusCode,aResponse);
+			};
+			
+			[UserRequest requestUser:[[NSUserDefaults standardUserDefaults] integerForKey:@"UserId"] 
+						  startBlock:tUserStart
+						successBlock:tUserSuccess 
+						failureBlock:tUserFailure];
+		};
+		
+		IKErrorBlock tFailure = ^(int aCode, NSString* aDescription) {
+			async_main(^{
+				[hud hide:YES];
+				Alert(@"Purchase Failed",aDescription);
+			});
+		};
+		
+		[InventoryKit purchaseProduct:[tSubscription objectForKey:@"identifier"]
+						   startBlock:tStart
+						 successBlock:tSuccess
+						 failureBlock:tFailure];
 	}];
 	[tAction setCancelButtonWithTitle:@"Cancel" handler:^{}];
 	[tAction showInView:self.navigationController.view];
@@ -191,6 +245,11 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 	
 	NSMutableArray* tSubscriptions = [NSMutableArray array];
 	for (SKProduct* tProduct in response.products) {
+//		NSNumberFormatter *tCurrencyFormatter = [[[NSNumberFormatter alloc] init] autorelease];
+//		[tCurrencyFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+//		[tCurrencyFormatter setLocale:tProduct.priceLocale];
+//		NSString* tLocalizedPrice = [tCurrencyFormatter stringFromNumber:tProduct.price];
+//		DDLogVerbose(@"productId: %@, title: %@, description: %@, raw price: %@, local price: %@",tProduct.productIdentifier,tProduct.localizedTitle,tProduct.localizedDescription,tProduct.price,tLocalizedPrice);
 		DDLogVerbose(@"productId: %@, title: %@, description: %@, price: %@",tProduct.productIdentifier,tProduct.localizedTitle,tProduct.localizedDescription,tProduct.price);
 		NSDictionary* tSubscription = [NSDictionary dictionaryWithObjectsAndKeys:tProduct.productIdentifier,@"identifier",tProduct.localizedTitle,@"title",tProduct.localizedDescription,@"description",tProduct.price,@"price",nil];
 		[tSubscriptions addObject:tSubscription];
@@ -222,14 +281,18 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (void)purchaseDidCompleteForProductWithKey:(NSString *)productKey
 {
-	dispatch_async(dispatch_get_main_queue(), ^{
-		hud.labelText = @"Verifying Purchase";
-	});
+	ASIBasicBlock tStart = ^{
+		async_main(^{
+			hud.labelText = @"Verifying Purchase";
+		});
+	};
 	
 	UserBlock tSuccess = ^(User* aUser) {
 		DDLogVerbose(@"Received user - email: %@, site_allowance: %@",aUser.email,aUser.siteAllowance);
-		dispatch_async(dispatch_get_main_queue(), ^{
+		async_main(^{
 			[hud hide:YES];
+		});
+		async_global(^{
 			successBlock(productKey);
 		});
 	};
@@ -239,8 +302,9 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 	};
 	
 	[UserRequest requestUser:[[NSUserDefaults standardUserDefaults] integerForKey:@"UserId"] 
-					 success:tSuccess 
-					 failure:tFailure];
+				  startBlock:tStart
+				successBlock:tSuccess 
+				failureBlock:tFailure];
 }
 
 - (void)purchaseDidFailForProductWithKey:(NSString *)productKey

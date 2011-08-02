@@ -19,10 +19,11 @@ static int ddLogLevel = LOG_LEVEL_ERROR;
 
 @synthesize delegate, action;
 
-+ (void)requestUser:(int)aUserId success:(UserBlock)successBlock failure:(ErrorBlock)failureBlock
++ (void)requestUser:(int)aUserId startBlock:(ASIBasicBlock)startBlock successBlock:(UserBlock)successBlock failureBlock:(ErrorBlock)failureBlock
 {
 	NSString* tPath = [NSString stringWithFormat:@"%@user.json",[User getRemoteSite]];
 	ASIHTTPRequest* tRequest = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:tPath]];
+	[tRequest setStartedBlock:startBlock];
 	[tRequest setCompletionBlock:^{
 		int tStatusCode = [tRequest responseStatusCode];
 		if( tStatusCode==200 ) {
@@ -31,6 +32,39 @@ static int ddLogLevel = LOG_LEVEL_ERROR;
 			NSDictionary* tUserDict = [tDict objectForKey:@"user"];
 			User* tUser = [User userWithDictionary:tUserDict];
 			successBlock(tUser);
+		}else{
+			failureBlock(tStatusCode, [tRequest responseString]);
+		}
+	}];
+	[tRequest setFailedBlock:^{
+		int tStatusCode = [tRequest responseStatusCode];
+		failureBlock(tStatusCode, [tRequest responseString]);
+	}];
+	[tRequest startAsynchronous];
+}
+
++ (void)requestCreateUser:(User*)aUser startBlock:(ASIBasicBlock)startBlock successBlock:(UserBlock)successBlock failureBlock:(ErrorBlock)failureBlock
+{
+	NSString* tPath = [NSString stringWithFormat:@"%@",[User getRemoteCollectionPath]];
+	ASIHTTPRequest* tRequest = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:tPath]];
+	NSString* tJson = [aUser toJSONExcluding:[NSArray arrayWithObjects:@"userId",@"createdAt",@"updatedAt",@"siteAllowance",nil]];
+	[tRequest appendPostData:[tJson dataUsingEncoding:NSUTF8StringEncoding]];
+	[tRequest addRequestHeader:@"Content-Type" value:@"application/json"];
+	[tRequest setRequestMethod:@"POST"];
+	[tRequest setStartedBlock:startBlock];
+	[tRequest setCompletionBlock:^{
+		int tStatusCode = [tRequest responseStatusCode];
+		if( tStatusCode==200 ) {
+			NSString* tJson = [tRequest responseString];
+			NSDictionary* tDict = [tJson JSONValue];
+			NSDictionary* tUserDict = [tDict objectForKey:@"user"];
+			User* tUser = [User userWithDictionary:tUserDict];
+			successBlock(tUser);
+		}else if( tStatusCode==422 ) {
+			NSString* tJson = [tRequest responseString];
+			NSDictionary* tDict = [tJson JSONValue];
+			NSArray* tErrors = [tDict objectForKey:@"errors"];
+			failureBlock(tStatusCode, [tErrors componentsJoinedByString:@"\n"]);
 		}else{
 			failureBlock(tStatusCode, [tRequest responseString]);
 		}
