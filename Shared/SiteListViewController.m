@@ -281,6 +281,7 @@ static int ddLogLevel = LOG_LEVEL_ERROR;
 - (void)siteDeleted
 {
 	[self hideHud];
+	self.sites = nil;
 	[self refreshSites];
 }
 

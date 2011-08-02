@@ -11,7 +11,7 @@
 #import "FlurryAPI.h"
 
 
-static int ddLogLevel = LOG_LEVEL_VERBOSE;
+static int ddLogLevel = LOG_LEVEL_WARN;
 
 @implementation SignInViewController_Shared
 

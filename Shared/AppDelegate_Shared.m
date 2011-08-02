@@ -13,7 +13,7 @@
 #import "ASIHTTPRequest.h"
 
 
-static int ddLogLevel = LOG_LEVEL_VERBOSE;
+static int ddLogLevel = LOG_LEVEL_WARN;
 
 @interface AppDelegate_Shared (private)
 -(void)wakeUp;
@@ -34,9 +34,9 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 		
 	// configure IK to listen for payment transactions
 	[InventoryKit registerWithPaymentQueue];
-	[InventoryKit useSandbox:YES];
+//	[InventoryKit useSandbox:YES];
 	[InventoryKit setApiToken:@"d04d10eb3a"];
-	
+
 	// set default http timeout
 	[ASIHTTPRequest setDefaultTimeOutSeconds:5];
 	
@@ -45,9 +45,9 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 	// default server url
 	NSString* tHost = [[NSUserDefaults standardUserDefaults] stringForKey:@"ServerUrl"];
-	if( true || tHost==nil ) {
-//		tHost = @"http://uptimetry.com/api/";
-		tHost = @"http://sandbox.uptimetry.com/api/";
+	if( tHost==nil ) {
+		tHost = @"http://uptimetry.com/api/";
+//		tHost = @"http://sandbox.uptimetry.com/api/";
 		[[NSUserDefaults standardUserDefaults] setValue:tHost forKey:@"ServerUrl"];
 		[[NSUserDefaults standardUserDefaults] synchronize];
 	}
@@ -100,9 +100,9 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 	[window addSubview:navigationController.view];
 
 	float tAlertVersion = [[NSUserDefaults standardUserDefaults] floatForKey:@"AlertVersion"];
-	if( tAlertVersion<0.3 ) {
-		Alert(@"Welcome!",@"Thanks for using Uptimetry™. Find us on Twitter (@uptimetry) if you have questions or problems.");
-		[[NSUserDefaults standardUserDefaults] setFloat:0.3 forKey:@"AlertVersion"];
+	if( tAlertVersion<0.91 ) {
+		Alert(@"Welcome!",@"Thanks for using Uptimetry™.\nFind us on Twitter (@uptimetry) if you have questions or problems.");
+		[[NSUserDefaults standardUserDefaults] setFloat:0.91 forKey:@"AlertVersion"];
 		[[NSUserDefaults standardUserDefaults] synchronize];
 	}
 }
