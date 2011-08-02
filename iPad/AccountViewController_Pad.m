@@ -16,10 +16,17 @@
 - (void)showSubscriptionSelect
 {
 	SubscriptionListViewController_Shared* tSubs = [[[SubscriptionListViewController_Shared alloc] init] autorelease];
-	tSubs.successBlock = ^(NSString* aProductIdentifier) { 
-		[self.navigationController dismissModalViewControllerAnimated:YES];
+	tSubs.successBlock = ^(NSString* aProductIdentifier) {
+		async_main(^{
+			[self.navigationController dismissModalViewControllerAnimated:YES];
+			[self refreshUser];
+		});
 	};
-	tSubs.cancelBlock = ^{ [self.navigationController dismissModalViewControllerAnimated:YES]; };
+	tSubs.cancelBlock = ^{ 
+		async_main(^{
+			[self.navigationController dismissModalViewControllerAnimated:YES];
+		});
+	};
 	MobileNavigationController* tWrapper = [[[MobileNavigationController alloc] initWithRootViewController:tSubs] autorelease];
 	[self.navigationController presentModalViewController:tWrapper animated:YES];
 }

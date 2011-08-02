@@ -61,7 +61,9 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 	
 	self.navigationItem.title = @"Select Plan";
 	self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel handler:^(id sender) {
-		cancelBlock();
+		async_global(^{
+			cancelBlock();
+		});
 	}] autorelease];
 
 	self.hud = [[[MBProgressHUD alloc] initWithView:self.navigationController.view] autorelease];
@@ -194,7 +196,6 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 		
 		IKStringBlock tSuccess = ^(NSString* productIdentifier) {
 			async_main(^{ 
-				hud.progress = 0;
 				hud.labelText = @"Verifying Purchase"; 
 			});
 			
@@ -204,22 +205,18 @@ static int ddLogLevel = LOG_LEVEL_VERBOSE;
 				DDLogVerbose(@"Received user - email: %@, site_allowance: %@",aUser.email,aUser.siteAllowance);
 				async_main(^{
 					[hud hide:YES];
+				});
+				async_global(^{
 					successBlock(productIdentifier);
 				});
 			};
 			
 			ErrorBlock tUserFailure = ^(int aStatusCode, NSString* aResponse) {
 				DDLogVerbose(@"Error retrieving user after purchase: (%d) %@",aStatusCode,aResponse);
+				async_main(^{
+					[hud hide:YES];
+				});
 			};
-			
-			// fake a progress bar
-			for (float k=0;k<10;k+=2.5)
-				[NSObject performBlock:^{
-					async_main(^{
-						hud.progress = k / 10.0;
-					});
-				}
-							afterDelay:k];
 			
 			[NSObject performBlock:^{
 				[UserRequest requestUser:[[NSUserDefaults standardUserDefaults] integerForKey:@"UserId"] 

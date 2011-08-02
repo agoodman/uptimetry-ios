@@ -37,9 +37,15 @@
 				[tAlert addButtonWithTitle:@"Upgrade" handler:^{
 					SubscriptionListViewController_Shared* tSubs = [[[SubscriptionListViewController_Shared alloc] init] autorelease];
 					tSubs.successBlock = ^(NSString* aProductIdentifier) { 
-						[self.navigationController popViewControllerAnimated:YES]; 
+						async_main(^{
+							[self.navigationController popViewControllerAnimated:YES]; 
+						});
 					};
-					tSubs.cancelBlock = ^{ [self.navigationController popViewControllerAnimated:YES]; };
+					tSubs.cancelBlock = ^{ 
+						async_main(^{
+							[self.navigationController popViewControllerAnimated:YES]; 
+						});
+					};
 					[self.navigationController pushViewController:tSubs animated:YES];
 				}];
 				[tAlert setCancelButtonWithTitle:@"Cancel" handler:^{}];

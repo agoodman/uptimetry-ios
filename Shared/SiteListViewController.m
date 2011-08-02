@@ -172,9 +172,15 @@ static int ddLogLevel = LOG_LEVEL_ERROR;
 				[tAlert addButtonWithTitle:@"Upgrade" handler:^{
 					SubscriptionListViewController_Shared* tSubs = [[[SubscriptionListViewController_Shared alloc] init] autorelease];
 					tSubs.successBlock = ^(NSString* aProductIdentifier) { 
-						[tWrapper popViewControllerAnimated:YES]; 
+						async_main(^{
+							[tWrapper popViewControllerAnimated:YES]; 
+						});
 					};
-					tSubs.cancelBlock = ^{ [tWrapper popViewControllerAnimated:YES]; };
+					tSubs.cancelBlock = ^{
+						async_main(^{
+							[tWrapper popViewControllerAnimated:YES]; 
+						});
+					};
 					[tWrapper pushViewController:tSubs animated:YES];
 				}];
 				[tAlert setCancelButtonWithTitle:@"Cancel" handler:^{}];
